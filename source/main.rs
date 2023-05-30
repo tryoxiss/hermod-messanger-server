@@ -1,6 +1,8 @@
 #[macro_use]
 mod terminal_out;
 
+mod packet_handler;
+
 fn main() { 
     info!("This is the program speaking now!");
 
@@ -13,7 +15,7 @@ fn main() {
         fatal!("Fatal");
     }
 
-    log!("Entering main loop");
+    log!("test en/decrypt");
 
     /*
     _on_packet_recieved: 

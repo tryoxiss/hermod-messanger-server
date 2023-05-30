@@ -5,8 +5,11 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-# [dependencies]
-
 [[bin]]
 name = "bonfire_server"
 path = "source/main.rs"
+
+[dependencies]
+
+# Appache 2.0 OR MIT (We will use MIT for this)
+aes-gcm-siv = "0.11.1"
