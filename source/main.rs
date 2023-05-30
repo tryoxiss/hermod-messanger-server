@@ -2,10 +2,16 @@
 mod terminal_out;
 
 fn main() { 
-    info!("info");
-    warning!("warning");
-    error!("error");
-    fatal!("Fatal");
+    info!("This is the program speaking now!");
+
+    // Silence annoying "unused import" warning.
+    if true == false { 
+        log!("Entering main loop");
+        info!("Info");
+        warning!("warning");
+        error!("error");
+        fatal!("Fatal");
+    }
 
     log!("Entering main loop");
 
