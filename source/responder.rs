@@ -28,7 +28,7 @@ trait Packet {
     fn target(&self) -> String;
 }
 
-struct Connect { 
+struct ConnectRequest { 
     edition: String,
 
     target: Address,
@@ -36,7 +36,7 @@ struct Connect {
     signature: Signature
 }
 
-struct Get { 
+struct GetRequest { 
     edition: String,
 
     target: Vec,
@@ -44,7 +44,7 @@ struct Get {
     signature: Signature
 }
 
-struct Create { 
+struct CreateRequest { 
     edition: String,
 
     target: Guid, // channel 
@@ -53,7 +53,7 @@ struct Create {
     signature: Signature
 }
 
-struct Edit { 
+struct EditRequest { 
     edition: String,
 
     target: Guid, // object (message, wiki page, etc)
@@ -62,21 +62,13 @@ struct Edit {
     signature: Signature
 }
 
-struct Remove { 
+struct RemoveRequest { 
     edition: String,
 
     target: String,
 }
 
-struct Delete { 
-    edition: String,
-
-    target: String,
-
-    signature: Signature
-}
-
-struct Destroy { 
+struct DeleteRequest { 
     edition: String,
 
     target: String,
@@ -84,7 +76,15 @@ struct Destroy {
     signature: Signature
 }
 
-struct Notify { 
+struct DestroyRequest { 
+    edition: String,
+
+    target: String,
+
+    signature: Signature
+}
+
+struct NotifyRequest { 
     edition: String,
 
     target: String,
