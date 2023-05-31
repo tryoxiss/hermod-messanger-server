@@ -15,7 +15,9 @@ fn main() {
         fatal!("Fatal");
     }
 
-    log!("test en/decrypt");
+    log!("test (en)decrypt");
+
+    packet_handler::handle_request();
 
     /*
     _on_packet_recieved: 

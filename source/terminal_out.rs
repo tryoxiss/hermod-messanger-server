@@ -1,4 +1,3 @@
-
 macro_rules! log {
     ($message:expr) => {
         eprintln!("\x1b[37m\x1b[1m         Log\x1b[0m {}", $message);

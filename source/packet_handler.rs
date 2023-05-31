@@ -1,37 +1,80 @@
+// why is this so hard...
+use crate::terminal_out;
+
 // use aes_gcm_siv::{
 //     aead::{Aead, KeyInit, OsRng},
 //     Aes256GcmSiv, Nonce // Or `Aes128GcmSiv`
 // };
 
-// enum Operation { 
-//     Connect,
-//     Create, 
-//     Notify,
-//     Edit,
-//     Remove,
-//     Delete,
-//     Destroy,
-//     Get
+#[derive(Debug)]
+enum Operation { 
+    Connect,
+    Create, 
+    Notify,
+    Edit,
+    Remove,
+    Delete,
+    Destroy,
+    Get
+}
+
+enum Address { 
+    DIMAddress,
+    IPv6Address,
+}
+
+#[derive(Debug)]
+struct Guid ( u128 );
+#[derive(Debug)]
+struct Signature ( u128 );
+
+struct IPv4 ( u8, u8, u8, u8 ); // ew                      (u8.u8.u8.u8)
+struct IPv6 ( u16, u16, u16, u16, u16, u16, u16, u16 ); // (u16:u16:u16:u16:u16:u16:u16:u16)
+
+#[derive(Debug)]
+struct Packet { 
+    edition: String,
+    operation: Operation,
+
+    target: Vec<Guid>,
+    content: String,
+
+    // signature: Signature,
+}
+
+// impl Signature { 
+//     fn new() -> Signature { 
+//         return (1);
+//     }
 // }
 
-// enum Address { 
-//     DIMAddress,
-//     IPv6Address,
-// }
+impl Packet { 
+    fn parse_to_struct(packet_string: &str) -> Packet { 
+        log!("Parsing packet");
 
-// struct Guid ( u128 );
-// struct Signature ( u128 );
+        return Packet { 
+            edition: String::from("2023"),
+            operation: Operation::Get,
+        
+            target: Vec::new(),
+            content: String::from(packet_string),
+        
+            // signature: Signature,
+        }
+    }
 
-// struct IPv4 ( u8, u8, u8, u8 ); // ew                      (u8.u8.u8.u8)
-// struct IPv6 ( u16, u16, u16, u16, u16, u16, u16, u16 ); // (u16:u16:u16:u16:u16:u16:u16:u16)
-
-// trait Packet {
-//     fn edition(&self) -> String;
-
-//     fn target(&self) -> Vec<Guid>;
-
-//     fn validate_signature(&self, _public_key: String) -> bool;
-// }
+    fn new() -> Packet { 
+        return Packet { 
+            edition: String::from("2023"),
+            operation: Operation::Get,
+        
+            target: Vec::new(),
+            content: String::from("packet_string"),
+        
+            // signature: Signature,
+        }
+    }
+}
 
 // struct ConnectRequest { 
 //     edition: String,
@@ -112,17 +155,18 @@
 //     }
 // }
 
-// fn parse_packet() { 
+pub fn handle_request() { 
+    log!("Handle Request Called");
+    
+    let packet;
+    packet = Packet::parse_to_struct("Hiss");
 
-// }
+    println!("{:?}", packet); 
 
-// pub fn handle_request() { 
-//     let key = Aes256GcmSiv::generate_key(&mut OsRng);
-//     let cipher = Aes256GcmSiv::new(&key);
-//     let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
-//     let ciphertext = cipher.encrypt(nonce, b"plaintext message".as_ref()) ?;
-//     let plaintext = cipher.decrypt(nonce, ciphertext.as_ref()) ?;
-//     assert_eq!(&plaintext, b"plaintext message");
 
-//     log!("Cuddles");
-// }
+
+    let packet;
+    packet = Packet::parse_to_struct("I want cuddles");
+
+    println!("{:?}", packet); 
+}
