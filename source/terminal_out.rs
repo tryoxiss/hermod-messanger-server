@@ -1,3 +1,9 @@
+macro_rules! process {
+    ($message:expr) => {
+        eprint!("\x1b[37m\x1b[1m         Log\x1b[0m {}\r", $message);
+    }
+}
+
 macro_rules! log {
     ($message:expr) => {
         eprintln!("\x1b[37m\x1b[1m         Log\x1b[0m {}", $message);
