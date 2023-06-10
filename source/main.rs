@@ -39,10 +39,7 @@ fn main() {
             wait_time = 0;
             cycles += 1;
 
-            // println and moving tyhe cursor to the start of the previous
-            // works for some reason and print!() with /r does not for some
-            // reason????
-            println!("Waiting for inputs ({}) ...\x1b[F", cycles); 
+            waiting!(cycles)
         };
     }
 

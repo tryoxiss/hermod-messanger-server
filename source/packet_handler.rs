@@ -52,7 +52,7 @@ impl Packet {
 
     /// Packet format: 
     /// ---
-    /// <OPERATION> <type> "FROM" <target> "WITH" <subject_identifier> ["AND" <encryption algorithum>]
+    /// <OPERATION or RESPONSE_NUMERICAL_CODE> <type or RESPONSE_STRING_CODE> "FROM" <target GUID or dim: protocol uri> "WITH" <subject_identifier> ["AND" <encryption algorithum>]
     /// key: value
     /// key2: value2
     /// content: | 
@@ -75,6 +75,30 @@ impl Packet {
     /// Signatre is always at the end. Content can be anywhere (the key value bits can be in any order, but the header (First line) needs to be on the first line always, and the signature always needs to be on the last line)
     fn raw_to_struct(packet_string: &str) -> Packet { 
         log!("Parsing packet");
+
+        let mut packet_vector: Vec<&str> = vec![];
+
+        for part in packet_string.split(' ') { 
+            packet_vector.push(part);
+        }
+
+        // now we remove all the whitespace (""). 
+        // WARNING: THis executes in O(n + 1) time.
+        let mut index: usize = 0;
+        let mut popped_number: usize = 0;
+        for item in packet_vector.clone().iter() { 
+
+            index += 1;
+
+            if item != &"" { continue }
+            packet_vector.remove(index - popped_number - 1);
+            popped_number += 1;
+        }
+
+        println!("{:?}", packet_vector);
+
+        // println!("{:?}", hiss);
+        // println!("{:?}", packet_string.split(' '));
 
         return Packet { 
             edition: String::from("2023"),
@@ -184,8 +208,13 @@ pub fn handle_request() {
     
     let packet;
     packet = Packet::raw_to_struct(
-        "edition: 2023
-        operation: GET
+        "GET messages FROM 99f97c79dfae4520a650df014d665be7 WITH bonfire-2023 AND aes
+        content: | 
+        \"This is my content
+        uwU
+        I love you!!\"
+        
+        SIGNED \"9320ea11f6d427aec4949634dc8676136b2fa8cdad289d22659b44541abb8c51fbeb6b678ded0c9c8a0eec2313192d3a2352b93b4a0e7dbfe29eb5e8dd2e0dcd7f6daf2377a6cbbae6cefdd132536988ad4cea2d36b8334b0a1d928df2341120\"
         ");
 
     println!("{:?}", packet); 
