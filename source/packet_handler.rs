@@ -74,6 +74,11 @@ impl Packet {
     /// ---
     /// Signatre is always at the end. Content can be anywhere (the key value bits can be in any order, but the header (First line) needs to be on the first line always, and the signature always needs to be on the last line)
     fn raw_to_struct(packet_string: &str) -> Packet { 
+        // ☣️ UNTRUTED DATA WARNING! 
+        // `packet_string` is direct from the network and is therefore 
+        // UNTRUSTED USER DATA! and MUST be properly sanitised before we can
+        // continue with this function! 
+
         log!("Parsing packet");
 
         let mut packet_vector: Vec<&str> = vec![];
@@ -83,7 +88,8 @@ impl Packet {
         }
 
         // now we remove all the whitespace (""). 
-        // WARNING: THis executes in O(n + 1) time.
+        // ❗ ALERT: The performance of this has not been measured. 
+        // It should execute in O(n + 1) time though.
         let mut index: usize = 0;
         let mut popped_number: usize = 0;
         for item in packet_vector.clone().iter() { 

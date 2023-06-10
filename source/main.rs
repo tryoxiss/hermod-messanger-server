@@ -25,19 +25,24 @@ fn main() {
     packet_handler::handle_request();
 
     loop { 
-        wait_time += 1;
+
+        // 🚨 Refactor REQUIRED! 
+        // This is a TERRIBLE solution and MUST be fixed. Probably with
+        // a time library or proper time units. 
+
+        wait_time += 1;  // 🚩 A lot of workfor an idle state. 
 
         // when a request comes in, currently just a demo block.
         if false { 
-            wait_time = 0;
-            cycles = 1;
+            wait_time = 0;  // 🚩 Possibly wasting a lot of work
+            cycles = 1;     // 🚩 Possibly wasting a lot of work
         };
 
         if WAIT_FOR_MESSAGE_TIME <= wait_time { 
             // println!("{cycles}; {wait_time}; ");
 
-            wait_time = 0;
-            cycles += 1;
+            wait_time = 0; // 🚩 Possibly wasting a lot of work
+            cycles += 1;   // 🚩 A lot of workfor an idle state. 
 
             waiting!(cycles)
         };
