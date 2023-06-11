@@ -26,7 +26,7 @@ enum Address {
 #[derive(Debug)]
 struct Guid ( u128 );
 #[derive(Debug)]
-struct Signature ( u128 );
+struct Signature ( u128, u128, u128, u128 );
 
 struct IPv4 ( u8, u8, u8, u8 ); // ew                      (u8.u8.u8.u8)
 struct IPv6 ( u16, u16, u16, u16, u16, u16, u16, u16 ); // (u16:u16:u16:u16:u16:u16:u16:u16)
