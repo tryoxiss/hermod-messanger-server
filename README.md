@@ -18,4 +18,6 @@ Namely we test it on CentOS, Unubtu Server, Debian, Fedora Server, and Rasberry 
 | Rasberry Pi OS | ??? | Very Good |
 | Fedora Server | 38 | Good |
 | Ubuntu Server | 22.04.2 LTS | Good |
+| Windows Server | All | None |
+| Mac Server | All | None |
 | Other Distributions | N/A | If it runs |
