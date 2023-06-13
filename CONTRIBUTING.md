@@ -23,4 +23,9 @@ Don't know how how to code? No worries! We have many things we need each with th
 
 ## Frequently Asked Questions (FAQ) 
 
+**I noticed some issues are marked as `wontfix`, why won't you fix them?**
+Some issues don't  fit the projects direction or would compromise what already exists. Many are also must more suited to be a part of a front end client or extension, as this is strictly a backend server implementation. (Though we do have another repository for a web client to go along with this!)
+
+---
+
 This document is licenced under [CC0](https://creativecommons.org/publicdomain/zero/1.0/)
