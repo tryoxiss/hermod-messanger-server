@@ -12,7 +12,7 @@ Yup... thats it!
 In exchange, we promise to
 
 1. **Resolve the issue** quickly, efficently, and transparerntly. While we are a small team, we do care about security very highly and it will become one of the highest priority issues. 
-2. **Give proper regition**, if you would like, you can be in the contributers page, listed as a pentester, and have the specific vulnerabilites you found displayed with that. It's not much, but you deserve it!
+2. **Give proper recignition**, if you would like, you can be in the contributers page, listed as a pentester, and have the specific vulnerabilites you found displayed with that. It's not much, but you deserve it!
 3. **Do no harm**, if you responseibly disclose, we won't take any punative action against you or any collaborators. 
 
 Unfortuntely, as we are a small team working as a passion project, **we are not currently able to offer monetary incestives** as rewards for major bugs.
