@@ -1,4 +1,5 @@
 #! /bin/bash
+
 # Linux install script.
 # --------------------
 # Untested and unfinished.
@@ -49,16 +50,16 @@ function ask {
 # $i = input buffer
 # $o = output buffer
 
-# if [ "$USER" != "root" ]
-# then
-#     o="The bonfire install script needs to be run with root permissions."
-#     error
-#     o="If you do not trust this script for some reason, "
-#     info
-#     o="please follow our manual install guide."
-#     info
-#     exit 2
-# fi
+if [ "$USER" != "root" ]
+then
+    o="The bonfire install script needs to be run with root permissions."
+    error
+    o="If you do not trust this script for some reason, "
+    info
+    o="please follow our manual install guide."
+    info
+    exit 2
+fi
 
 DATA_LOCATION="/srv/$PROJECT_NAME/"
 # we also write to /srv/https/bonfire/
@@ -134,7 +135,7 @@ chmod 440 /srv/$PROJECT_NAME/old/
 
 # chmod $DATA_LOCATION/data
 
-# Creat ADMIN user and group
+# Create ADMIN user and group
 # Add permisisons with CHMOD
 # Download and add the files where they need to go 
 # Run to confim everything is working
