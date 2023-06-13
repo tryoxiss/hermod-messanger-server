@@ -15,7 +15,9 @@ enum Operation {
     Remove,
     Delete,
     Destroy,
-    Get
+    Get,
+
+    InvalidRequest,
 }
 
 enum Address { 
@@ -87,6 +89,8 @@ impl Packet {
             packet_vector.push(part);
         }
 
+        // split every newline aswell
+
         // now we remove all the whitespace (""). 
         // ❗ ALERT: The performance of this has not been measured. 
         // It should execute in O(n + 1) time though.
@@ -101,7 +105,67 @@ impl Packet {
             popped_number += 1;
         }
 
-        println!("{:?}", packet_vector);
+        // .into_string() does the same but with less memory? 
+        // https://stackoverflow.com/questions/27201086/comparing-string-in-rust
+        if !matches!(packet_vector[0], 
+            "CONNECT" |
+            "CREATE"  |
+            "NOTIFY"  |
+            "EDIT"    |
+            "REMOVE"  |
+            "DELETE"  |
+            "DESTROY" |
+            "GET"     ) 
+        {
+            error!("Did not find OPERATION in PACKET HEADER. Returning `401 Bad_Request`");
+            return Packet {
+                edition: String::from("ERROR"),
+                operation: Operation::InvalidRequest,
+                target: Vec::new(),
+                content: String::from("ERROR")
+            };
+        }
+
+        // if !matches!(packet_vector[1], 
+        //     "CONNECT" |
+        //     "CREATE"  |
+        //     "NOTIFY"  |
+        //     "EDIT"    |
+        //     "REMOVE"  |
+        //     "DELETE"  |
+        //     "DESTROY" |
+        //     "GET"     ) 
+        // {
+        //     error!("Did not find TYPE in PACKET HEADER. Returning `401 Bad_Request`");
+        // }
+
+        if !matches!(packet_vector[2], "FROM") {
+            error!("Did not find `FROM` keyword in PACKET HEADER. Returning `401 Bad_Request`");
+        }
+
+        // if !matches!(packet_vector[3], "TARGET") {
+        //     error!("Did not find TARGET in PACKET HEADER. Returning `401 Bad_Request`");
+        // }
+
+        if !matches!(packet_vector[4], "WITH") {
+            error!("Did not find `WITH` keyword in PACKET HEADER. Returning `401 Bad_Request`");
+        }
+
+        if !matches!(packet_vector[5], "dim/2023") {
+            error!("Did not find EDITION in PACKET HEADER. Returning `401 Bad_Request`");
+        }
+
+        // if !matches!(packet_vector[6], "AND") {
+        //     log!("Did not find `WITH` keyword in PACKET HEADER.");
+        // }
+
+        // if !matches!(packet_vector[7], "aes" | "rsa") {
+        //     log!("Did not find `WITH` keyword in PACKET HEADER.");
+        // }
+
+        // optional: Encryption info
+
+        // println!("{:?}", packet_vector);
 
         // println!("{:?}", hiss);
         // println!("{:?}", packet_string.split(' '));
@@ -214,7 +278,7 @@ pub fn handle_request() {
     
     let packet;
     packet = Packet::raw_to_struct(
-        "GET messages FROM 99f97c79dfae4520a650df014d665be7 WITH bonfire-2023 AND aes
+        "GET messages FROM 99f97c79dfae4520a650df014d665be7 WITH dim/2023 AND aes
         content: | 
         \"This is my content
         uwU
@@ -223,12 +287,25 @@ pub fn handle_request() {
         SIGNED \"9320ea11f6d427aec4949634dc8676136b2fa8cdad289d22659b44541abb8c51fbeb6b678ded0c9c8a0eec2313192d3a2352b93b4a0e7dbfe29eb5e8dd2e0dcd7f6daf2377a6cbbae6cefdd132536988ad4cea2d36b8334b0a1d928df2341120\"
         ");
 
-    println!("{:?}", packet); 
+    if packet.edition == "ERROR".to_string() { 
+        log!("Found an `ERROR` in the packets edition. Returning!");
+        return;
+    }
+
+    // println!("{:?}", packet); 
 
 
 
-    let packet;
-    packet = Packet::raw_to_struct("I want cuddles");
+    let _packet;
+    _packet = Packet::raw_to_struct(
+        "NOTIFY messages FROM 99f97c79dfae4520a650df014d665be7 WITH dim/2023 AND aes
+        content: | 
+        \"This is my content
+        uwU
+        I love you!!\"
+        
+        SIGNED \"9320ea11f6d427aec4949634dc8676136b2fa8cdad289d22659b44541abb8c51fbeb6b678ded0c9c8a0eec2313192d3a2352b93b4a0e7dbfe29eb5e8dd2e0dcd7f6daf2377a6cbbae6cefdd132536988ad4cea2d36b8334b0a1d928df2341120\"
+        ");
 
-    println!("{:?}", packet); 
+    // println!("{:?}", packet); 
 }

@@ -6,11 +6,6 @@ mod packet_handler;
 fn main() { 
     info!("This is the program speaking now!");
 
-    let mut wait_time: u64 = 0;
-    let mut cycles: u64 = 0;
-    //                 5_000_000_000
-    let WAIT_FOR_MESSAGE_TIME: u64 = 10_000_000_000; 
-
     // Silence annoying "unused import" warning.
     if true == false { 
         log!("Entering main loop");
@@ -26,26 +21,11 @@ fn main() {
 
     loop { 
 
-        // 🚨 Refactor REQUIRED! 
-        // This is a TERRIBLE solution and MUST be fixed. Probably with
-        // a time library or proper time units. 
+        // 🚨 Refactor RECCOMMENDED! 
+        // This should increment every 10 secconds to show the wait time.
+        // and should reset if any action is done. 
 
-        wait_time += 1;  // 🚩 A lot of workfor an idle state. 
-
-        // when a request comes in, currently just a demo block.
-        if false { 
-            wait_time = 0;  // 🚩 Possibly wasting a lot of work
-            cycles = 1;     // 🚩 Possibly wasting a lot of work
-        };
-
-        if WAIT_FOR_MESSAGE_TIME <= wait_time { 
-            // println!("{cycles}; {wait_time}; ");
-
-            wait_time = 0; // 🚩 Possibly wasting a lot of work
-            cycles += 1;   // 🚩 A lot of workfor an idle state. 
-
-            waiting!(cycles)
-        };
+        // waiting!(cycles)
     }
 
     /*
