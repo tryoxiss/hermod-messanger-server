@@ -15,13 +15,13 @@ This document defines the community rules for this repository and any assosiated
 ## 3. Unacceptable Behavour
 
 1. Violence, or threats of violence, against anyone in or out of this community. 
-2. Sexist, racist, homophobic, transphobic, ableist or otherwise discriminatory jokes and language.
+2. Sexist, racist, homophobic, transphobic, ableist or otherwise discriminatory jokes or language.
 3. Displaying or distributing violet or discriminatory material in our spaces. 
 4. Posting, or threatening to post somebodys personally identifable information, of anyone in or out of this community. 
 5. Personal insults, particularly those related to gender, sexual orientation, race, religion, or disability.
 6. Inappropriate physical contact. You should have someone's consent before touching them, even if it's just a handshake or something harmless like that. People may have triggers and needs you may not forsee. 
-7. Unwanted sexual attention, including but not limited to unwanted flirting, grouping, sexual advances, or simillar. 
-8. Deliberate intimidation, stalking or following (online or in person).
+7. Unwanted sexual attention, including but not limited to unwanted flirting, groping, sexual advances, or simillar. 
+8. Deliberate intimidation, stalking, or following (online or in person).
 9. Advocating for, or encouraging, any of the above behavior.
 10. Sustained disruption of community events, including talks and presentations.
 11. In case of in-person events, carrying any form of weapon is a major offence. 
