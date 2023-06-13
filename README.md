@@ -9,8 +9,6 @@ We currently only support Linux kernel operating systems. See the chart below fo
 
 Namely we test it on CentOS, Unubtu Server, Debian, Fedora Server, and Rasberry Pi OS. 
 
-
-
 | OS       | Version | Support   | 
 | -------- | ------- | --------- |
 | Debian   | 12      | Very Good |
