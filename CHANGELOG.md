@@ -30,17 +30,3 @@ The tags are:
 
 ## [0.1.0] Unrelased
 This is our baseline so not much here. We wanted to get this much finished before we made the repo public. 
-
-**Important**
-- The repository is now public
-
-**Added**
-- User Inerface
-- Tooltips
-- Commands Header document
-    - `@slash_command` wrapper
-        - Ensures enough arguments are present
-        - Identifies and handles basic flags
-        - Handles client object creation
-        - 
-    - Command Tools class
