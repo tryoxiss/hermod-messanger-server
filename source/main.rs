@@ -15,9 +15,11 @@ fn main() {
         fatal!("Fatal");
     }
 
-    log!("test (en)decrypt");
+    // log!("test (en)decrypt");
 
     packet_handler::handle_request();
+
+    // let mut cycles = 0;
 
     loop { 
 
@@ -26,6 +28,7 @@ fn main() {
         // and should reset if any action is done. 
 
         // waiting!(cycles)
+        // cycles += 1
     }
 
     /*

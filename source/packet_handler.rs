@@ -273,7 +273,8 @@ impl Packet {
 //     }
 // }
 
-pub fn handle_request() { 
+pub fn handle_request() 
+{ 
     log!("Handle Request Called");
     
     let packet;
@@ -308,4 +309,32 @@ pub fn handle_request() {
         ");
 
     // println!("{:?}", packet); 
+}
+
+#[cfg(test)]
+mod tests
+{   
+    use crate::packet_handler::Packet;
+
+    #[test]
+    fn notify_1()
+    {
+        let packet = Packet::raw_to_struct(
+            "NOTIFY messages FROM 99f97c79dfae4520a650df014d665be7 WITH dim/2023 AND aes
+            content: | 
+            \"This is my content
+            uwU
+            I love you!!\"
+            
+            SIGNED \"9320ea11f6d427aec4949634dc8676136b2fa8cdad289d22659b44541abb8c51fbeb6b678ded0c9c8a0eec2313192d3a2352b93b4a0e7dbfe29eb5e8dd2e0dcd7f6daf2377a6cbbae6cefdd132536988ad4cea2d36b8334b0a1d928df2341120\"
+            ");
+        
+        assert_eq!(packet.edition, "dim/2023");
+    }
+
+    #[test]
+    fn notify_2()
+    {
+        warning!("bonfire:Not_Implemented_Error for `mod tests` -> `notify_2` in bonfire:packer_handler.rs")
+    }
 }
