@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+THIS IS NOT A BUG TEMPLATE. 
+
 **Where is the problem?**
 e.g., code (source/file.rs), docs (doc article name). 
 
