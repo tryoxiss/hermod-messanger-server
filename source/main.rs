@@ -3,11 +3,13 @@ mod terminal_out;
 
 mod packet_handler;
 
-fn main() { 
+fn main() 
+{ 
     info!("This is the program speaking now!");
 
     // Silence annoying "unused import" warning.
-    if true == false { 
+    if true == false 
+    { 
         log!("Entering main loop");
         info!("Info");
         warning!("warning");
@@ -21,7 +23,8 @@ fn main() {
 
     // let mut cycles = 0;
 
-    loop { 
+    loop 
+    { 
 
         // 🚨 Refactor RECCOMMENDED! 
         // This should increment every 10 secconds to show the wait time.
