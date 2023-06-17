@@ -1,5 +1,6 @@
 [package]
 name = "codename_bonfire_server"
+licence = "AGPL 3.0 Only"
 version = "0.1.0"
 edition = "2021"  # Rust Edition
 
@@ -9,7 +10,15 @@ edition = "2021"  # Rust Edition
 name = "codename_bonfire_server"
 path = "source/main.rs"
 
+# [dev-dependencies]
+# [build-dependencies]
+
 [dependencies]
 
 # MIT Licence
-aes-gcm-siv = "0.11.1"  # Appache 2.0 OR MIT
+aes-gcm-siv = "0.11.1"  # Apache 2.0  OR  MIT
+config = "0.13.1"       # Apache 2.0  OR  MIT
+
+# FOR CONFIG: 
+# INI Format
+# `hermod.config`
