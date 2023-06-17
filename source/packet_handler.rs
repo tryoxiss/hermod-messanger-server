@@ -1,3 +1,23 @@
+/* 
+ *      This file is part of:
+ *      Codename Bonfire Instant Messanger
+ *
+ *      Copyright (C) 2023 or later - Project Bonfire Contributers
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as published
+ *  by the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ * 
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 // why is this so hard...
 use crate::terminal_out;
 
@@ -7,7 +27,8 @@ use crate::terminal_out;
 // };
 
 #[derive(Debug)]
-enum Operation { 
+enum Operation \
+{ 
     Connect,
     Create, 
     Notify,
@@ -20,7 +41,8 @@ enum Operation {
     InvalidRequest,
 }
 
-enum Address { 
+enum Address 
+{ 
     DIMAddress,
     IPv6Address,
 }
@@ -34,7 +56,8 @@ struct IPv4 ( u8, u8, u8, u8 ); // ew                      (u8.u8.u8.u8)
 struct IPv6 ( u16, u16, u16, u16, u16, u16, u16, u16 ); // (u16:u16:u16:u16:u16:u16:u16:u16)
 
 #[derive(Debug)]
-struct Packet { 
+struct Packet 
+{ 
     edition: String,
     operation: Operation,
 
@@ -50,8 +73,8 @@ struct Packet {
 //     }
 // }
 
-impl Packet { 
-
+impl Packet 
+{ 
     /// Packet format: 
     /// ---
     /// <OPERATION or RESPONSE_NUMERICAL_CODE> <type or RESPONSE_STRING_CODE> "FROM" <target GUID or dim: protocol uri> "WITH" <subject_identifier> ["AND" <encryption algorithum>]
@@ -75,7 +98,8 @@ impl Packet {
     /// SIGNED "9320ea11f6d427aec4949634dc8676136b2fa8cdad289d22659b44541abb8c51fbeb6b678ded0c9c8a0eec2313192d3a2352b93b4a0e7dbfe29eb5e8dd2e0dcd7f6daf2377a6cbbae6cefdd132536988ad4cea2d36b8334b0a1d928df2341120"
     /// ---
     /// Signatre is always at the end. Content can be anywhere (the key value bits can be in any order, but the header (First line) needs to be on the first line always, and the signature always needs to be on the last line)
-    fn raw_to_struct(packet_string: &str) -> Packet { 
+    fn raw_to_struct(packet_string: &str) -> Packet 
+    { 
         // ☣️ UNTRUTED DATA WARNING! 
         // `packet_string` is direct from the network and is therefore 
         // UNTRUSTED USER DATA! and MUST be properly sanitised before we can
@@ -85,7 +109,8 @@ impl Packet {
 
         let mut packet_vector: Vec<&str> = vec![];
 
-        for part in packet_string.split(' ') { 
+        for part in packet_string.split(' ') 
+        { 
             packet_vector.push(part);
         }
 
@@ -96,8 +121,9 @@ impl Packet {
         // It should execute in O(n + 1) time though.
         let mut index: usize = 0;
         let mut popped_number: usize = 0;
-        for item in packet_vector.clone().iter() { 
 
+        for item in packet_vector.clone().iter() 
+        { 
             index += 1;
 
             if item != &"" { continue }
@@ -118,7 +144,8 @@ impl Packet {
             "GET"     ) 
         {
             error!("Did not find OPERATION in PACKET HEADER. Returning `401 Bad_Request`");
-            return Packet {
+            return Packet 
+            {
                 edition: String::from("ERROR"),
                 operation: Operation::InvalidRequest,
                 target: Vec::new(),
@@ -139,7 +166,8 @@ impl Packet {
         //     error!("Did not find TYPE in PACKET HEADER. Returning `401 Bad_Request`");
         // }
 
-        if !matches!(packet_vector[2], "FROM") {
+        if !matches!(packet_vector[2], "FROM") 
+        {
             error!("Did not find `FROM` keyword in PACKET HEADER. Returning `401 Bad_Request`");
         }
 
@@ -147,19 +175,23 @@ impl Packet {
         //     error!("Did not find TARGET in PACKET HEADER. Returning `401 Bad_Request`");
         // }
 
-        if !matches!(packet_vector[4], "WITH") {
+        if !matches!(packet_vector[4], "WITH") 
+        {
             error!("Did not find `WITH` keyword in PACKET HEADER. Returning `401 Bad_Request`");
         }
 
-        if !matches!(packet_vector[5], "dim/2023") {
+        if !matches!(packet_vector[5], "dim/2023") 
+        {
             error!("Did not find EDITION in PACKET HEADER. Returning `401 Bad_Request`");
         }
 
-        // if !matches!(packet_vector[6], "AND") {
+        // if !matches!(packet_vector[6], "AND") 
+        // {
         //     log!("Did not find `WITH` keyword in PACKET HEADER.");
         // }
 
-        // if !matches!(packet_vector[7], "aes" | "rsa") {
+        // if !matches!(packet_vector[7], "aes" | "rsa") 
+        // {
         //     log!("Did not find `WITH` keyword in PACKET HEADER.");
         // }
 
@@ -170,7 +202,8 @@ impl Packet {
         // println!("{:?}", hiss);
         // println!("{:?}", packet_string.split(' '));
 
-        return Packet { 
+        return Packet 
+        { 
             edition: String::from("2023"),
             operation: Operation::Get,
         
@@ -181,8 +214,10 @@ impl Packet {
         }
     }
 
-    fn new(edition: &str, operation: Operation, target: Vec<Guid>, content: &str) -> Packet { 
-        return Packet { 
+    fn new(edition: &str, operation: Operation, target: Vec<Guid>, content: &str) -> Packet 
+    { 
+        return Packet 
+        { 
             edition: String::from(edition),
             operation: operation,
         
@@ -194,7 +229,8 @@ impl Packet {
     }
 }
 
-// struct ConnectRequest { 
+// struct ConnectRequest 
+// { 
 //     edition: String,
 
 //     target: Address,
@@ -202,7 +238,8 @@ impl Packet {
 //     signature: Signature
 // }
 
-// struct GetRequest { 
+// struct GetRequest 
+// { 
 //     edition: String,
 
 //     target: Vec<Guid>,
@@ -210,7 +247,8 @@ impl Packet {
 //     signature: Signature
 // }
 
-// struct CreateRequest { 
+// struct CreateRequest 
+// { 
 //     edition: String,
 
 //     target: Guid, // channel 
@@ -219,7 +257,8 @@ impl Packet {
 //     signature: Signature
 // }
 
-// struct EditRequest { 
+// struct EditRequest 
+// { 
 //     edition: String,
 
 //     target: Guid, // object (message, wiki page, etc)
@@ -228,21 +267,15 @@ impl Packet {
 //     signature: Signature
 // }
 
-// struct RemoveRequest { 
+// struct RemoveRequest 
+// { 
 //     edition: String,
 
 //     target: String,
 // }
 
-// struct DeleteRequest { 
-//     edition: String,
-
-//     target: String,
-
-//     signature: Signature
-// }
-
-// struct DestroyRequest { 
+// struct DeleteRequest 
+// { 
 //     edition: String,
 
 //     target: String,
@@ -250,7 +283,17 @@ impl Packet {
 //     signature: Signature
 // }
 
-// struct NotifyRequest { 
+// struct DestroyRequest 
+// { 
+//     edition: String,
+
+//     target: String,
+
+//     signature: Signature
+// }
+
+// struct NotifyRequest 
+// { 
 //     edition: String,
 
 //     target: String,
@@ -259,16 +302,20 @@ impl Packet {
 //     signature: Signature
 // }
 
-// impl Packet for GetRequest { 
-//     fn edition(&self) -> String { 
+// impl Packet for GetRequest 
+// { 
+//     fn edition(&self) -> String 
+//     { 
 //         return self.edition; 
 //     }
 
-//     fn target(&self) -> Vec<Guid> { 
+//     fn target(&self) -> Vec<Guid> 
+//     { 
 //         return self.target;
 //     }
 
-//     fn validate_signature(&self, _public_key: Key) -> bool {
+//     fn validate_signature(&self, _public_key: Key) -> bool 
+//     {
 //         return false;
 //     }
 // }
@@ -288,7 +335,8 @@ pub fn handle_request()
         SIGNED \"9320ea11f6d427aec4949634dc8676136b2fa8cdad289d22659b44541abb8c51fbeb6b678ded0c9c8a0eec2313192d3a2352b93b4a0e7dbfe29eb5e8dd2e0dcd7f6daf2377a6cbbae6cefdd132536988ad4cea2d36b8334b0a1d928df2341120\"
         ");
 
-    if packet.edition == "ERROR".to_string() { 
+    if packet.edition == "ERROR".to_string() 
+    { 
         log!("Found an `ERROR` in the packets edition. Returning!");
         return;
     }
