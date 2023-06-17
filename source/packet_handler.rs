@@ -27,7 +27,7 @@ use crate::terminal_out;
 // };
 
 #[derive(Debug)]
-enum Operation \
+enum Operation
 { 
     Connect,
     Create, 

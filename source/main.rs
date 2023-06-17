@@ -2,6 +2,9 @@
 mod terminal_out;
 
 mod packet_handler;
+mod network_manager;
+
+use network_manager::NetworkConnection;
 
 fn main() 
 { 
@@ -17,6 +20,13 @@ fn main()
         fatal!("Fatal");
     }
 
+    info!("Initialising the Master Process");
+
+    verify_file_integrity();
+    check_updaes();
+
+    let network_stream: NetworkConnection = network_manager::NetworkConnection::establish_connection();
+
     // log!("test (en)decrypt");
 
     packet_handler::handle_request();
@@ -25,6 +35,8 @@ fn main()
 
     loop 
     { 
+        // on packet recieved: 
+        // packet_handler::handle_request();
 
         // 🚨 Refactor RECCOMMENDED! 
         // This should increment every 10 secconds to show the wait time.
@@ -41,4 +53,16 @@ fn main()
         store (if applicable) 
         send to route
     */
+}
+
+fn verify_file_integrity()
+{
+    warning!("The function `verify_file_integrity()` currently has no functionality.");
+    log!("Veryfying file integrity")
+}
+
+fn check_updaes()
+{
+    warning!("The function `check_updaes()` currently has no functionality.");
+    log!("Checking for Updates");
 }
