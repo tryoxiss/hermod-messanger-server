@@ -18,13 +18,30 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// why is this so hard...
-use crate::terminal_out;
+// use crate::terminal_out;
+
+use std::net::TcpStream;
+use std::io::prelude::*;
 
 // use aes_gcm_siv::{
 //     aead::{Aead, KeyInit, OsRng},
 //     Aes256GcmSiv, Nonce // Or `Aes128GcmSiv`
 // };
+
+pub fn handle_connection(mut stream: TcpStream)
+{
+    let mut buffer = [0; 1024];
+
+    stream.read(&mut buffer).unwrap();
+    warning!("Stream is read and then unwrapped! Don't unwrap!");
+
+    let response = "HTTP/1.1 200 OK\r\n\r\n";
+    stream.write(response.as_bytes()).unwrap();
+    warning!("Stream is written to and then unwrapped! Don't unwrap!");
+
+    stream.flush().unwrap();
+    warning!("Stream flush is unwrapped! Don't unwrap!");
+}
 
 #[derive(Debug)]
 enum Operation
@@ -362,7 +379,7 @@ pub fn handle_request()
 #[cfg(test)]
 mod tests
 {   
-    use crate::packet_handler::Packet;
+    use crate::connection_handler::Packet;
 
     #[test]
     fn notify_1()

@@ -1,10 +1,9 @@
 #[macro_use]
 mod terminal_out;
 
-mod packet_handler;
-mod network_manager;
+use std::net::TcpListener;
 
-use network_manager::NetworkConnection;
+mod connection_handler;
 
 fn main() 
 { 
@@ -23,27 +22,31 @@ fn main()
     info!("Initialising the Master Process");
 
     verify_file_integrity();
-    check_updaes();
+    check_updates();
 
-    let network_stream: NetworkConnection = network_manager::NetworkConnection::establish_connection();
+    log!("Initalising TCP Stream");
+    let network_listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
-    // log!("test (en)decrypt");
+    warning!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol 
+             is actually built in TLS! This is just for testing!");
+    warning!("network_lister is bound to an UNWRAPPED VALUE!");
 
-    packet_handler::handle_request();
+    // packet_handler::handle_request();
 
-    // let mut cycles = 0;
+    let mut packets_handled: u128 = 0;
 
-    loop 
-    { 
-        // on packet recieved: 
-        // packet_handler::handle_request();
+    // This automatically persists indefintely. 
+    for stream in network_listener.incoming()
+    {
+        let stream = stream.unwrap();
+        warning!("stream is bound to an UNWRAPPED VALUE!");
 
-        // 🚨 Refactor RECCOMMENDED! 
-        // This should increment every 10 secconds to show the wait time.
-        // and should reset if any action is done. 
+        log!("Attempting to connect ...");
+        connection_handler::handle_connection(stream);
 
-        // waiting!(cycles)
-        // cycles += 1
+        // take note of requests handled for log files
+        packets_handled += 1;
+        log!(format!("{packets_handled} packets handled"));
     }
 
     /*
@@ -61,7 +64,7 @@ fn verify_file_integrity()
     log!("Veryfying file integrity")
 }
 
-fn check_updaes()
+fn check_updates()
 {
     warning!("The function `check_updaes()` currently has no functionality.");
     log!("Checking for Updates");
