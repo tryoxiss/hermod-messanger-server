@@ -1,6 +1,9 @@
 #[macro_use]
 mod terminal_out;
 
+mod threading;
+use threading::ThreadPool;
+
 use std::net::TcpListener;
 
 mod connection_handler;
@@ -8,16 +11,6 @@ mod connection_handler;
 fn main() 
 { 
     info!("This is the program speaking now!");
-
-    // Silence annoying "unused import" warning.
-    if true == false 
-    { 
-        log!("Entering main loop");
-        info!("Info");
-        warning!("warning");
-        error!("error");
-        fatal!("Fatal");
-    }
 
     info!("Initialising the Master Process");
 
@@ -33,7 +26,11 @@ fn main()
 
     // packet_handler::handle_request();
 
+
+    // main portion
+
     let mut packets_handled: u128 = 0;
+    let thread_pool = ThreadPool::new(4);
 
     // This automatically persists indefintely. 
     for stream in network_listener.incoming()
@@ -41,11 +38,16 @@ fn main()
         let stream = stream.unwrap();
         warning!("stream is bound to an UNWRAPPED VALUE!");
 
-        log!("Attempting to connect ...");
-        connection_handler::handle_connection(stream);
-
-        // take note of requests handled for log files
         packets_handled += 1;
+        thread_pool.run(|| 
+        {
+            log!("Attempting to connect ...");
+
+            connection_handler::handle_connection(stream);
+
+            // take note of requests handled for log files
+        });
+
         log!(format!("{packets_handled} packets handled"));
     }
 
