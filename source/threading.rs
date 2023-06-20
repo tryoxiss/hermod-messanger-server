@@ -102,9 +102,9 @@ impl Worker
             // source: https://youtu.be/1AamFJGAE8E?t=1063
             let message = reciever
                 .lock()
-                .expect("Getting Mutex<> failed on threading.rs:78")
+                .unwrap()
                 .recv()
-                .expect(".recv() failed on threading.rs:80");
+                .unwrap();
             
             match message
             {

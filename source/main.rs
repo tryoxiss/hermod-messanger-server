@@ -12,6 +12,8 @@ fn main()
 { 
     info!("This is the program speaking now!");
 
+    // warn_not_linux();
+
     info!("Initialising the Master Process");
 
     verify_file_integrity();
@@ -25,7 +27,6 @@ fn main()
     warning!("network_lister is bound to an UNWRAPPED VALUE!");
 
     // packet_handler::handle_request();
-
 
     // main portion
 
