@@ -14,6 +14,9 @@ fn main()
 
     // warn_not_linux();
 
+    error!("Meow");
+    fatal!(911, "Program Binary Modified");
+
     info!("Initialising the Master Process");
 
     verify_file_integrity();
