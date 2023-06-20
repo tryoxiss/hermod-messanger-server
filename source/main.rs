@@ -33,7 +33,7 @@ fn main()
     let thread_pool = ThreadPool::new(4);
 
     // This automatically persists indefintely. 
-    for stream in network_listener.incoming()
+    for stream in network_listener.incoming() //.take(2) // test shutdown
     {
         let stream = stream.unwrap();
         warning!("stream is bound to an UNWRAPPED VALUE!");
@@ -50,6 +50,8 @@ fn main()
 
         log!(format!("{packets_handled} packets handled"));
     }
+
+    info!("Begining server shutdown ...");
 
     /*
     _on_packet_recieved: 

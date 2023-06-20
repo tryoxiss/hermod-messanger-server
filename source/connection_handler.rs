@@ -231,19 +231,19 @@ impl Packet
         }
     }
 
-    fn new(edition: &str, operation: Operation, target: Vec<Guid>, content: &str) -> Packet 
-    { 
-        return Packet 
-        { 
-            edition: String::from(edition),
-            operation: operation,
+    // fn new(edition: &str, operation: Operation, target: Vec<Guid>, content: &str) -> Packet 
+    // { 
+    //     return Packet 
+    //     { 
+    //         edition: String::from(edition),
+    //         operation: operation,
         
-            target: target,
-            content: String::from(content),
+    //         target: target,
+    //         content: String::from(content),
         
-            // signature: Signature,
-        }
-    }
+    //         // signature: Signature,
+    //     }
+    // }
 }
 
 // struct ConnectRequest 

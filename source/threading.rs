@@ -1,13 +1,18 @@
-use std::thread;
+use std::thread::{self, Thread};
 use std::sync::{mpsc, Arc, Mutex};
 
 pub struct ThreadPool
 {
     workers: Vec<Worker>,
-    sender: mpsc::Sender<Job>,
+    sender: mpsc::Sender<Message>,
 }
 
 type Job = Box<dyn FnOnce() + Send + 'static>;
+
+enum Message { 
+    NewJob(Job),
+    Terminate,
+}
 
 impl ThreadPool 
 {
@@ -51,20 +56,42 @@ impl ThreadPool
         // 
         // I still think we should type match to show that its intentional at
         // least. 
-        self.sender.send(job).unwrap();
+        self.sender.send(Message::NewJob(job)).unwrap();
         warning!("threading.rs:41:8 uses an unwrap method!! Don't unwrap!!");
+    }
+}
+
+impl Drop for ThreadPool
+{
+    fn drop(&mut self) 
+    {
+        for _ in &self.workers
+        {
+            self.sender.send(Message::Terminate).unwrap();
+        }
+
+        for worker in &mut self.workers
+        {
+            info!(format!("Shutting down worker thread #{}", worker.id));
+
+            // This is an if statement, meaning its possible to de-nest this.
+            // I couldn't figure it out.
+            if let Some(thread) = worker.thread.take() {
+                thread.join().unwrap();
+            }
+        }
     }
 }
 
 struct Worker
 {
     id: usize,
-    thread: thread::JoinHandle<()>
+    thread: Option<thread::JoinHandle<()>>
 }
 
 impl Worker 
 {
-    fn new(id: usize, reciever: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker
+    fn new(id: usize, reciever: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker
     {
         let thread = thread::spawn(move || loop
         {
@@ -73,15 +100,23 @@ impl Worker
             // Also these unwraps are also apparently safe?
             // Can someone confirm? 
             // source: https://youtu.be/1AamFJGAE8E?t=1063
-            let job = reciever
+            let message = reciever
                 .lock()
                 .expect("Getting Mutex<> failed on threading.rs:78")
                 .recv()
                 .expect(".recv() failed on threading.rs:80");
             
-            log!(format!("Worker #{id} got a job!"))
+            match message
+            {
+                Message::NewJob(job) => 
+                {
+                    log!(format!("Worker #{id} got a job!"));
+                    job();
+                }
+                Message::Terminate => { break; }
+            }
         });
 
-        Worker { id: id, thread: thread }
+        Worker { id: id, thread: Some(thread) }
     }
 }
