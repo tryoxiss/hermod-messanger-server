@@ -58,7 +58,7 @@ impl ThreadPool
         // least. 
         match self.sender.send(Message::NewJob(job))
         {
-            Ok(message) => { /* nothing to do */ }
+            Ok(_message) => { /* nothing to do */ }
             Err(message) => { error!(format!("Something went wrong in threading.rs:ThreadPool:run (line 62). 
              Here is the rust error message: \n {}", message)) }
         }

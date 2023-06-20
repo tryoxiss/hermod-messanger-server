@@ -127,6 +127,6 @@ mod tests
         info!("Info");
         warning!("Warning");
         error!("Error");
-        fatal!("Fatal");
+        fatal!(100, "Fatal");
     }
 }
