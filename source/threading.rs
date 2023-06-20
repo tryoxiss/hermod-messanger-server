@@ -29,7 +29,7 @@ impl ThreadPool
 
         let mut workers = Vec::with_capacity(threads);
 
-        for id in 0..threads
+        for id in 0..threads + 1
         {
             // Worker numbers get printed out and written to logs,
             // so we want them to start at 1, not 0. 
@@ -56,8 +56,12 @@ impl ThreadPool
         // 
         // I still think we should type match to show that its intentional at
         // least. 
-        self.sender.send(Message::NewJob(job)).unwrap();
-        warning!("threading.rs:41:8 uses an unwrap method!! Don't unwrap!!");
+        match self.sender.send(Message::NewJob(job))
+        {
+            Ok(message) => { /* nothing to do */ }
+            Err(message) => { error!(format!("Something went wrong in threading.rs:ThreadPool:run (line 62). 
+             Here is the rust error message: \n {}", message)) }
+        }
     }
 }
 
@@ -112,6 +116,7 @@ impl Worker
                 {
                     log!(format!("Worker #{id} got a job!"));
                     job();
+                    log!(format!("Worker #{id} finished its job!"))
                 }
                 Message::Terminate => { break; }
             }

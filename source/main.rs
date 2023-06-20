@@ -26,8 +26,6 @@ fn main()
              is actually built in TLS! This is just for testing!");
     warning!("network_lister is bound to an UNWRAPPED VALUE!");
 
-    // packet_handler::handle_request();
-
     // main portion
 
     let mut packets_handled: u128 = 0;
@@ -37,30 +35,16 @@ fn main()
     for stream in network_listener.incoming() //.take(2) // test shutdown
     {
         let stream = stream.unwrap();
+
         warning!("stream is bound to an UNWRAPPED VALUE!");
 
         packets_handled += 1;
-        thread_pool.run(|| 
-        {
-            log!("Attempting to connect ...");
-
-            connection_handler::handle_connection(stream);
-
-            // take note of requests handled for log files
-        });
+        thread_pool.run(|| { connection_handler::handle_connection(stream); });
 
         log!(format!("{packets_handled} packets handled"));
     }
 
     info!("Begining server shutdown ...");
-
-    /*
-    _on_packet_recieved: 
-        read_header
-        find route
-        store (if applicable) 
-        send to route
-    */
 }
 
 fn verify_file_integrity()

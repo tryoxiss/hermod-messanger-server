@@ -14,13 +14,13 @@ macro_rules! info
     }
 }
 
-macro_rules! waiting 
-{
-    ($cycles:expr) => 
-    {
-        eprintln!("\x1b[96m\x1b[1m     Waiting\x1b[0m for input ({}) ...\x1b[F", $cycles)
-    }
-}
+// macro_rules! waiting 
+// {
+//     ($cycles:expr) => 
+//     {
+//         eprintln!("\x1b[96m\x1b[1m     Waiting\x1b[0m for input ({}) ...\x1b[F", $cycles)
+//     }
+// }
 
 macro_rules! warning 
 {
