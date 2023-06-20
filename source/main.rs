@@ -8,8 +8,8 @@ use std::net::TcpListener;
 
 mod connection_handler;
 
-fn main() 
-{ 
+fn main()
+{
     info!("This is the program speaking now!");
 
     // warn_not_linux();
@@ -22,7 +22,7 @@ fn main()
     log!("Initalising TCP Stream");
     let network_listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
-    warning!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol 
+    warning!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
              is actually built in TLS! This is just for testing!");
     warning!("network_lister is bound to an UNWRAPPED VALUE!");
 
@@ -31,7 +31,7 @@ fn main()
     let mut packets_handled: u128 = 0;
     let thread_pool = ThreadPool::new(4);
 
-    // This automatically persists indefintely. 
+    // This automatically persists indefintely.
     for stream in network_listener.incoming() //.take(2) // test shutdown
     {
         let stream = stream.unwrap();

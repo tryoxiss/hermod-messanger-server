@@ -16,7 +16,7 @@ enum Message {
 
 impl ThreadPool 
 {
-    /// Create a new ThreadBook
+    /// Create a new ThreadPool
     /// The size is the number of threads in the ThreadPool
     /// 
     /// This function will panic if threads is 0.
