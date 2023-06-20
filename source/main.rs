@@ -12,11 +12,6 @@ fn main()
 {
     info!("This is the program speaking now!");
 
-    // warn_not_linux();
-
-    error!("Meow");
-    fatal!(911, "Program Binary Modified");
-
     info!("Initialising the Master Process");
 
     verify_file_integrity();
