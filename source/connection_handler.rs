@@ -20,6 +20,9 @@
 
 // use crate::terminal_out;
 
+use log::{debug, error, info, trace, warn};
+use log4rs;
+
 use std::net::TcpStream;
 use std::io::prelude::*;
 
@@ -28,12 +31,12 @@ pub fn handle_connection(mut stream: TcpStream)
     let mut buffer = [0; 1024];
 
     stream.read(&mut buffer).unwrap();
-    warning!("Stream is read and then unwrapped! Don't unwrap!");
+    warn!("Stream is read and then unwrapped! Don't unwrap!");
 
     let response = "HTTP/1.1 200 OK\r\n\r\n";
     stream.write(response.as_bytes()).unwrap();
-    warning!("Stream is written to and then unwrapped! Don't unwrap!");
+    warn!("Stream is written to and then unwrapped! Don't unwrap!");
 
     stream.flush().unwrap();
-    warning!("Stream flush is unwrapped! Don't unwrap!");
+    warn!("Stream flush is unwrapped! Don't unwrap!");
 }

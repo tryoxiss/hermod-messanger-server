@@ -1,6 +1,9 @@
 use std::thread;
 use std::sync::{mpsc, Arc, Mutex};
 
+use log::{debug, error, info, trace, warn};
+use log4rs;
+
 pub struct ThreadPool
 {
     workers: Vec<Worker>,
@@ -31,7 +34,7 @@ impl ThreadPool
 
         for id in 0..threads + 1
         {
-            // Worker numbers get printed out and written to logs,
+            // Worker numbers get printed out and written to traces,
             // so we want them to start at 1, not 0. 
             if id == 0 { continue }
             workers.push(Worker::new(id, Arc::clone(&reciever)));
@@ -59,8 +62,8 @@ impl ThreadPool
         match self.sender.send(Message::NewJob(job))
         {
             Ok(_message) => { /* nothing to do */ }
-            Err(message) => { error!(format!("Something went wrong in threading.rs:ThreadPool:run (line 62). 
-             Here is the rust error message: \n {}", message)) }
+            Err(message) => { error!("Something went wrong in threading.rs:ThreadPool:run (line 62). 
+             Here is the rust error message: \n {}", message) }
         }
     }
 }
@@ -76,7 +79,7 @@ impl Drop for ThreadPool
 
         for worker in &mut self.workers
         {
-            info!(format!("Shutting down worker thread #{}", worker.id));
+            info!("Shutting down worker thread #{}", worker.id);
 
             // This is an if statement, meaning its possible to de-nest this.
             // I couldn't figure it out.
@@ -114,9 +117,9 @@ impl Worker
             {
                 Message::NewJob(job) => 
                 {
-                    log!(format!("Worker #{id} got a job!"));
+                    trace!("Worker #{id} got a job!");
                     job();
-                    log!(format!("Worker #{id} finished its job!"))
+                    trace!("Worker #{id} finished its job!");
                 }
                 Message::Terminate => { break; }
             }

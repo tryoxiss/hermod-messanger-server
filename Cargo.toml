@@ -19,6 +19,11 @@ path = "source/main.rs"
 aes-gcm-siv = "0.11.1"  # Apache 2.0  OR  MIT
 config = "0.13.1"       # Apache 2.0  OR  MIT
 
+
+
+log = "0.4"
+log4rs = "1"
+
 # FOR CONFIG: 
 # INI Format
 # `hermod.config`
