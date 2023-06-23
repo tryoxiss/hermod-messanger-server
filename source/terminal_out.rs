@@ -1,61 +1,61 @@
-macro_rules! trace 
-{
-    ($message:expr) => 
-    {
-        eprintln!("\x1b[92m\x1b[1m         Log\x1b[0m {}", $message);
-    }
-}
-
-macro_rules! info 
-{
-    ($message:expr) => 
-    {
-        eprintln!("\x1b[96m\x1b[1m        Info\x1b[0m {}", $message);
-    }
-}
-
-// macro_rules! waiting 
+// macro_rules! trace
 // {
-//     ($cycles:expr) => 
+//     ($message:expr) =>
+//     {
+//         eprintln!("\x1b[92m\x1b[1m         Log\x1b[0m {}", $message);
+//     }
+// }
+
+// macro_rules! info
+// {
+//     ($message:expr) =>
+//     {
+//         eprintln!("\x1b[96m\x1b[1m        Info\x1b[0m {}", $message);
+//     }
+// }
+
+// macro_rules! waiting
+// {
+//     ($cycles:expr) =>
 //     {
 //         eprintln!("\x1b[96m\x1b[1m     Waiting\x1b[0m for input ({}) ...\x1b[F", $cycles)
 //     }
 // }
 
-macro_rules! warn 
-{
-    ($message:expr) => 
-    {
-        eprintln!("\x1b[93m\x1b[1m     Warning\x1b[0m {}", $message);
-    }
-}
+// macro_rules! warn
+// {
+//     ($message:expr) =>
+//     {
+//         eprintln!("\x1b[93m\x1b[1m     Warning\x1b[0m {}", $message);
+//     }
+// }
 
-macro_rules! error 
-{
-    ($message:expr) => 
-    {
-        eprintln!("\x1b[91m\x1b[1m       Error\x1b[0m {}", $message);
-    }
-}
+// macro_rules! error
+// {
+//     ($message:expr) =>
+//     {
+//         eprintln!("\x1b[91m\x1b[1m       Error\x1b[0m {}", $message);
+//     }
+// }
 
-macro_rules! fatal 
+macro_rules! fatal
 {
-    // Codes: 
+    // Codes:
     //
     // 910 = unknown modification
     // 911 = Program Binary Modified
     // 912 = Config File Modified During Runtime
     // 913 = Hardware Modified During Runtime
-    // 
+    //
     // 920 = Unknown Invalid Setup
     // 921 = Config Invalid
     // 922 = Config Contradctary
     // 923 = Server Power Out
-    // 
+    //
     // 930 = Unknown Program Bug
     // 931 = Data Injection Error
-    // 932 = Main Thread Paniced 
-    ($code:expr, $message:expr) => 
+    // 932 = Main Thread Paniced
+    ($code:expr, $message:expr) =>
     {
         println!("\x1b[101m\x1b[30m\x1b[1m Panicking! \x1b[0m\x1b[91m\x1b[1m Something happened that caused the program to panic");
         println!("\x1b[101m\x1b[30m\x1b[1m   Message: \x1b[0m\x1b[01m {}\x1b[0m {}", $code.to_string(), $message);
@@ -121,7 +121,7 @@ mod tests
     {
         eprintln!("This is a VISUAL TEST!");
         eprintln!("Please make sure that the ends of the TITLE lines up evenly with all of the items.");
-        
+
         eprintln!("\x1b[92m\x1b[1m       Title\x1b[0m The content message");
 
         log!("Log");

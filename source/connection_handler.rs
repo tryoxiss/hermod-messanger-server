@@ -28,6 +28,9 @@ use std::io::prelude::*;
 
 pub fn handle_connection(mut stream: TcpStream)
 {
+    warn!("The `handle_connection` TCP Stream buffer is a defined size 
+             of 1024 bytes. This should be able to handle a stream 
+             of any size.");
     let mut buffer = [0; 1024];
 
     stream.read(&mut buffer).unwrap();

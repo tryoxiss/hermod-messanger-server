@@ -11,8 +11,6 @@ use std::net::TcpListener;
 
 mod connection_handler;
 
-// {format!( {{h(\x1b[1m {l})}:>} ) \x1b[0m {m}{n}
-
 fn main()
 {
     log4rs::init_file("logging_config.yml", Default::default()).unwrap();
@@ -20,7 +18,7 @@ fn main()
     trace!("detailed tracing info");
     debug!("debug info");
     info!("relevant general info");
-    warn!("warning this program doesn't do much");
+    warn!("warning you unwrap too much");
     error!("error message here");
 
     info!("This is the program speaking now!");
@@ -28,6 +26,9 @@ fn main()
     info!("Initialising the Master Process");
 
     // fatal!(901, "I had bad grammer and now I need to fix it");
+
+    // Define an automatic-restart threashold. 
+    let max_requests: usize = usize::MAX;
 
     verify_file_integrity();
     check_updates();
@@ -45,7 +46,7 @@ fn main()
     let thread_pool = ThreadPool::new(4);
 
     // This automatically persists indefintely.
-    for stream in network_listener.incoming() //.take(2) // test shutdown
+    for stream in network_listener.incoming().take(max_requests) // test shutdown
     {
         let stream = stream.unwrap();
 
@@ -62,7 +63,8 @@ fn main()
 
 fn verify_file_integrity()
 {
-    warn!("The function `verify_file_integrity()` currently has no functionality.");
+    warn!("The function `verify_file_integrity()` currently has 
+             no functionality.");
     trace!("Veryfying file integrity")
 }
 

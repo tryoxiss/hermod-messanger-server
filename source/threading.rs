@@ -12,16 +12,16 @@ pub struct ThreadPool
 
 type Job = Box<dyn FnOnce() + Send + 'static>;
 
-enum Message { 
+enum Message {
     NewJob(Job),
     Terminate,
 }
 
-impl ThreadPool 
+impl ThreadPool
 {
     /// Create a new ThreadPool
     /// The size is the number of threads in the ThreadPool
-    /// 
+    ///
     /// This function will panic if threads is 0.
     pub fn new(threads: usize) -> ThreadPool
     {
@@ -35,7 +35,7 @@ impl ThreadPool
         for id in 0..threads + 1
         {
             // Worker numbers get printed out and written to traces,
-            // so we want them to start at 1, not 0. 
+            // so we want them to start at 1, not 0.
             if id == 0 { continue }
             workers.push(Worker::new(id, Arc::clone(&reciever)));
         }
@@ -52,17 +52,17 @@ impl ThreadPool
 
         // Apparently this is a safe unwrap: https://youtu.be/1AamFJGAE8E?t=1028
         // Can someone confirm?
-        // 
+        //
         // My understanding is it returens a result type, which would error if a
         // thread shuts down. But since threads don't shut down unless something
-        // bad happened, its fine. 
-        // 
+        // bad happened, its fine.
+        //
         // I still think we should type match to show that its intentional at
-        // least. 
+        // least.
         match self.sender.send(Message::NewJob(job))
         {
             Ok(_message) => { /* nothing to do */ }
-            Err(message) => { error!("Something went wrong in threading.rs:ThreadPool:run (line 62). 
+            Err(message) => { error!("Something went wrong in threading.rs:ThreadPool:run (line 62).
              Here is the rust error message: \n {}", message) }
         }
     }
@@ -70,7 +70,7 @@ impl ThreadPool
 
 impl Drop for ThreadPool
 {
-    fn drop(&mut self) 
+    fn drop(&mut self)
     {
         for _ in &self.workers
         {
@@ -96,7 +96,13 @@ struct Worker
     thread: Option<thread::JoinHandle<()>>
 }
 
-impl Worker 
+enum Continue
+{
+    Yes,
+    No
+}
+
+impl Worker
 {
     fn new(id: usize, reciever: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker
     {
@@ -105,26 +111,43 @@ impl Worker
             // this is absolutely disgusting.
 
             // Also these unwraps are also apparently safe?
-            // Can someone confirm? 
+            // Can someone confirm?
             // source: https://youtu.be/1AamFJGAE8E?t=1063
             let message = reciever
                 .lock()
                 .unwrap()
                 .recv()
                 .unwrap();
-            
-            match message
+
+            let keep_working = Worker::work(id, message);
+
+            match keep_working
             {
-                Message::NewJob(job) => 
-                {
-                    trace!("Worker #{id} got a job!");
-                    job();
-                    trace!("Worker #{id} finished its job!");
-                }
-                Message::Terminate => { break; }
+                Continue::Yes => {  }
+                Continue::No  => { break; }
             }
         });
 
         Worker { id: id, thread: Some(thread) }
+    }
+
+    fn work(id: usize, message: Message) -> Continue
+    {
+        // This is an absolutely disgusting amount of nesting ...
+        match message
+        {
+            Message::NewJob(job) =>
+            {
+                debug!("Worker #{id} got a job!");
+                job();
+                trace!("Worker #{id} finished its job!");
+
+                return Continue::Yes;
+            }
+            Message::Terminate =>
+            {
+                return Continue::No;
+            }
+        }
     }
 }
