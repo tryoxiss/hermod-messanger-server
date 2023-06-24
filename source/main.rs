@@ -2,7 +2,8 @@ use log::{debug, error, info, trace, warn};
 use log4rs;
 
 // #[macro_use]
-// mod terminal_out;
+mod terminal_out;
+use terminal_out::ask_yes_no;
 
 mod threading;
 use threading::ThreadPool;
@@ -22,6 +23,8 @@ fn main()
     error!("error message here");
 
     info!("This is the program speaking now!");
+
+    log::info!("Mewo");
 
     info!("Initialising the Master Process");
 
@@ -63,6 +66,33 @@ fn main()
 
 fn verify_file_integrity()
 {
+    // get repo from config files
+    // get SHA-2 hash of files
+    // Get desired SHA-2 hash from repo
+    // compare them
+
+    let our_hash = "Good2Go";
+    let server_hash = "NotGood2Go";
+
+    info!("Checking file integrity ...");
+    if our_hash == server_hash
+    {
+        info!("File integrity good!");
+    }
+    else
+    {
+        error!("File hashes do not match. If you just set this server up, 
+             check that the repo listed in your `bonfire.config` file is 
+             the same as where you got your source code from. (If you 
+             used an install script, it's most likely correct)
+             
+             if it is not a fresh install, this likely means your files 
+             are either corrupted or tampered with!");
+
+        let fix_files = ask_yes_no("Would you like to fix your files?");
+        // todo!("Implement this!");
+    }
+
     warn!("The function `verify_file_integrity()` currently has 
              no functionality.");
     trace!("Veryfying file integrity")
@@ -70,6 +100,18 @@ fn verify_file_integrity()
 
 fn check_updates()
 {
+    // get repo from config file
+    // get version from config file
+    // Get desired hash from repo
+    // get version from repo
+    // compare version
+    // if version is less than (patch, A.A.THIS): 
+    //      Suggest Update
+    // if version is less than (secrity A.A.THIS AND A.A.CURRENT_VERSION is DEPRECATED or YANKED):
+    //      *strongly* suggest update
+    // if version is less than (major): 
+    //      suggest update when next doing major admin stuff/setting up new servers
+
     warn!("The function `check_updaes()` currently has no functionality.");
     trace!("Checking for Updates");
 }
