@@ -180,3 +180,75 @@ impl ResponsePacket
         // return response_header.as_bytes() + response_variables.as_bytes() + response_message.as_bytes();
     }
 }
+
+// 
+// Tests!
+// 
+
+#[cfg(test)]
+mod tests
+{
+    use log::trace;
+
+    use crate::connection_handler::ResponsePacket;
+    use crate::connection_handler::HeaderFlag;
+
+    #[test]
+    fn no_header_variables()
+    {
+        let response_variables: Vec<HeaderFlag> = vec![];
+
+        assert_eq!(
+            "dim/1.0 200 Serving\n\n---\nTest content\n---",
+            ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
+        )
+    }
+
+    // #[test]
+    // fn with_header_variables()
+    // {
+    //     let response_variables: Vec<HeaderFlag> = vec![];
+
+    //     assert_eq!(
+    //         "dim/1.0 200 Serving\n\n---\nTest content\n---",
+    //         ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
+    //     )
+    // }
+
+    // #[test]
+    // fn all_header_variables()
+    // {
+    //     let response_variables: Vec<HeaderFlag> = vec![];
+
+    //     assert_eq!(
+    //         "dim/1.0 200 Serving\n\n---\nTest content\n---",
+    //         ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
+    //     )
+    // }
+
+    // #[test]
+    // fn encryption_header_variables()
+    // {
+    //     let response_variables: Vec<HeaderFlag> = vec![];
+
+    //     assert_eq!(
+    //         "dim/1.0 200 Serving\n\n---\nTest content\n---",
+    //         ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
+    //     )
+    // }
+
+    // extern crate test;
+    // use test::bench;
+    // use test::Bencher;
+
+    // #[bench]
+    // fn _header_variables(benchmark: &mut Bencher)
+    // {
+    //     benchmark.iter(||
+    //     {
+    //         let response_variables: Vec<HeaderFlag> = vec![];
+
+    //         ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
+    //     })
+    // }
+}

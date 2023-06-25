@@ -151,22 +151,3 @@ macro_rules! fatal
         std::process::exit($code);
     }
 }
-
-#[cfg(test)]
-mod tests
-{
-    #[test]
-    fn test_alignment()
-    {
-        eprintln!("This is a VISUAL TEST!");
-        eprintln!("Please make sure that the ends of the TITLE lines up evenly with all of the items.");
-
-        eprintln!("\x1b[92m\x1b[1m       Title\x1b[0m The content message");
-
-        log!("Log");
-        info!("Info");
-        warning!("Warning");
-        error!("Error");
-        fatal!(100, "Fatal");
-    }
-}
