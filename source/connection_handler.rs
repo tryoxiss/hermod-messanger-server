@@ -81,7 +81,13 @@ pub fn handle_connection(mut stream: TcpStream)
     let mut response_variables: Vec<HeaderFlag> = vec![];
 
     response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
-    response_variables.push(HeaderFlag::new(String::from("you_are_cute"), String::from("t")));
+    response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
+    response_variables.push(HeaderFlag::new(String::from("author"), String::from("8d1a0cfb13df4ca3bdb0e912be01863b")));
+    response_variables.push(HeaderFlag::new(String::from("target"), String::from("none")));
+    response_variables.push(HeaderFlag::new(String::from("channel"), String::from("20026f0a1c484f95a0063d148c8898f9")));
+    response_variables.push(HeaderFlag::new(String::from("channel_type"), String::from("text_message")));
+    response_variables.push(HeaderFlag::new(String::from("message_type"), String::from("text")));
+    response_variables.push(HeaderFlag::new(String::from("time_sent"), String::from("2023-06-25 12:25:22")));
 
     // DIM
     let response = ResponsePacket::create(
@@ -91,14 +97,18 @@ pub fn handle_connection(mut stream: TcpStream)
         response_variables, 
         String::from("Monically laughs at the futility of life. Oh also I got DIM packets sorta being contructed!"));
 
-//     // DIM
-//     let response = format!(
-// "dim/1.0 200 Serving\nHeaderFlag=True;\n---
-// Bufer_Length: {};
-// Packet_Length: {};
-// ---", 
-//     buffer.len(),
-//     "Unknown");
+    // response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
+    // response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
+    // response_variables.push(HeaderFlag::new(String::from("message_type"), String::from("pong")));
+    // response_variables.push(HeaderFlag::new(String::from("time_sent"), String::from("2023-06-25 12:29:22.")));
+
+    // // DIM
+    // let response = ResponsePacket::create(
+    //     String::from("1.0"),
+    //     200,
+    //     String::from("Pong"), 
+    //     response_variables, 
+    //     String::from("Process Took: <N>ns"));
 
     stream.write(response.as_bytes()).unwrap();
 
@@ -158,7 +168,7 @@ impl ResponsePacket
         header_variables: Vec<HeaderFlag>,
         content: String) -> String
     {
-        let response_header = format!("dim/{version} {} {response_message}\n", response_code.to_string());
+        let response_header = format!("dim/{version} {code} {response_message}\n", code=response_code.to_string());
         let mut response_variables: String = String::from("");
 
         for variable in header_variables.iter()
@@ -242,7 +252,7 @@ mod tests
     // use test::Bencher;
 
     // #[bench]
-    // fn _header_variables(benchmark: &mut Bencher)
+    // fn bench_header_variables(benchmark: &mut Bencher)
     // {
     //     benchmark.iter(||
     //     {
