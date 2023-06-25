@@ -24,8 +24,6 @@ fn main()
 
     info!("This is the program speaking now!");
 
-    log::info!("Mewo");
-
     info!("Initialising the Master Process");
 
     // fatal!(901, "I had bad grammer and now I need to fix it");
@@ -72,7 +70,7 @@ fn verify_file_integrity()
     // compare them
 
     let our_hash = "Good2Go";
-    let server_hash = "NotGood2Go";
+    let server_hash = "Good2Go";
 
     info!("Checking file integrity ...");
     if our_hash == server_hash
