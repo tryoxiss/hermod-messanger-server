@@ -15,7 +15,6 @@ Namely we test it on CentOS, Unubtu Server, Debian, Fedora Server, and Rasberry 
 | OS       | Version | Support   | 
 | -------- | ------- | --------- |
 | Debian   | 12      | Very Good |
-| CentOS Linux   | 8 | Very Good |
 | Rasberry Pi OS | ??? | Very Good |
 | Fedora Server | 38 | Good |
 | Ubuntu Server | 22.04.2 LTS | Good |
