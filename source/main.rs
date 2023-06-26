@@ -41,7 +41,13 @@ fn main()
     check_updates();
 
     trace!("Initalising TCP Stream");
-    let network_listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+
+    let listner_ip = "127.0.0.1";
+    let listner_port = "7878";
+
+    info!("Listening to \x1b[1m{listner_ip}:{listner_port}");
+
+    let network_listener = TcpListener::bind(format!("{listner_ip}:{listner_port}")).unwrap();
 
     warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
              is actually built in TLS! This is just for testing!");

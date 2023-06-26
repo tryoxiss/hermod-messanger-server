@@ -26,6 +26,11 @@ use log4rs;
 use std::net::TcpStream;
 use std::io::prelude::*;
 
+use aes_gcm_siv::{
+    aead::{Aead, KeyInit, OsRng},
+    Aes256GcmSiv, Nonce // Or `Aes128GcmSiv`
+};
+
 pub fn handle_connection(mut stream: TcpStream)
 {
     // [0; u16::MAX] (we just cant put a u16 in there because type mismacth.)
@@ -77,6 +82,15 @@ pub fn handle_connection(mut stream: TcpStream)
 
     // Valid HTTP
     // let response = format!("HTTP/1.1 200 OK\r\n\r\n Connection established! \n Bufer_Length: {}; \n Packet_Length: {};", buffer.len(), "Unknown");
+
+    let key = Aes256GcmSiv::generate_key(&mut OsRng);
+    let cipher = Aes256GcmSiv::new(&key);
+    let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
+    let ciphertext: Vec<u8> = cipher.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
+    let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
+    // assert_eq!(&plaintext.unwrap(), b"plaintext message");
+
+    info!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
 
     let mut response_variables: Vec<HeaderFlag> = vec![];
 
