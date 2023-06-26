@@ -46,6 +46,9 @@ fn main()
     warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
              is actually built in TLS! This is just for testing!");
     warn!("network_lister is bound to an UNWRAPPED VALUE!");
+
+    // ACTUALLY it seems Aes-Gcm-Siv handles all this for us!
+    // ---
     // We can use a CSPRNG or Crypographically Secure Psudo-Random Number
     // Generator for encryption values. We will use ChaCha20-poly1305 since
     // - It can produce 1.8gb of randomness every seccond, making it far from
@@ -57,6 +60,7 @@ fn main()
     // [ChaCha20Analysis]: https://datatracker.ietf.org/doc/html/rfc7539#section-1
     // (Same as Above)   : https://www.cryptrec.go.jp/exreport/cryptrec-ex-2601-2016.pdf
     // (Summary)         : https://en.wikipedia.org/wiki/ChaCha20-Poly1305
+    // ---
 
     // main portion
 
