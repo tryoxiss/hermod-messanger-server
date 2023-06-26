@@ -16,9 +16,7 @@ Safe: ✅
 
 random/inconsistant: 🎲
 
-Optimised: 
-    fast: ⚡ 
-    very fast: 🚀
+Optimised/Fast: 🚀
     
     
 EMOJIS FOR CODE COMMITS: 

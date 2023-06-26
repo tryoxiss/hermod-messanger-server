@@ -32,6 +32,12 @@ fn main()
     let max_requests: usize = usize::MAX;
 
     verify_file_integrity();
+
+    // Store these values. 
+    // When someone logs on/connects and the server is running a version with
+    // a known security vulnerability (manual override), or running a version
+    // nearing the end of support, send a notification/system message
+    // telling them. 
     check_updates();
 
     trace!("Initalising TCP Stream");
