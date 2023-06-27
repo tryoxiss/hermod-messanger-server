@@ -12,6 +12,10 @@ use std::net::TcpListener;
 
 mod connection_handler;
 
+static CODE_START: &str = "\x1b[40m";
+static CODE_END: &str   = "\x1b[0m";
+static INDENT: &str     = "             ";
+
 fn main()
 {
     log4rs::init_file("log4rs.yml", Default::default()).unwrap();
@@ -102,17 +106,17 @@ fn verify_file_integrity()
     info!("Checking file integrity ...");
     if local_software_hash == server_match_hash
     {
-        info!("\rFile integrity good!");
+        info!("File integrity good!");
     }
     else
     {
         error!("File hashes do not match. If you just set this server up, 
-             check that the repo listed in your `bonfire.config` file is 
-             the same as where you got your source code from. (If you 
-             used an install script, it's most likely correct)
-             
-             if it is not a fresh install, this likely means your files 
-             are either corrupted or tampered with!");
+{INDENT}check that the repo listed in your bonfire.config` file is 
+{INDENT}the same as where you got your source code from. (If you 
+{INDENT}used an install script, it's most likely correct)
+{INDENT}
+{INDENT}if it is not a fresh install, this likely means your files 
+{INDENT}are either corrupted or tampered with!");
 
         let fix_files = ask_yes_no("Would you like to fix your files?");
         // todo!("Implement this!");
@@ -123,8 +127,8 @@ fn verify_file_integrity()
         }
     }
 
-    warn!("The function `verify_file_integrity()` currently has 
-             no functionality.");
+    warn!("The function {CODE_START}verify_file_integrity(){CODE_END} currently has 
+{INDENT}no functionality.");
     trace!("Veryfying file integrity")
 }
 

@@ -4,6 +4,8 @@ use std::sync::{mpsc, Arc, Mutex};
 use log::{debug, error, info, trace, warn};
 use log4rs;
 
+use crate::{CODE_END, CODE_START};
+
 pub struct ThreadPool
 {
     workers: Vec<Worker>,
@@ -62,7 +64,7 @@ impl ThreadPool
         match self.sender.send(Message::NewJob(job))
         {
             Ok(_message) => { /* nothing to do */ }
-            Err(message) => { error!("Something went wrong in threading.rs:ThreadPool:run (line 62).
+            Err(message) => { error!("Something went wrong in {CODE_START}threading.rs:ThreadPool:run{CODE_END} (line 62).
              Here is the rust error message: \n {}", message) }
         }
     }
