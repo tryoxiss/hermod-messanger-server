@@ -81,7 +81,7 @@ fn main()
     warn!("When a payload is too lagre (over {} bytes), we simply 
 {INDENT}drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
 
-    info!("Initation completed! Your server is now live!");
+    info!("🚀 Initation completed! Your server is now live! 🎉");
 
     // This automatically persists indefintely.
     for stream in network_listener.incoming().take(max_requests) // test shutdown
@@ -120,31 +120,31 @@ fn main()
             continue;
         }
 
-        if packets_handled == 1
+        if packets_handled == 1_000
         {
-            info!("GG! You just handled {CODE_START}1,000{ENDBLOCK} packets this session!");
+            info!("🎉 You just handled {CODE_START}1,000{ENDBLOCK} packets this session!");
         }
 
-        if packets_handled == 1
+        if packets_handled == 100_000
         {
-            info!("GG! You just handled {CODE_START}100,000{ENDBLOCK} packets this session!
+            info!("🎉 You just handled {CODE_START}100,000{ENDBLOCK} packets this session!
 {INDENT}You should probably restart it soon");
         }
 
-        if packets_handled == 1
+        if packets_handled == 1_000_000
         {
             warn!("Your server just handled {CODE_START}1,000,000{ENDBLOCK} packets this session!
 {INDENT}(IT is BEGGING you to RESTART IT!)");
         }
 
-        if packets_handled == 1
+        if packets_handled == 100_000_000
         {
             warn!("Your server just handled {CODE_START}100,000,000{ENDBLOCK} packets this session... 
 {INDENT}(Like seriously, please. This is the software authors. This is more
 {INDENT} way too much!)");
         }
 
-        if packets_handled == 1
+        if packets_handled == 200_000_000
         {
             warn!("Your server just handled {CODE_START}200,000,000{ENDBLOCK} packets this session... 
 {INDENT}A notification has been sent to your users and the server will 
