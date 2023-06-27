@@ -51,11 +51,11 @@ fn main()
 
     info!("Listening to \x1b[4m{listner_ip}:{listner_port}\x1b[0m");
 
+    warn!("{CODE_START}network_listner{CODE_END} is bound to an UNWRAPPED VALUE!");
     let network_listener = TcpListener::bind(format!("{listner_ip}:{listner_port}")).unwrap();
 
     warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
              is actually built in TLS! This is just for testing!");
-    warn!("network_lister is bound to an UNWRAPPED VALUE!");
 
     // ACTUALLY it seems Aes-Gcm-Siv handles all this for us!
     // ---
@@ -77,15 +77,30 @@ fn main()
     let mut packets_handled: u128 = 0;
     let thread_pool = ThreadPool::new(4);
 
+
+    warn!("When a payload is too lagre (over {} bytes), we simply 
+{INDENT}drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
+
     // This automatically persists indefintely.
     for stream in network_listener.incoming().take(max_requests) // test shutdown
     {
-        let stream = stream.unwrap();
+        match &stream 
+        {
+            Ok(message) => { trace!("Stream is OK"); }
 
-        warn!("stream is bound to an UNWRAPPED VALUE!");
+            Err(error) =>
+            {
+                error!("TCP Stream is an {CODE_START}Err{CODE_END} type!! Something went
+{INDENT}terribly wrong! Attached is the compilers error
+{error}");
+                continue;
+            }
+        }
 
         packets_handled += 1;
-        thread_pool.run(|| { connection_handler::handle_connection(stream); });
+        // This .unwrap() is 100% safe, since we check if its an `Err` type 
+        // just above and if it is `continue;` the loop, skipping this block.
+        thread_pool.run(|| { connection_handler::handle_connection(stream.unwrap()); });
 
         trace!("{packets_handled} packets handled");
     }

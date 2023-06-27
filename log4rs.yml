@@ -17,6 +17,6 @@ appenders:
     #     encoder:
     #         pattern: "{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}"
 root:
-    level: trace
+    level: debug
     appenders:
         - my_stdout

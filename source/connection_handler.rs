@@ -31,6 +31,8 @@ use aes_gcm_siv::{
     Aes256GcmSiv, Nonce // Or `Aes128GcmSiv`
 };
 
+use crate::{CODE_END, CODE_START, INDENT};
+
 pub fn handle_connection(mut stream: TcpStream)
 {
     // [0; u16::MAX] (we just cant put a u16 in there because type mismacth.)
@@ -70,15 +72,26 @@ pub fn handle_connection(mut stream: TcpStream)
     // TODO: With this current implementation we simply drop extra bytes rather
     // than returning 411 Payload_Too_Large !!
 
-    warn!("When a payload is too lagre (over {} bytes), we simply 
-             drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
-
     let mut buffer = [0; 65_535];
 
     trace!("MEOW");
 
-    stream.read(&mut buffer).unwrap();
-    warn!("Stream is read and then unwrapped! Don't unwrap!");
+    match stream.read(&mut buffer)
+    {
+        Ok(message) => 
+        {
+            trace!("Stream Read Successfully");
+        }
+
+        Err(error) =>
+        {
+            error!("The TCP Stream read failed! 
+{INDENT}{CODE_START}connection_handler.rs::handle_connection(){CODE_END}
+{INDENT}Here we provide the compilers error:
+{error} ");
+            panic!("Why would the TCP stream flush panic !");
+        }
+    }
 
     // Valid HTTP
     // let response = format!("HTTP/1.1 200 OK\r\n\r\n Connection established! \n Bufer_Length: {}; \n Packet_Length: {};", buffer.len(), "Unknown");
@@ -90,7 +103,7 @@ pub fn handle_connection(mut stream: TcpStream)
     let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
     // assert_eq!(&plaintext.unwrap(), b"plaintext message");
 
-    info!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
+    // trace!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
 
     let mut response_variables: Vec<HeaderFlag> = vec![];
 
@@ -124,12 +137,39 @@ pub fn handle_connection(mut stream: TcpStream)
     //     response_variables, 
     //     String::from("Process Took: <N>ns"));
 
-    stream.write(response.as_bytes()).unwrap();
+    match stream.write(response.as_bytes())
+    {
+        Ok(message) =>
+        {
+            trace!("Wrote to the TCP Stream");
+        }
 
-    warn!("Stream is written to and then unwrapped! Don't unwrap!");
+        Err(error) =>
+        {
+            error!("The TCP Stream write failed! 
+{INDENT}{CODE_START}connection_handler.rs::handle_connection(){CODE_END}
+{INDENT}Here we provide the compilers error:
+{error} ");
+            panic!("Why would the TCP stream flush panic !");
+        }
+    }
 
-    stream.flush().unwrap();
-    warn!("Stream flush is unwrapped! Don't unwrap!");
+    match stream.flush()
+    {
+        Ok(message) =>
+        {
+            trace!("TCP Stream Flushed");
+        }
+
+        Err(error)  =>
+        {
+            error!("The TCP Stream flush failed! 
+{INDENT}{CODE_START}connection_handler.rs::handle_connection(){CODE_END}
+{INDENT}Here we provide the compilers error:
+{error} ");
+            panic!("Why would the TCP stream flush panic !");
+        }
+    }
 }
 
 #[derive(Debug)]
