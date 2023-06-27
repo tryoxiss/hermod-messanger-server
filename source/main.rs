@@ -75,13 +75,13 @@ fn verify_file_integrity()
     // Get desired SHA-2 hash from repo
     // compare them
 
-    let our_hash = "Good2Go";
-    let server_hash = "Good2Go";
+    let local_software_hash = "Good2Go";
+    let server_match_hash = "Good2Go";
 
     info!("Checking file integrity ...");
-    if our_hash == server_hash
+    if local_software_hash == server_match_hash
     {
-        info!("File integrity good!");
+        info!("\rFile integrity good!");
     }
     else
     {
@@ -95,6 +95,11 @@ fn verify_file_integrity()
 
         let fix_files = ask_yes_no("Would you like to fix your files?");
         // todo!("Implement this!");
+
+        if fix_files 
+        {
+            info!("Fixing Files <NOT IMPLEMENTED YET>");
+        }
     }
 
     warn!("The function `verify_file_integrity()` currently has 
