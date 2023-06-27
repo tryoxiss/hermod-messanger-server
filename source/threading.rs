@@ -142,7 +142,7 @@ impl Worker
         {
             Message::NewJob(job) =>
             {
-                debug!("Worker #{id} got a job!");
+                trace!("Worker #{id} got a job!");
                 job();
                 trace!("Worker #{id} finished its job!");
 
