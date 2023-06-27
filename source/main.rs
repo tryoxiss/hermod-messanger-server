@@ -13,7 +13,7 @@ use std::net::TcpListener;
 mod connection_handler;
 
 static CODE_START: &str = "\x1b[40m";
-static CODE_END: &str   = "\x1b[0m";
+static ENDBLOCK: &str   = "\x1b[0m";
 static INDENT: &str     = "             ";
 
 fn main()
@@ -51,7 +51,7 @@ fn main()
 
     info!("Listening to \x1b[4m{listner_ip}:{listner_port}\x1b[0m");
 
-    warn!("{CODE_START}network_listner{CODE_END} is bound to an UNWRAPPED VALUE!");
+    warn!("{CODE_START}network_listner{ENDBLOCK} is bound to an UNWRAPPED VALUE!");
     let network_listener = TcpListener::bind(format!("{listner_ip}:{listner_port}")).unwrap();
 
     warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
@@ -90,7 +90,7 @@ fn main()
 
             Err(error) =>
             {
-                error!("TCP Stream is an {CODE_START}Err{CODE_END} type!! Something went
+                error!("TCP Stream is an {CODE_START}Err{ENDBLOCK} type!! Something went
 {INDENT}terribly wrong! Attached is the compilers error
 {error}");
                 continue;
@@ -103,6 +103,51 @@ fn main()
         thread_pool.run(|| { connection_handler::handle_connection(stream.unwrap()); });
 
         debug!("{packets_handled} packets handled");
+
+
+        // This block is cute messages based on your handled packets. 
+        // May remove since its a lot of IF's for every packet.
+
+        // this is so incredibvly ugly
+        if packets_handled != 1000 ||
+           packets_handled != 100_000 ||
+           packets_handled != 1_000_000 ||
+           packets_handled != 100_000_000 ||
+           packets_handled != 200_000_000
+        {
+            continue;
+        }
+
+        if packets_handled == 1
+        {
+            info!("GG! You just handled {CODE_START}1,000{ENDBLOCK} packets this session!");
+        }
+
+        if packets_handled == 1
+        {
+            info!("GG! You just handled {CODE_START}100,000{ENDBLOCK} packets this session!
+{INDENT}You should probably restart it soon");
+        }
+
+        if packets_handled == 1
+        {
+            warn!("Your server just handled {CODE_START}1,000,000{ENDBLOCK} packets this session!
+{INDENT}(IT is BEGGING you to RESTART IT!)");
+        }
+
+        if packets_handled == 1
+        {
+            warn!("Your server just handled {CODE_START}100,000,000{ENDBLOCK} packets this session... 
+{INDENT}(Like seriously, please. This is the software authors. This is more
+{INDENT} way too much!)");
+        }
+
+        if packets_handled == 1
+        {
+            warn!("Your server just handled {CODE_START}200,000,000{ENDBLOCK} packets this session... 
+{INDENT}A notification has been sent to your users and the server will 
+{INDENT}restart in 45 minutes.");
+        }
     }
 
     info!("Begining server shutdown ...");
@@ -142,7 +187,7 @@ fn verify_file_integrity()
         }
     }
 
-    warn!("The function {CODE_START}verify_file_integrity(){CODE_END} currently has 
+    warn!("The function {CODE_START}verify_file_integrity(){ENDBLOCK} currently has 
 {INDENT}no functionality.");
     trace!("Veryfying file integrity")
 }
@@ -161,6 +206,6 @@ fn check_updates()
     // if version is less than (major): 
     //      suggest update when next doing major admin stuff/setting up new servers
 
-    warn!("The function {CODE_START}check_updaes(){CODE_END} currently has no functionality.");
+    warn!("The function {CODE_START}check_updaes(){ENDBLOCK} currently has no functionality.");
     trace!("Checking for Updates");
 }

@@ -31,7 +31,7 @@ use aes_gcm_siv::{
     Aes256GcmSiv, Nonce // Or `Aes128GcmSiv`
 };
 
-use crate::{CODE_END, CODE_START, INDENT};
+use crate::{ENDBLOCK, CODE_START, INDENT};
 
 pub fn handle_connection(mut stream: TcpStream)
 {
@@ -86,7 +86,7 @@ pub fn handle_connection(mut stream: TcpStream)
         Err(error) =>
         {
             error!("The TCP Stream read failed! 
-{INDENT}{CODE_START}connection_handler.rs::handle_connection(){CODE_END}
+{INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
 {INDENT}Here we provide the compilers error:
 {error} ");
             panic!("Why would the TCP stream flush panic !");
@@ -147,7 +147,7 @@ pub fn handle_connection(mut stream: TcpStream)
         Err(error) =>
         {
             error!("The TCP Stream write failed! 
-{INDENT}{CODE_START}connection_handler.rs::handle_connection(){CODE_END}
+{INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
 {INDENT}Here we provide the compilers error:
 {error} ");
             panic!("Why would the TCP stream flush panic !");
@@ -164,7 +164,7 @@ pub fn handle_connection(mut stream: TcpStream)
         Err(error)  =>
         {
             error!("The TCP Stream flush failed! 
-{INDENT}{CODE_START}connection_handler.rs::handle_connection(){CODE_END}
+{INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
 {INDENT}Here we provide the compilers error:
 {error} ");
             panic!("Why would the TCP stream flush panic !");
