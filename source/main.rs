@@ -161,6 +161,6 @@ fn check_updates()
     // if version is less than (major): 
     //      suggest update when next doing major admin stuff/setting up new servers
 
-    warn!("The function `check_updaes()` currently has no functionality.");
+    warn!("The function {CODE_START}check_updaes(){CODE_END} currently has no functionality.");
     trace!("Checking for Updates");
 }
