@@ -10,6 +10,9 @@ use threading::ThreadPool;
 
 use std::net::TcpListener;
 
+use std::time::Duration;
+use std::thread;
+
 mod connection_handler;
 
 static CODE_START: &str = "\x1b[40m";
@@ -18,6 +21,8 @@ static INDENT: &str     = "             ";
 
 fn main()
 {
+    info!("Initalising Program");
+
     log4rs::init_file("log4rs.yml", Default::default()).unwrap();
 
     trace!("detailed tracing info");
@@ -27,8 +32,6 @@ fn main()
     error!("error message here");
 
     info!("This is the program speaking now!");
-
-    info!("Initialising the Master Process");
 
     // fatal!(901, "I had bad grammer and now I need to fix it");
 
@@ -43,6 +46,8 @@ fn main()
     // nearing the end of support, send a notification/system message
     // telling them. 
     check_updates();
+
+    info!("Launch Sequence Initated");
 
     trace!("Initalising TCP Stream");
 
@@ -81,7 +86,46 @@ fn main()
     warn!("When a payload is too lagre (over {} bytes), we simply 
 {INDENT}drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
 
-    info!("🚀 Initation completed! Your server is now live! 🎉");
+    let skip_launch_countdown = true;
+
+    // this is UGLY
+    if skip_launch_countdown == false
+    {
+        info!("Launching in \x1b[1m10{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 9{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 8{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 7{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 6{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 5{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 4{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 3{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 2{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 1{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+
+        info!("Launching in \x1b[1m 0{ENDBLOCK} secconds\x1b[A\r");
+        thread::sleep(Duration::from_secs(1));
+    }
+
+    info!("Initation completed! Your server is now live! 🎉");
 
     // This automatically persists indefintely.
     for stream in network_listener.incoming().take(max_requests) // test shutdown
