@@ -102,7 +102,7 @@ fn main()
         // just above and if it is `continue;` the loop, skipping this block.
         thread_pool.run(|| { connection_handler::handle_connection(stream.unwrap()); });
 
-        trace!("{packets_handled} packets handled");
+        debug!("{packets_handled} packets handled");
     }
 
     info!("Begining server shutdown ...");
