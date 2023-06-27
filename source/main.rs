@@ -86,42 +86,18 @@ fn main()
     warn!("When a payload is too lagre (over {} bytes), we simply 
 {INDENT}drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
 
-    let skip_launch_countdown = true;
+    // set count to 0 to skip launch sequence
+    let launch_countdown: u8 = 0;
 
-    // this is UGLY
-    if skip_launch_countdown == false
+    for count in 0..launch_countdown
     {
-        info!("Launching in \x1b[1m10{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 9{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 8{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 7{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 6{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 5{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 4{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 3{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 2{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 1{ENDBLOCK} secconds\x1b[A\r");
-        thread::sleep(Duration::from_secs(1));
-
-        info!("Launching in \x1b[1m 0{ENDBLOCK} secconds\x1b[A\r");
+        // The extra spaces get rid of trailing "s" characters when the digits drop.
+        // e.g.
+        // Launching in 10 secconds
+        // launching in 9 seccondss
+        //                        ^ Stayed because it was never overwritten.
+        // We only allow up to a count of 256 (u8), so two trailing spaces is enough.
+        info!("Launching in \x1b[1m{n}{ENDBLOCK} secconds  \x1b[A\r", n=launch_countdown-count);
         thread::sleep(Duration::from_secs(1));
     }
 
@@ -144,6 +120,7 @@ fn main()
         }
 
         packets_handled += 1;
+
         // This .unwrap() is 100% safe, since we check if its an `Err` type 
         // just above and if it is `continue;` the loop, skipping this block.
         thread_pool.run(|| { connection_handler::handle_connection(stream.unwrap()); });
