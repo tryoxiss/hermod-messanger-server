@@ -81,6 +81,8 @@ fn main()
     warn!("When a payload is too lagre (over {} bytes), we simply 
 {INDENT}drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
 
+    info!("Initation completed! Your server is now live!");
+
     // This automatically persists indefintely.
     for stream in network_listener.incoming().take(max_requests) // test shutdown
     {
