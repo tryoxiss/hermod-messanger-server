@@ -14,7 +14,7 @@ mod connection_handler;
 
 fn main()
 {
-    log4rs::init_file("logging_config.yml", Default::default()).unwrap();
+    log4rs::init_file("log4rs.yml", Default::default()).unwrap();
 
     trace!("detailed tracing info");
     debug!("debug info");
