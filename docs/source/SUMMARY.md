@@ -8,6 +8,7 @@
 - [Security](./security/index.md)
     - [Best Practices](./security/best_practices.md)
 - [Code Documentation](./code/index.md)
+    - [Software Stack](./code/software-stack.md)
 
 ---
 
