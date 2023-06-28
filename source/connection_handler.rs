@@ -130,10 +130,6 @@ pub fn handle_connection(mut stream: TcpStream)
     //     response_variables, 
     //     String::from("Process Took: <N>ns"));
 
-    warn!("We currently are encrypting with {CODE_START}OsRng{ENDBLOCK}, which is NOT 
-{INDENT}(NECESARLY) CRYPTOGRAPHICALLY SECURE!!
-{INDENT}It often is, but not always!");
-
     let key = Aes256GcmSiv::generate_key(&mut OsRng);
     // let cipher = Aes256GcmSiv::new(&key);
     // let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message

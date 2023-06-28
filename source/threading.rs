@@ -1,7 +1,7 @@
 use std::thread;
 use std::sync::{mpsc, Arc, Mutex};
 
-use log::{error, info, trace};
+use log::{trace, debug, error};
 // use log4rs;
 
 use crate::{ENDBLOCK, CODE_START};
@@ -81,7 +81,7 @@ impl Drop for ThreadPool
 
         for worker in &mut self.workers
         {
-            info!("Shutting down worker thread #{}", worker.id);
+            debug!("Shutting down worker thread #{}", worker.id);
 
             // This is an if statement, meaning its possible to de-nest this.
             // I couldn't figure it out.

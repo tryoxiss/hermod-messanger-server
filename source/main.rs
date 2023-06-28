@@ -37,6 +37,8 @@ fn main()
 
     // Define an automatic-restart threashold. 
     let max_requests: usize = usize::MAX;
+    // 3/4ths to restart
+    let warn_restart = (max_requests / 4) * 3;
 
     verify_file_integrity();
 
@@ -79,7 +81,7 @@ fn main()
 
     // main portion
 
-    let mut packets_handled: u128 = 0;
+    let mut packets_handled: usize = 0;
     let thread_pool = ThreadPool::new(4);
 
 
@@ -103,8 +105,12 @@ fn main()
 
     info!("Initation completed! Your server is now live! 🎉");
 
+    warn!("We currently are encrypting with {CODE_START}OsRng{ENDBLOCK}, which is NOT 
+{INDENT}(NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+{INDENT}It often is, but not always!");
+
     // This automatically persists indefintely.
-    for stream in network_listener.incoming().take(max_requests) // test shutdown
+    for stream in network_listener.incoming().take(max_requests)
     {
         match &stream 
         {
@@ -125,7 +131,31 @@ fn main()
         // just above and if it is `continue;` the loop, skipping this block.
         thread_pool.run(|| { connection_handler::handle_connection(stream.unwrap()); });
 
+        if packets_handled == warn_restart
+        {
+            info!("Your server has passed the imment restart threadhold.
+{INDENT}Your server will restart soon (ish). If this was too short, we
+{INDENT}reccommend incresing your max packet limit, and restarting 
+{INDENT}automatically at midnight in your timezone. A restart takes
+{INDENT}less than three minutes, leaving minimal downtime if you
+{INDENT}automate it.");
+        }
+        else if packets_handled == max_requests
+        {
+            info!("\x1b[01mYour server is now shutting down{ENDBLOCK}, since you reached your
+{INDENT}maximum packet limit. We will send a notification to you and your 
+{INDENT}servers usersers, informaing them of what happened.");
+        }
+        else if packets_handled >= warn_restart
+        {
+            info!("Plesae restart your server soon! It has handled more
+{INDENT}than 3/4ths of its single-run lifetime.
+{INDENT}({packets_handled} / {max_requests} packets handled)");
+        }
+
+
         debug!("{packets_handled} packets handled");
+        trace!("lifetime: {packets_handled} / {max_requests}");
     }
 
     info!("Begining server shutdown ...");
