@@ -1,4 +1,4 @@
-use log::{debug, error, info, trace, warn};
+use log::{trace, debug, info, warn, error};
 use log4rs;
 
 // #[macro_use]

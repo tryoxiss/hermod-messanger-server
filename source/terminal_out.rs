@@ -40,8 +40,7 @@
 
 use std::io;
 
-use log::{debug, error, info, trace, warn};
-use log4rs;
+use log::{trace, debug, info, warn, error};
 
 pub fn ask_yes_no(question: &str) -> bool
 {

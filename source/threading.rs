@@ -1,8 +1,8 @@
 use std::thread;
 use std::sync::{mpsc, Arc, Mutex};
 
-use log::{debug, error, info, trace, warn};
-use log4rs;
+use log::{error, info, trace};
+// use log4rs;
 
 use crate::{ENDBLOCK, CODE_START};
 
@@ -85,7 +85,8 @@ impl Drop for ThreadPool
 
             // This is an if statement, meaning its possible to de-nest this.
             // I couldn't figure it out.
-            if let Some(thread) = worker.thread.take() {
+            if let Some(thread) = worker.thread.take()
+            {
                 thread.join().unwrap();
             }
         }

@@ -20,8 +20,7 @@
 
 // use crate::terminal_out;
 
-use log::{debug, error, info, trace, warn};
-use log4rs;
+use log::{trace, debug, info, warn, error};
 
 use std::net::TcpStream;
 use std::io::prelude::*;
@@ -96,15 +95,6 @@ pub fn handle_connection(mut stream: TcpStream)
     // Valid HTTP
     // let response = format!("HTTP/1.1 200 OK\r\n\r\n Connection established! \n Bufer_Length: {}; \n Packet_Length: {};", buffer.len(), "Unknown");
 
-    let key = Aes256GcmSiv::generate_key(&mut OsRng);
-    let cipher = Aes256GcmSiv::new(&key);
-    let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
-    let ciphertext: Vec<u8> = cipher.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
-    let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
-    // assert_eq!(&plaintext.unwrap(), b"plaintext message");
-
-    // trace!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
-
     let mut response_variables: Vec<HeaderFlag> = vec![];
 
     response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
@@ -122,7 +112,8 @@ pub fn handle_connection(mut stream: TcpStream)
         200,
         String::from("Serving"), 
         response_variables, 
-        String::from("Monically laughs at the futility of life. Oh also I got DIM packets sorta being contructed!"));
+        String::from("Monically laughs at the futility of life. Oh also I got DIM packets sorta being contructed!")
+        );
 
     // response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
     // response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
@@ -137,7 +128,44 @@ pub fn handle_connection(mut stream: TcpStream)
     //     response_variables, 
     //     String::from("Process Took: <N>ns"));
 
-    match stream.write(response.as_bytes())
+    warn!("We currently are encrypting with {CODE_START}OsRng{ENDBLOCK}, which is NOT 
+{INDENT}CRYPTOGRAPHICALLY SECURE!!");
+
+    let key = Aes256GcmSiv::generate_key(&mut OsRng);
+    // let cipher = Aes256GcmSiv::new(&key);
+    // let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
+    // let ciphertext: Vec<u8> = cipher.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
+    // let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
+    // assert_eq!(&plaintext.unwrap(), b"plaintext message");
+
+    // trace!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
+
+    let cipher = Aes256GcmSiv::new(&key);
+    let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
+
+    // warn!("Unsafe {CODE_START}.unwrap(){ENDBLOCK} in {CODE_START}connection_handler.rs{ENDBLOCK}");
+    // let response: Vec<u8> = response.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
+
+    match stream.write(&response.as_bytes())
+    {
+        Ok(message) =>
+        {
+            trace!("Wrote to the TCP Stream");
+        }
+
+        Err(error) =>
+        {
+            error!("The TCP Stream write failed! 
+{INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
+{INDENT}Here we provide the compilers error:
+{error} ");
+            panic!("Why would the TCP stream flush panic !");
+        }
+    }
+
+    let plaintext = cipher.decrypt(nonce, response.as_ref()).unwrap();
+
+    match stream.write(&plaintext)
     {
         Ok(message) =>
         {
