@@ -126,51 +126,6 @@ fn main()
         thread_pool.run(|| { connection_handler::handle_connection(stream.unwrap()); });
 
         debug!("{packets_handled} packets handled");
-
-
-        // This block is cute messages based on your handled packets. 
-        // May remove since its a lot of IF's for every packet.
-
-        // this is so incredibvly ugly
-        if packets_handled != 1000 ||
-           packets_handled != 100_000 ||
-           packets_handled != 1_000_000 ||
-           packets_handled != 100_000_000 ||
-           packets_handled != 200_000_000
-        {
-            continue;
-        }
-
-        if packets_handled == 1_000
-        {
-            info!("🎉 You just handled {CODE_START}1,000{ENDBLOCK} packets this session!");
-        }
-
-        if packets_handled == 100_000
-        {
-            info!("🎉 You just handled {CODE_START}100,000{ENDBLOCK} packets this session!
-{INDENT}You should probably restart it soon");
-        }
-
-        if packets_handled == 1_000_000
-        {
-            warn!("Your server just handled {CODE_START}1,000,000{ENDBLOCK} packets this session!
-{INDENT}(IT is BEGGING you to RESTART IT!)");
-        }
-
-        if packets_handled == 100_000_000
-        {
-            warn!("Your server just handled {CODE_START}100,000,000{ENDBLOCK} packets this session... 
-{INDENT}(Like seriously, please. This is the software authors. This is more
-{INDENT} way too much!)");
-        }
-
-        if packets_handled == 200_000_000
-        {
-            warn!("Your server just handled {CODE_START}200,000,000{ENDBLOCK} packets this session... 
-{INDENT}A notification has been sent to your users and the server will 
-{INDENT}restart in 45 minutes.");
-        }
     }
 
     info!("Begining server shutdown ...");
@@ -212,7 +167,7 @@ fn verify_file_integrity()
 
     warn!("The function {CODE_START}verify_file_integrity(){ENDBLOCK} currently has 
 {INDENT}no functionality.");
-    trace!("Veryfying file integrity")
+    trace!("Veryfying file integrity");
 }
 
 fn check_updates()
