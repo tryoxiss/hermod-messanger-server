@@ -54,7 +54,7 @@ fn main()
     let listner_ip = "127.0.0.1";
     let listner_port = "8800";
 
-    info!("Listening to \x1b[4m{listner_ip}:{listner_port}\x1b[0m");
+    info!("Listening to \x1b[4mhttp://{listner_ip}:{listner_port}\x1b[0m");
 
     warn!("{CODE_START}network_listner{ENDBLOCK} is bound to an UNWRAPPED VALUE!");
     let network_listener = TcpListener::bind(format!("{listner_ip}:{listner_port}")).unwrap();
