@@ -17,14 +17,13 @@ Safe: ✅
 random/inconsistant: 🎲
 
 Optimised/Fast: 🚀
-    
-    
+
 EMOJIS FOR CODE COMMITS: 
 
 `🎉` - release, mostly
 `🔥` - Removal
 `🐛` - bug fix
-`🚀` - performance improvements
+`🚀` - performance improvementssure  
 `✨` - new feature
 `🚧` - misc progress / not final
 `🩹` - band-aid fix -- need to go back
