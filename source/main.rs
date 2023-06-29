@@ -168,6 +168,7 @@ fn verify_file_integrity()
     // Get desired SHA-2 hash from repo
     // compare them
 
+    // replace with actual hashes
     let local_software_hash = "Good2Go";
     let server_match_hash = "Good2Go";
 

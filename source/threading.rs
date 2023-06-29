@@ -4,7 +4,7 @@ use std::sync::{mpsc, Arc, Mutex};
 use log::{trace, debug, error};
 // use log4rs;
 
-use crate::{ENDBLOCK, CODE_START};
+use crate::{ENDBLOCK, CODE_START, INDENT};
 
 pub struct ThreadPool
 {
@@ -65,7 +65,7 @@ impl ThreadPool
         {
             Ok(_message) => { /* nothing to do */ }
             Err(message) => { error!("Something went wrong in {CODE_START}threading.rs:ThreadPool:run{ENDBLOCK} (line 62).
-             Here is the rust error message: \n {}", message) }
+{INDENT}Here is the rust error message: \n {}", message) }
         }
     }
 }
@@ -87,6 +87,8 @@ impl Drop for ThreadPool
             // I couldn't figure it out.
             if let Some(thread) = worker.thread.take()
             {
+                // this unwrap is psudo-safe since we don't care if it panics: 
+                // we are shutting it down anyway.
                 thread.join().unwrap();
             }
         }
@@ -124,35 +126,19 @@ impl Worker
                 .recv()
                 .unwrap();
 
-            let keep_working = Worker::work(id, message);
-
-            match keep_working
+            // this nesting is.... ewwww...
+            match message
             {
-                Continue::Yes => {  }
-                Continue::No  => { break; }
+                Message::NewJob(job) =>
+                {
+                    trace!("Worker #{id} got a job!");
+                    job();
+                    trace!("Worker #{id} finished its job!");
+                }
+                Message::Terminate => { break }
             }
         });
 
         Worker { id: id, thread: Some(thread) }
-    }
-
-    fn work(id: usize, message: Message) -> Continue
-    {
-        // This is an absolutely disgusting amount of nesting ...
-        match message
-        {
-            Message::NewJob(job) =>
-            {
-                trace!("Worker #{id} got a job!");
-                job();
-                trace!("Worker #{id} finished its job!");
-
-                return Continue::Yes;
-            }
-            Message::Terminate =>
-            {
-                return Continue::No;
-            }
-        }
     }
 }
