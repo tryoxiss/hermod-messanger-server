@@ -54,10 +54,10 @@ fn main()
     // ASSIGN VALUES
     // NO VALUE? -> DEFULT
 
-    let threads: usize = 4;               // threads to add to the pool
-    let max_requests: usize = usize::MAX; // requests before automatic shutdown
-    let listner_ip: &str = "127.0.255.1"; // send requests to this IP
-    let listner_port: &str = "8800";      // Send Requests to this port
+    static threads: usize = 4;               // threads to add to the pool
+    static max_requests: usize = usize::MAX; // requests before automatic shutdown
+    static listner_ip: &str = "127.0.255.1"; // send requests to this IP
+    static listner_port: &str = "8800";      // Send Requests to this port
 
     // when do we send a warning the server is reaching its capacity?
     let warn_restart = (max_requests / 4) * 3;
