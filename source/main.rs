@@ -44,7 +44,63 @@ static BOLD: &str       = "\x1b[1m";
 
 fn main()
 {
-    log4rs::init_file("log4rs.yml", Default::default()).unwrap();
+    // this is wayy too nested but this works for now
+    match log4rs::init_file("log4rs.yml", Default::default())
+    {
+        Ok(_) => 
+        {
+            trace!("log4rsl.yml initated properly");
+        }
+
+        Err(error) =>
+        {
+            // will these be taken out of scope after this block? Like
+            // do thier lifetimes work the same as with standard variables?
+            use std::fs;
+            use std::fs::File;
+            use std::io::prelude::*;
+
+            let mut file = File::create("log4rs.yml");
+            match fs::write("log4rs.yml", b"appenders:
+    my_stdout:
+    # TODO: 
+    # - Make `Capitalsed` instead of `UPPERCASE`.
+    # - Change Colors
+    #   - Trace: Grey
+    #   - Debug: Green
+    #   - Info:  Blue
+    #   - Warn:  Yellow (Already Correct)
+    #   - Error: Red    (Already Correct)
+        kind: console
+        encoder:
+            pattern: \"{h(\\x1b[1m{l}):>16.16}\\x1b[0m {m}{n}\"
+    # my_file_logger:
+    #     kind: file
+    #     path: \"log/my.log\"
+    #     encoder:
+    #         pattern: \"{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}\"
+root:
+    level: info
+    appenders:
+        - my_stdout")
+            {
+                Ok(_) =>
+                {
+                    println!("The defult log4rs.yml file has been created! Try re-running the program!");
+                    std::process::exit(1);
+                }
+
+                Err(error) =>
+                {
+                    panic!("No log4rs.yml file existed and it was failed to be created. Here is the error
+{error}");
+                }
+            }
+            // maybe import `File` to create the file with defult config.
+            panic!("log4rs config file init failed. Here is the error message
+{error}");
+        }
+    }
 
     info!("Initalising Program");
 
@@ -54,13 +110,13 @@ fn main()
     // ASSIGN VALUES
     // NO VALUE? -> DEFULT
 
-    static threads: usize = 4;               // threads to add to the pool
-    static max_requests: usize = usize::MAX; // requests before automatic shutdown
-    static listner_ip: &str = "127.0.255.1"; // send requests to this IP
-    static listner_port: &str = "8800";      // Send Requests to this port
+    static THREADS: usize = 4;               // threads to add to the pool
+    static MAX_REQUESTS: usize = usize::MAX; // requests before automatic shutdown
+    static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
+    static LISTENER_PORT: &str = "8800";      // Send Requests to this port
 
     // when do we send a warning the server is reaching its capacity?
-    let warn_restart = (max_requests / 4) * 3;
+    let warn_restart = (MAX_REQUESTS / 4) * 3;
 
     verify_file_integrity();
 
@@ -90,7 +146,7 @@ fn main()
 
     // main portion
     debug!("Initalising Thread Pool");
-    let thread_pool = ThreadPool::new(threads);
+    let thread_pool = ThreadPool::new(THREADS);
 
     warn!("When a payload is too lagre (over {} bytes), we simply 
 {INDENT}drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
@@ -99,7 +155,7 @@ fn main()
 
     warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
             is actually built in TLS! This is just for testing!");
-    let network_listener = TcpListener::bind(format!("{listner_ip}:{listner_port}"));
+    let network_listener = TcpListener::bind(format!("{LISTENER_IP}:{LISTENER_PORT}"));
 
     match network_listener
     {
@@ -119,9 +175,9 @@ fn main()
 
     info!("Your server is running
 {INDENT} -  {BOLD}Software:{ENDBLOCK} {server_version}
-{INDENT} -  {BOLD}Threads:{ENDBLOCK} {threads}
-{INDENT} -  {BOLD}Max Requests:{ENDBLOCK} {max_requests} (warn at 3/4ths though)
-{INDENT} -  {BOLD}Location:{ENDBLOCK} \x1b[4mhttp://{listner_ip}:{listner_port}{ENDBLOCK}
+{INDENT} -  {BOLD}Threads:{ENDBLOCK} {THREADS}
+{INDENT} -  {BOLD}Max Requests:{ENDBLOCK} {MAX_REQUESTS} (warn at 3/4ths though)
+{INDENT} -  {BOLD}Location:{ENDBLOCK} \x1b[4mhttp://{LISTENER_IP}:{LISTENER_PORT}{ENDBLOCK}
 {INDENT}If this is not correct, please press CTRL+C during the 
 {INDENT}launch countdown to abort the launch.");
 
@@ -152,7 +208,7 @@ fn main()
         .unwrap()
         .incoming()
         .enumerate()
-        .take(max_requests)
+        .take(MAX_REQUESTS)
     {
         match &stream 
         {
@@ -180,7 +236,7 @@ fn main()
 {INDENT}less than three minutes, leaving minimal downtime if you
 {INDENT}automate it.");
         }
-        else if packets_handled == max_requests
+        else if packets_handled == MAX_REQUESTS
         {
             info!("\x1b[01mYour server is now shutting down{ENDBLOCK}, since you reached your
 {INDENT}maximum packet limit. We will send a notification to you and your 
@@ -190,7 +246,7 @@ fn main()
         {
             info!("Plesae restart your server soon! It has handled more
 {INDENT}than 3/4ths of its single-run lifetime.
-{INDENT}({packets_handled} / {max_requests} packets handled)");
+{INDENT}({packets_handled} / {MAX_REQUESTS} packets handled)");
         }
 
         trace!("lifetime: {packets_handled} packets handled");
