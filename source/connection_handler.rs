@@ -119,7 +119,7 @@ pub fn handle_connection(mut stream: TcpStream)
     trace!("buffer: {}; expected: {:?}", buffer[4], "\x00".as_bytes()[0]);
 
     // 65535
-    if buffer[4 - 1] != "\x00".as_bytes()[0]
+    if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
     {
         let mut response_variables: Vec<HeaderFlag> = vec![];
         response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
