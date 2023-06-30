@@ -19,7 +19,6 @@
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 use log::{trace, debug, info, warn, error};
 use log4rs;
 
@@ -32,7 +31,6 @@ use threading::ThreadPool;
 
 use std::net::TcpListener;
 
-use std::time::Duration;
 use std::thread;
 
 mod connection_handler;
@@ -41,68 +39,23 @@ static CODE_START: &str = "\x1b[40m";
 static ENDBLOCK: &str   = "\x1b[0m";
 static INDENT: &str     = "             ";
 static BOLD: &str       = "\x1b[1m";
+static UNDERLINE: &str  = "\x1b[4m";
+
+// m (margin) = INDENT
+// p (padding) = 1ch left, 1ch right
+// c (content) = 1ch
+//                         mmmmmmmmmmmmmpcpp  
+static UL_ITEM: &str    = "              • ";
 
 fn main()
 {
-    // this is wayy too nested but this works for now
-    match log4rs::init_file("log4rs.yml", Default::default())
-    {
-        Ok(_) => 
-        {
-            trace!("log4rsl.yml initated properly");
-        }
-
-        Err(error) =>
-        {
-            // will these be taken out of scope after this block? Like
-            // do thier lifetimes work the same as with standard variables?
-            use std::fs;
-            use std::fs::File;
-            use std::io::prelude::*;
-
-            let mut file = File::create("log4rs.yml");
-            match fs::write("log4rs.yml", b"appenders:
-    my_stdout:
-    # TODO: 
-    # - Make `Capitalsed` instead of `UPPERCASE`.
-    # - Change Colors
-    #   - Trace: Grey
-    #   - Debug: Green
-    #   - Info:  Blue
-    #   - Warn:  Yellow (Already Correct)
-    #   - Error: Red    (Already Correct)
-        kind: console
-        encoder:
-            pattern: \"{h(\\x1b[1m{l}):>16.16}\\x1b[0m {m}{n}\"
-    # my_file_logger:
-    #     kind: file
-    #     path: \"log/my.log\"
-    #     encoder:
-    #         pattern: \"{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}\"
-root:
-    level: info
-    appenders:
-        - my_stdout")
-            {
-                Ok(_) =>
-                {
-                    println!("The defult log4rs.yml file has been created! Try re-running the program!");
-                    std::process::exit(1);
-                }
-
-                Err(error) =>
-                {
-                    panic!("No log4rs.yml file existed and it was failed to be created. Here is the error
-{error}");
-                }
-            }
-            // maybe import `File` to create the file with defult config.
-            panic!("log4rs config file init failed. Here is the error message
-{error}");
-        }
-    }
+    init_config();
 
     info!("Initalising Program");
+
+    verify_file_integrity();
+
+    let server_version: String = check_updates();
 
     // config variables
 
@@ -110,22 +63,13 @@ root:
     // ASSIGN VALUES
     // NO VALUE? -> DEFULT
 
-    static THREADS: usize = 4;               // threads to add to the pool
-    static MAX_REQUESTS: usize = usize::MAX; // requests before automatic shutdown
+    static THREADS: usize = 4;                // threads to add to the pool
+    static MAX_REQUESTS: usize = usize::MAX;  // requests before automatic shutdown
     static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
     static LISTENER_PORT: &str = "8800";      // Send Requests to this port
 
     // when do we send a warning the server is reaching its capacity?
     let warn_restart = (MAX_REQUESTS / 4) * 3;
-
-    verify_file_integrity();
-
-    // Store these values. 
-    // When someone logs on/connects and the server is running a version with
-    // a known security vulnerability (manual override), or running a version
-    // nearing the end of support, send a notification/system message
-    // telling them. 
-    let server_version: String = check_updates();
 
     debug!("Launch Sequence Initated");
 
@@ -148,13 +92,10 @@ root:
     debug!("Initalising Thread Pool");
     let thread_pool = ThreadPool::new(THREADS);
 
-    warn!("When a payload is too lagre (over {} bytes), we simply 
-{INDENT}drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
-
     debug!("Initalising TCP Stream");
 
     warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
-            is actually built in TLS! This is just for testing!");
+{INDENT}is actually built in TLS! This is just for testing!");
     let network_listener = TcpListener::bind(format!("{LISTENER_IP}:{LISTENER_PORT}"));
 
     match network_listener
@@ -174,18 +115,21 @@ root:
     }
 
     info!("Your server is running
-{INDENT} -  {BOLD}Software:{ENDBLOCK} {server_version}
-{INDENT} -  {BOLD}Threads:{ENDBLOCK} {THREADS}
-{INDENT} -  {BOLD}Max Requests:{ENDBLOCK} {MAX_REQUESTS} (warn at 3/4ths though)
-{INDENT} -  {BOLD}Location:{ENDBLOCK} \x1b[4mhttp://{LISTENER_IP}:{LISTENER_PORT}{ENDBLOCK}
-{INDENT}If this is not correct, please press CTRL+C during the 
+{UL_ITEM}{BOLD}Software:{ENDBLOCK} {server_version}
+{UL_ITEM}{BOLD}Threads:{ENDBLOCK} {THREADS}
+{UL_ITEM}{BOLD}Max Requests:{ENDBLOCK} {MAX_REQUESTS} (warn at 3/4ths though)
+{UL_ITEM}{BOLD}Location:{ENDBLOCK} {UNDERLINE}http://{LISTENER_IP}:{LISTENER_PORT}{ENDBLOCK}
+{INDENT}If this is not correct, please press {BOLD}{UNDERLINE}CTRL+C{ENDBLOCK} during the 
 {INDENT}launch countdown to abort the launch.");
 
-    // set count to 0 to skip launch sequence
+
+    // set count to 0 to skip launch sequence. Is always 0 when hosting
+    // a local server. Defult is 5 secconds when testing anything else.
     let launch_countdown: u8 = 0;
 
     for count in 0..launch_countdown
     {
+        use std::time::Duration;
         // The extra spaces get rid of trailing "s" characters when the digits drop.
         // e.g.
         // Launching in 10 secconds
@@ -295,6 +239,70 @@ fn verify_file_integrity()
     warn!("The function {CODE_START}verify_file_integrity(){ENDBLOCK} currently has 
 {INDENT}no functionality.");
     trace!("Veryfying file integrity");
+}
+
+fn init_config()
+{
+    // this is wayy too nested but this works for now
+    match log4rs::init_file("log4rs.yml", Default::default())
+    {
+        Ok(_) => 
+        {
+            trace!("log4rsl.yml initated properly");
+        }
+
+        Err(error) =>
+        {
+            create_log4rs_file();
+        }
+    }
+}
+
+fn create_log4rs_file()
+{
+    // will these be taken out of scope after this block? Like
+    // do thier lifetimes work the same as with standard variables?
+    use std::fs;
+    use std::fs::File;
+    use std::io::prelude::*;
+
+    let mut file = File::create("log4rs.yml");
+    match fs::write("log4rs.yml", 
+b"appenders:
+    my_stdout:
+    # TODO: 
+    # - Make `Capitalsed` instead of `UPPERCASE`.
+    # - Change Colors
+    #   - Trace: Grey
+    #   - Debug: Green
+    #   - Info:  Blue
+    #   - Warn:  Yellow (Already Correct)
+    #   - Error: Red    (Already Correct)
+        kind: console
+        encoder:
+            pattern: \"{h(\\x1b[1m{l}):>16.16}\\x1b[0m {m}{n}\"
+    # my_file_logger:
+    #     kind: file
+    #     path: \"log/my.log\"
+    #     encoder:
+    #         pattern: \"{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}\"
+root:
+    level: info
+    appenders:
+        - my_stdout")
+    {
+        Ok(_) =>
+        {
+            println!("The defult log4rs.yml file has been created! Try re-running the program!");
+            std::process::exit(1);
+        }
+
+        Err(error) =>
+        {
+            panic!("No log4rs.yml file existed and it was failed to be created. Here is the error
+{error}");
+        }
+    }
 }
 
 fn check_updates() -> String
