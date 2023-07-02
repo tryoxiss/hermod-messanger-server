@@ -29,9 +29,17 @@ use terminal_out::ask_yes_no;
 mod threading;
 use threading::ThreadPool;
 
+use std::convert;
+use std::default;
 use std::net::TcpListener;
 
 use std::thread;
+
+#[macro_use]
+extern crate ini;
+
+use std::fs;
+use std::fs::File;
 
 mod connection_handler;
 
@@ -47,15 +55,16 @@ static UNDERLINE: &str  = "\x1b[4m";
 //                         mmmmmmmmmmmmmpcpp  
 static UL_ITEM: &str    = "              • ";
 
+/// The main function contains all initalisation steps, aswell as the main
+/// program loop.
 fn main()
 {
-    init_config();
+    init_log4rs_config();
 
     info!("Initalising Program");
 
-    verify_file_integrity();
-
     let server_version: String = check_updates();
+    verify_file_integrity(&server_version);
 
     // config variables
 
@@ -63,6 +72,11 @@ fn main()
     // ASSIGN VALUES
     // NO VALUE? -> DEFULT
 
+    // does not guess data types. Will need to go through each parameter,
+    // trying to turn it into the desired data type.
+    // let config_map = ini!("./hermod.config");
+
+    // these will need to be let eventually
     static THREADS: usize = 4;                // threads to add to the pool
     static MAX_REQUESTS: usize = usize::MAX;  // requests before automatic shutdown
     static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
@@ -154,7 +168,7 @@ fn main()
         .enumerate()
         .take(MAX_REQUESTS)
     {
-        match &stream 
+        match &stream
         {
             Ok(message) => { trace!("Stream is OK"); }
 
@@ -201,7 +215,52 @@ fn main()
     info!("Begining server shutdown ...");
 }
 
-fn verify_file_integrity()
+// SETUP HELPER FUNCTIONS
+
+fn config_real_number(content: &str) -> usize
+{
+    return str::parse::<usize>(content).unwrap();
+}
+
+fn config_natural_number(content: &str) -> usize
+{
+    let converted =  str::parse::<usize>(content).unwrap();
+    if converted == 0
+    {
+        panic!("Config file error, expected Natural Number, found other.");
+    }
+    else { return converted }
+}
+
+
+fn create_hermod_config_file()
+{
+    let mut file = File::create("log4rs.yml");
+    match fs::write("hermod.config", 
+b"
+[hardware]
+threads = 4
+
+[networking]
+ip: 127.0.255.1
+port: 8800")
+    {
+        Ok(_) =>
+        {
+            println!("The defult log4rs.yml file has been created! Try re-running the program!");
+            std::process::exit(1);
+        }
+
+        Err(error) =>
+        {
+            panic!("No log4rs.yml file existed and it was failed to be created. Here is the error
+{error}");
+        }
+    }
+}
+
+
+fn verify_file_integrity(version: &String)
 {
     // get repo from config files
     // get SHA-2 hash of files
@@ -241,7 +300,7 @@ fn verify_file_integrity()
     trace!("Veryfying file integrity");
 }
 
-fn init_config()
+fn init_log4rs_config()
 {
     // this is wayy too nested but this works for now
     match log4rs::init_file("log4rs.yml", Default::default())
@@ -260,11 +319,6 @@ fn init_config()
 
 fn create_log4rs_file()
 {
-    // will these be taken out of scope after this block? Like
-    // do thier lifetimes work the same as with standard variables?
-    use std::fs;
-    use std::fs::File;
-    use std::io::prelude::*;
 
     let mut file = File::create("log4rs.yml");
     match fs::write("log4rs.yml", 

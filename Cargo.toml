@@ -13,13 +13,14 @@ path = "source/main.rs"
 # [dev-dependencies]
 # [build-dependencies]
 
-[dependencies]
+[dependencies] # Sorted By Licence
 
-# MIT Licence
-aes-gcm-siv = "0.11.1"  # Apache 2.0  OR  MIT
-config = "0.13.1"       # Apache 2.0  OR  MIT
+# MIT Licence Crates
+aes-gcm-siv = "0.11.1"  # MIT  -OR-  Apache 2.0
 
-
+# Config is `hermod.config` and is in INI format since it is simple and fast
+# to parse.
+ini = "1.3.0"           # MIT  -OR-  LGPL 3.0 Or Later
 
 log = "0.4"
 log4rs = "1"
