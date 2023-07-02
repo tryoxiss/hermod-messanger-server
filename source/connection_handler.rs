@@ -135,7 +135,7 @@ pub fn handle_connection(mut stream: TcpStream)
 
         match stream.write(&response.as_bytes())
         {
-            Ok(message) =>
+            Ok(_message) =>
             {
                 trace!("Wrote to the TCP Stream");
             }

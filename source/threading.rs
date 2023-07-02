@@ -101,14 +101,6 @@ struct Worker
     thread: Option<thread::JoinHandle<()>>
 }
 
-// I feel like this will lead to code duplication. 
-// I want to find a way to reuse this.
-enum Continue
-{
-    Yes,
-    No
-}
-
 impl Worker
 {
     fn new(id: usize, reciever: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker

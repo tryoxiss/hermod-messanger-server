@@ -208,51 +208,10 @@ fn main()
 
 // SETUP HELPER FUNCTIONS
 
-fn config_real_number(content: &str) -> usize
-{
-    return str::parse::<usize>(content).unwrap();
-}
-
-fn config_natural_number(content: &str) -> usize
-{
-    let converted =  str::parse::<usize>(content).unwrap();
-    if converted == 0
-    {
-        panic!("Config file error, expected Natural Number, found other.");
-    }
-    else { return converted }
-}
-
-
-fn create_hermod_config_file()
-{
-    let mut file = File::create("log4rs.yml");
-    match fs::write("hermod.config", 
-b"
-[hardware]
-threads = 4
-
-[networking]
-ip: 127.0.255.1
-port: 8800")
-    {
-        Ok(_) =>
-        {
-            println!("The defult log4rs.yml file has been created! Try re-running the program!");
-            std::process::exit(1);
-        }
-
-        Err(error) =>
-        {
-            panic!("No log4rs.yml file existed and it was failed to be created. Here is the error
-{error}");
-        }
-    }
-}
-
-
 fn verify_file_integrity(version: &String)
 {
+    trace!("Veryfying files for {version}");
+
     // get repo from config files
     // get SHA-2 hash of files
     // Get desired SHA-2 hash from repo
@@ -301,7 +260,7 @@ fn init_log4rs_config()
             trace!("log4rsl.yml initated properly");
         }
 
-        Err(error) =>
+        Err(_error) =>
         {
             create_log4rs_file();
         }
@@ -311,7 +270,7 @@ fn init_log4rs_config()
 fn create_log4rs_file()
 {
 
-    let mut file = File::create("log4rs.yml");
+    let mut _file = File::create("log4rs.yml");
     match fs::write("log4rs.yml", 
 b"appenders:
     my_stdout:
