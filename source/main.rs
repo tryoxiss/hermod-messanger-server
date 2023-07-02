@@ -29,14 +29,9 @@ use terminal_out::ask_yes_no;
 mod threading;
 use threading::ThreadPool;
 
-use std::convert;
-use std::default;
 use std::net::TcpListener;
 
 use std::thread;
-
-#[macro_use]
-extern crate ini;
 
 use std::fs;
 use std::fs::File;
@@ -71,10 +66,6 @@ fn main()
     // READ CONFIG FILE
     // ASSIGN VALUES
     // NO VALUE? -> DEFULT
-
-    // does not guess data types. Will need to go through each parameter,
-    // trying to turn it into the desired data type.
-    // let config_map = ini!("./hermod.config");
 
     // these will need to be let eventually
     static THREADS: usize = 4;                // threads to add to the pool
