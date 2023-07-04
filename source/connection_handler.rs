@@ -130,7 +130,7 @@ pub fn handle_connection(mut stream: TcpStream)
             411,
             String::from("Payload Too Large"), 
             response_variables, 
-            String::from("Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `series=<u64>;` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
+            String::from("Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `group=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
             );
 
         match stream.write(&response.as_bytes())

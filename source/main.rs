@@ -273,7 +273,7 @@ fn create_log4rs_file()
     let mut _file = File::create("log4rs.yml");
     match fs::write("log4rs.yml", 
 b"appenders:
-    my_stdout:
+    stdout:
     # TODO: 
     # - Make `Capitalsed` instead of `UPPERCASE`.
     # - Change Colors
@@ -293,7 +293,7 @@ b"appenders:
 root:
     level: info
     appenders:
-        - my_stdout")
+        - stdout")
     {
         Ok(_) =>
         {
