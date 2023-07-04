@@ -1,3 +1,24 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *  This file is part of:         https://github.com/tryoxiss/bonfire-server *
+ *  Hermod Messanger                          https://en.ourdomain.ext/docs/ *
+ *                                                                           *
+ *  Copyright (C) 2023—present : Hermod Messenger Contributers (AUTHORS.md)  *
+ *                                                                           *
+ *  This program is free software: you can redistribute it and/or modify     *
+ *  it under the terms of the GNU Affero General Public License version 3    *
+ *  as published by the Free Software Foundation.                            *
+ *                                                                           *
+ *  This program is distributed in the hope that it will be useful,          *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
+ *  GNU Affero General Public License version 3 for more details.            *
+ *                                                                           *
+ *  You should have received a copy of the GNU Affero General Public License *
+ *  along with this program.  If not, see:                                   *
+ *    https://www.gnu.org/licenses/agpl-3.0                                  *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 use log::{trace, debug, info, warn, error};
 use log4rs;
 
@@ -10,59 +31,52 @@ use threading::ThreadPool;
 
 use std::net::TcpListener;
 
-use std::time::Duration;
 use std::thread;
+
+use std::fs;
+use std::fs::File;
 
 mod connection_handler;
 
 static CODE_START: &str = "\x1b[40m";
 static ENDBLOCK: &str   = "\x1b[0m";
 static INDENT: &str     = "             ";
+static BOLD: &str       = "\x1b[1m";
+static UNDERLINE: &str  = "\x1b[4m";
 
+// m (margin) = INDENT
+// p (padding) = 1ch left, 1ch right
+// c (content) = 1ch
+//                         mmmmmmmmmmmmmpcpp  
+static UL_ITEM: &str    = "              • ";
+
+/// The main function contains all initalisation steps, aswell as the main
+/// program loop.
 fn main()
 {
+    init_log4rs_config();
+
     info!("Initalising Program");
 
-    log4rs::init_file("log4rs.yml", Default::default()).unwrap();
+    let server_version: String = check_updates();
+    verify_file_integrity(&server_version);
 
-    trace!("detailed tracing info");
-    debug!("debug info");
-    info!("relevant general info");
-    warn!("warning you unwrap too much");
-    error!("error message here");
+    // config variables
 
-    info!("This is the program speaking now!");
+    // READ CONFIG FILE
+    // ASSIGN VALUES
+    // NO VALUE? -> DEFULT
 
-    // fatal!(901, "I had bad grammer and now I need to fix it");
+    // these will need to be let eventually
+    static THREADS: usize = 4;                // threads to add to the pool
+    static MAX_REQUESTS: usize = usize::MAX;  // requests before automatic shutdown
+    static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
+    static LISTENER_PORT: &str = "8800";      // Send Requests to this port
 
-    // Define an automatic-restart threashold. 
-    let max_requests: usize = usize::MAX;
-    // 3/4ths to restart
-    let warn_restart = (max_requests / 4) * 3;
+    // when do we send a warning the server is reaching its capacity?
+    let warn_restart = (MAX_REQUESTS / 4) * 3;
 
-    verify_file_integrity();
-
-    // Store these values. 
-    // When someone logs on/connects and the server is running a version with
-    // a known security vulnerability (manual override), or running a version
-    // nearing the end of support, send a notification/system message
-    // telling them. 
-    check_updates();
-
-    info!("Launch Sequence Initated");
-
-    trace!("Initalising TCP Stream");
-
-    let listner_ip = "127.0.255.1";
-    let listner_port = "8800";
-
-    info!("Listening to \x1b[4mhttp://{listner_ip}:{listner_port}{ENDBLOCK}");
-
-    warn!("{CODE_START}network_listner{ENDBLOCK} is bound to an UNWRAPPED VALUE!");
-    let network_listener = TcpListener::bind(format!("{listner_ip}:{listner_port}")).unwrap();
-
-    warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
-             is actually built in TLS! This is just for testing!");
+    debug!("Launch Sequence Initated");
 
     // ACTUALLY it seems Aes-Gcm-Siv handles all this for us!
     // ---
@@ -80,26 +94,54 @@ fn main()
     // ---
 
     // main portion
+    debug!("Initalising Thread Pool");
+    let thread_pool = ThreadPool::new(THREADS);
 
-    let mut packets_handled: usize = 0;
-    let thread_pool = ThreadPool::new(4);
+    debug!("Initalising TCP Stream");
+
+    warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
+{INDENT}is actually built in TLS! This is just for testing!");
+    let network_listener = TcpListener::bind(format!("{LISTENER_IP}:{LISTENER_PORT}"));
+
+    match network_listener
+    {
+        Ok(_) =>
+        {
+            debug!("Network listeer initalised!");
+        }
+
+        Err(error) =>
+        {
+            error!("An error occured when binding to the network listner.
+    {INDENT}Here is the rust compiler message:
+    {error}");
+            panic!();
+        }
+    }
+
+    info!("Your server is running
+{UL_ITEM}{BOLD}Software:{ENDBLOCK} {server_version}
+{UL_ITEM}{BOLD}Threads:{ENDBLOCK} {THREADS}
+{UL_ITEM}{BOLD}Max Requests:{ENDBLOCK} {MAX_REQUESTS} (warn at 3/4ths though)
+{UL_ITEM}{BOLD}Location:{ENDBLOCK} {UNDERLINE}http://{LISTENER_IP}:{LISTENER_PORT}{ENDBLOCK}
+{INDENT}If this is not correct, please press {BOLD}{UNDERLINE}CTRL+C{ENDBLOCK} during the 
+{INDENT}launch countdown to abort the launch.");
 
 
-    warn!("When a payload is too lagre (over {} bytes), we simply 
-{INDENT}drop the extra bytes rather than returning a 411 Payload_Too_Large!", u16::MAX);
-
-    // set count to 0 to skip launch sequence
+    // set count to 0 to skip launch sequence. Is always 0 when hosting
+    // a local server. Defult is 5 secconds when testing anything else.
     let launch_countdown: u8 = 0;
 
     for count in 0..launch_countdown
     {
+        use std::time::Duration;
         // The extra spaces get rid of trailing "s" characters when the digits drop.
         // e.g.
         // Launching in 10 secconds
         // launching in 9 seccondss
         //                        ^ Stayed because it was never overwritten.
         // We only allow up to a count of 256 (u8), so two trailing spaces is enough.
-        info!("Launching in \x1b[1m{n}{ENDBLOCK} secconds  \x1b[A\r", n=launch_countdown-count);
+        info!("Launching in {BOLD}{n}{ENDBLOCK} secconds  \x1b[A\r", n=launch_countdown-count);
         thread::sleep(Duration::from_secs(1));
     }
 
@@ -110,9 +152,14 @@ fn main()
 {INDENT}It often is, but not always!");
 
     // This automatically persists indefintely.
-    for stream in network_listener.incoming().take(max_requests)
+    // This unwrap is 100% since since we get out of the way earlier if its an Err
+    for (packets_handled, stream) in network_listener
+        .unwrap()
+        .incoming()
+        .enumerate()
+        .take(MAX_REQUESTS)
     {
-        match &stream 
+        match &stream
         {
             Ok(message) => { trace!("Stream is OK"); }
 
@@ -124,8 +171,6 @@ fn main()
                 continue;
             }
         }
-
-        packets_handled += 1;
 
         // This .unwrap() is 100% safe, since we check if its an `Err` type 
         // just above and if it is `continue;` the loop, skipping this block.
@@ -140,7 +185,7 @@ fn main()
 {INDENT}less than three minutes, leaving minimal downtime if you
 {INDENT}automate it.");
         }
-        else if packets_handled == max_requests
+        else if packets_handled == MAX_REQUESTS
         {
             info!("\x1b[01mYour server is now shutting down{ENDBLOCK}, since you reached your
 {INDENT}maximum packet limit. We will send a notification to you and your 
@@ -150,31 +195,36 @@ fn main()
         {
             info!("Plesae restart your server soon! It has handled more
 {INDENT}than 3/4ths of its single-run lifetime.
-{INDENT}({packets_handled} / {max_requests} packets handled)");
+{INDENT}({packets_handled} / {MAX_REQUESTS} packets handled)");
         }
 
+        trace!("lifetime: {packets_handled} packets handled");
 
-        debug!("{packets_handled} packets handled");
-        trace!("lifetime: {packets_handled} / {max_requests}");
+        // println!("\x1b[30mEnter Command ...\x1b[A\r{ENDBLOCK}");
     }
 
     info!("Begining server shutdown ...");
 }
 
-fn verify_file_integrity()
+// SETUP HELPER FUNCTIONS
+
+fn verify_file_integrity(version: &String)
 {
+    trace!("Veryfying files for {version}");
+
     // get repo from config files
     // get SHA-2 hash of files
     // Get desired SHA-2 hash from repo
     // compare them
 
+    // replace with actual hashes
     let local_software_hash = "Good2Go";
     let server_match_hash = "Good2Go";
 
-    info!("Checking file integrity ...");
+    trace!("Checking file integrity ...");
     if local_software_hash == server_match_hash
     {
-        info!("File integrity good!");
+        debug!("File integrity good!");
     }
     else
     {
@@ -200,7 +250,66 @@ fn verify_file_integrity()
     trace!("Veryfying file integrity");
 }
 
-fn check_updates()
+fn init_log4rs_config()
+{
+    // this is wayy too nested but this works for now
+    match log4rs::init_file("log4rs.yml", Default::default())
+    {
+        Ok(_) => 
+        {
+            trace!("log4rsl.yml initated properly");
+        }
+
+        Err(_error) =>
+        {
+            create_log4rs_file();
+        }
+    }
+}
+
+fn create_log4rs_file()
+{
+
+    let mut _file = File::create("log4rs.yml");
+    match fs::write("log4rs.yml", 
+b"appenders:
+    my_stdout:
+    # TODO: 
+    # - Make `Capitalsed` instead of `UPPERCASE`.
+    # - Change Colors
+    #   - Trace: Grey
+    #   - Debug: Green
+    #   - Info:  Blue
+    #   - Warn:  Yellow (Already Correct)
+    #   - Error: Red    (Already Correct)
+        kind: console
+        encoder:
+            pattern: \"{h(\\x1b[1m{l}):>16.16}\\x1b[0m {m}{n}\"
+    # my_file_logger:
+    #     kind: file
+    #     path: \"log/my.log\"
+    #     encoder:
+    #         pattern: \"{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}\"
+root:
+    level: info
+    appenders:
+        - my_stdout")
+    {
+        Ok(_) =>
+        {
+            println!("The defult log4rs.yml file has been created! Try re-running the program!");
+            std::process::exit(1);
+        }
+
+        Err(error) =>
+        {
+            panic!("No log4rs.yml file existed and it was failed to be created. Here is the error
+{error}");
+        }
+    }
+}
+
+fn check_updates() -> String
 {
     // get repo from config file
     // get version from config file
@@ -214,6 +323,32 @@ fn check_updates()
     // if version is less than (major): 
     //      suggest update when next doing major admin stuff/setting up new servers
 
+    let project: &str = "hermod";
+    let major: u16 = 0;
+    let minor: u16 = 3;
+    let patch: u16 = 5;
+
+    let release_level: &str = "pre-release";
+    let release_number: u16 = 4;
+
+    let mut release: String = String::from("");
+
+    if release_level != "stable"
+    {
+
+        release = format!(":{release_level}.{release_number}");
+    }
+
+
     warn!("The function {CODE_START}check_updaes(){ENDBLOCK} currently has no functionality.");
     trace!("Checking for Updates");
+
+    return String::from(format!("{project} {major}.{minor}.{patch}{release}",
+            project = project.to_string(),
+            major = major.to_string(),
+            minor = minor.to_string(),
+            patch = patch.to_string(),
+            release = release
+        )
+    );
 }

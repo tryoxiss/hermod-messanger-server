@@ -73,7 +73,14 @@ pub fn handle_connection(mut stream: TcpStream)
     // TODO: With this current implementation we simply drop extra bytes rather
     // than returning 411 Payload_Too_Large !!
 
-    let mut buffer = [0; 65_535];
+    // one more than the buffer, so we can see if its null and respond accordingly
+    // 16_777_216
+
+    const MAX_PACKET_LENGTH: usize = 1048576;
+
+    let mut buffer = [0; MAX_PACKET_LENGTH];
+
+    // let mut buffer = vec![];
 
     trace!("MEOW");
 
@@ -94,9 +101,59 @@ pub fn handle_connection(mut stream: TcpStream)
         }
     }
 
+    let key = Aes256GcmSiv::generate_key(&mut OsRng);
+    // let cipher = Aes256GcmSiv::new(&key);
+    // let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
+    // let ciphertext: Vec<u8> = cipher.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
+    // let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
+    // assert_eq!(&plaintext.unwrap(), b"plaintext message");
+
+    // trace!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
+
+    let cipher = Aes256GcmSiv::new(&key);
+    let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
+
+    // warn!("Unsafe {CODE_START}.unwrap(){ENDBLOCK} in {CODE_START}connection_handler.rs{ENDBLOCK}");
+    // let response: Vec<u8> = response.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
+
+    trace!("buffer: {}; expected: {:?}", buffer[4], "\x00".as_bytes()[0]);
+
+    // 65535
+    if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
+    {
+        let mut response_variables: Vec<HeaderFlag> = vec![];
+        response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
+        response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
+
+        let response = ResponsePacket::create(
+            String::from("1.0"),
+            411,
+            String::from("Payload Too Large"), 
+            response_variables, 
+            String::from("Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `series=<u64>;` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
+            );
+
+        match stream.write(&response.as_bytes())
+        {
+            Ok(_message) =>
+            {
+                trace!("Wrote to the TCP Stream");
+            }
+    
+            Err(error) =>
+            {
+                error!("The TCP Stream write failed! 
+    {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
+    {INDENT}Here we provide the compilers error:
+    {error} ");
+                panic!("Why would the TCP stream flush panic !");
+            }
+        }
+        return;
+    }
+
     // Valid HTTP
     // let response = format!("HTTP/1.1 200 OK\r\n\r\n Connection established! \n Bufer_Length: {}; \n Packet_Length: {};", buffer.len(), "Unknown");
-
     let mut response_variables: Vec<HeaderFlag> = vec![];
 
     response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
@@ -129,21 +186,6 @@ pub fn handle_connection(mut stream: TcpStream)
     //     String::from("Pong"), 
     //     response_variables, 
     //     String::from("Process Took: <N>ns"));
-
-    let key = Aes256GcmSiv::generate_key(&mut OsRng);
-    // let cipher = Aes256GcmSiv::new(&key);
-    // let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
-    // let ciphertext: Vec<u8> = cipher.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
-    // let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
-    // assert_eq!(&plaintext.unwrap(), b"plaintext message");
-
-    // trace!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
-
-    let cipher = Aes256GcmSiv::new(&key);
-    let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
-
-    // warn!("Unsafe {CODE_START}.unwrap(){ENDBLOCK} in {CODE_START}connection_handler.rs{ENDBLOCK}");
-    // let response: Vec<u8> = response.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
 
     match stream.write(&response.as_bytes())
     {
