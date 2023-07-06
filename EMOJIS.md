@@ -17,7 +17,9 @@ Safe: ✅
 random/inconsistant: 🎲
 
 Optimised/Fast: 🚀
-
+	a
+	
+	<- Tab Character
 EMOJIS FOR CODE COMMITS: 
 
 `🎉` - release, mostly
