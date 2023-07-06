@@ -5,6 +5,15 @@ An implementation of our down DIstributed Instant Messaging (DIM) protocol in Ru
 > **Warning**
 > This software is not currently suitable for any productin builds and is not spec-compliant as it is in very early developement. 
 
+## Progress
+
+- **Done**
+    - 
+- **Working On**
+    - 
+- **Todo**
+    - 
+
 ## FAQ
 
 **What operating systems can it run on?**
@@ -21,3 +30,23 @@ Namely we test it on CentOS, Unubtu Server, Debian, Fedora Server, and Rasberry 
 | Windows Server | All | None |
 | Mac Server | All | None |
 | Other Distributions | N/A | If it runs |
+
+
+## Developement
+
+### What this is
+
+- A server-side implementation of DIM protocol
+- A way to fetch and relay said DIM data
+
+### What this is not
+
+- A client. Don't put crap in here, that goes to the users client.
+
+### What goes in this
+
+- 
+
+### What does not go in this
+
+- 
