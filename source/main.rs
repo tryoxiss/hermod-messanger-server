@@ -212,6 +212,7 @@ fn verify_file_integrity(version: &String)
 {
     trace!("Veryfying files for {version}");
 
+    // 🚧 TODO: verify_file_integrity()
     // get repo from config files
     // get SHA-2 hash of files
     // Get desired SHA-2 hash from repo
