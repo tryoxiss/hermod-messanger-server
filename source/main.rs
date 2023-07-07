@@ -59,7 +59,6 @@ fn main()
     info!("Initalising Program");
 
     let server_version: String = check_updates();
-    verify_file_integrity(&server_version);
 
     // config variables
 
@@ -208,10 +207,8 @@ fn main()
 
 // SETUP HELPER FUNCTIONS
 
-fn verify_file_integrity(version: &String)
+fn verify_file_integrity(project: &str, major: &str, minor: &str, patch: &str, release_level: &str, release_number: &str)
 {
-    trace!("Veryfying files for {version}");
-
     // 🚧 TODO: verify_file_integrity()
     // get repo from config files
     // get SHA-2 hash of files
@@ -342,6 +339,8 @@ fn check_updates() -> String
 
     warn!("The function {CODE_START}check_updaes(){ENDBLOCK} currently has no functionality.");
     trace!("Checking for Updates");
+
+    // verify_file_integrity(project, major, minor, patch, release_level, release_number);
 
     return String::from(format!("{project} {major}.{minor}.{patch}{release}",
             project = project.to_string(),
