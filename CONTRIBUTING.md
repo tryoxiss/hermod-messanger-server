@@ -21,6 +21,58 @@ Don't know how how to code? No worries! We have many things we need each with th
 - **Art + Branding**: While we do already have somewhat of an established brand, we are always happy to take contributions and art to go along with them! Especially for our offical client. 
 - **Security**: Good at fixing things? We need that! Good at breaking things? We need that too! Feel free to audit our code at any time, but please publish a comprehensive report somewhere and send it to a community manager for review! Also feel free to fix any changes you find!
 
+## Commits
+
+Please include an emoji at the start of each commit message to quickly tell other developers what sort of change it made. The ones we generally use are:
+- `🎉` - Release, mostly
+- `🔥` - Removal
+- `🐛` - Bug fix
+- `🚀` - performance improvementssure  
+- `✨` - New thing
+- `🚧` - Misc / Progress / Clean Up / Spelling fixes / etc
+- `🎨` - Customisation / Style
+- `🎬` - rollback 
+- `📔` - Documentation or writing
+
+OTHERS - If you think they are more applicable.  Such as `📈` for analytics.
+
+## Comments
+
+Please include the following admontations in comments where helpful, to help other developers find what needs doing.
+
+For things that need addressing, we use `ALLCAPS:` and a brief description. For longer comments to explain stuff, we just have a standard title.
+
+```
+// ☣️ Critical Warning
+// Content Body
+
+// 🚩 FIXME: Bad Practice Name
+// Content Body
+
+// 🎲 Inconsistant
+// Description of inconsistancies
+
+// 🛠️ HACK: Hack Brief Description
+// Detailed description of hack. This refers to "hacks" that
+// make code faster or more efficent, or was just how you implemented
+// it. Generally this would be an optimisation instead.
+//
+// The diffrence is: Hacks should be removed eventually in favor of
+// better options, optimisations should only be removed when vulnerabilties
+// arise because of them.
+
+// 🚧 TODO: Task
+// (optional) description of task
+
+// 📔 Note
+// Detailed note.
+// Keep in mind this is only for longer-form or imprtant notes:
+// not every comment is a note!
+
+// 🚀 Optimisation
+// Description of optimisation
+```
+
 ## Frequently Asked Questions (FAQ) 
 
 **I noticed some issues are marked as `wontfix`, why won't you fix them?**
