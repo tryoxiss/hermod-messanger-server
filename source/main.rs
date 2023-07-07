@@ -19,8 +19,7 @@
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-use log::{trace, debug, info, warn, error};
-use log4rs;
+mod connection_handler;
 
 // #[macro_use]
 mod terminal_out;
@@ -36,7 +35,8 @@ use std::thread;
 use std::fs;
 use std::fs::File;
 
-mod connection_handler;
+use log::{trace, debug, info, warn, error};
+use log4rs;
 
 static CODE_START: &str = "\x1b[40m";
 static ENDBLOCK: &str   = "\x1b[0m";
@@ -270,7 +270,6 @@ fn init_log4rs_config()
 
 fn create_log4rs_file()
 {
-
     let mut _file = File::create("log4rs.yml");
     match fs::write("log4rs.yml", 
 b"appenders:
