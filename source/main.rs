@@ -44,10 +44,10 @@ static INDENT: &str     = "             ";
 static BOLD: &str       = "\x1b[1m";
 static UNDERLINE: &str  = "\x1b[4m";
 
-// m (margin) = INDENT
-// p (padding) = 1ch left, 1ch right
-// c (content) = 1ch
-//                         mmmmmmmmmmmmmpcpp  
+// - (margin) = INDENT
+// = (padding) = 1ch left, 1ch right
+// C (content) = 1ch
+//                         -------------=C=
 static UL_ITEM: &str    = "              • ";
 
 /// The main function contains all initalisation steps, aswell as the main
@@ -73,7 +73,8 @@ fn main()
     static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
     static LISTENER_PORT: &str = "8800";      // Send Requests to this port
 
-    // when do we send a warning the server is reaching its capacity?
+    // When do we send a warning that the server has been on
+    // for a bit too long?
     let warn_restart = (MAX_REQUESTS / 4) * 3;
 
     debug!("Launch Sequence Initated");
@@ -99,8 +100,34 @@ fn main()
 
     debug!("Initalising TCP Stream");
 
-    warn!("TCP Is NOT ENCRYPTED and NOT SPEC COMPLIANT! DIM protocol
-{INDENT}is actually built in TLS! This is just for testing!");
+    // 🚩 FIXME: TCP is not encrypted!
+    // We need this TCP stream, but all content needs to be send over a secure
+    // end-to-end-encrypted channel. All items recieved must be decrypted, all
+    // items sent must be encrypted. This encryption will happen with
+    // AES-GCM-SIV.
+    //
+    // We also need to perform the AES/TLS/SSL handshakes to make this work.
+    // Anything that is intermediated by a server also has its contents
+    // encrypted seperately, to avoid exposing information. All the server does
+    // when one is involved is:
+    // - Route Traffic
+    // - Store ENCRYPTED data
+    // - Cache information for zero-trust architecure.
+    //      - This protocol, and this implementation, are built with the
+    //        assumpstions that:
+    //      - The only instance that can be trusted is that the user chose, and
+    //        any other instance is unsafe and possibly malicuous.
+    //      - Therefore, any possibly private data (IPs, Profile Names, Etc) is
+    //        to be cached and proxied by the server.
+    //
+    // Since DIM is NOT A MEDIA TRANSFER PROTOCOL, it is not uncommon to store
+    // data seperately and transfer it via HTTPS, FTP, or a simillar protocol.
+    // This is considered acceptable, as long as it maintains the same
+    // zero-trust arcitecture, and can only be accessed by authorised parties.
+    //
+    // If a user attempts to access a media server or file they do not
+    // explictly have access to, they are to get a 403 Forbidden, reguardless
+    // of the existance of media at that location.
     let network_listener = TcpListener::bind(format!("{LISTENER_IP}:{LISTENER_PORT}"));
 
     match network_listener
@@ -127,14 +154,17 @@ fn main()
 {INDENT}If this is not correct, please press {BOLD}{UNDERLINE}CTRL+C{ENDBLOCK} during the 
 {INDENT}launch countdown to abort the launch.");
 
-
+    // 📔 Note
     // set count to 0 to skip launch sequence. Is always 0 when hosting
     // a local server. Defult is 5 secconds when testing anything else.
+    // This mostly is to prevent the "onoseccond", where you do something
+    // and immeditely realise that you have just made a very big mistake.
     let launch_countdown: u8 = 0;
 
     for count in 0..launch_countdown
     {
         use std::time::Duration;
+        // 📔 Note
         // The extra spaces get rid of trailing "s" characters when the digits drop.
         // e.g.
         // Launching in 10 secconds
@@ -151,7 +181,6 @@ fn main()
 {INDENT}(NECESARLY) CRYPTOGRAPHICALLY SECURE!!
 {INDENT}It often is, but not always!");
 
-    // This automatically persists indefintely.
     // This unwrap is 100% since since we get out of the way earlier if its an Err
     for (packets_handled, stream) in network_listener
         .unwrap()
@@ -161,7 +190,7 @@ fn main()
     {
         match &stream
         {
-            Ok(message) => { trace!("Stream is OK"); }
+            Ok(_message) => { trace!("Stream is OK"); }
 
             Err(error) =>
             {
@@ -208,12 +237,13 @@ fn main()
 
 // SETUP HELPER FUNCTIONS
 
-fn verify_file_integrity(project: &str, major: &str, minor: &str, patch: &str, release_level: &str, release_number: &str)
+fn verify_file_integrity(version: String)
 {
     // 🚧 TODO: verify_file_integrity()
     // get repo from config files
     // get SHA-2 hash of files
     // Get desired SHA-2 hash from repo
+    //      - Likely something like $REPO/hashes/VERSION_STRING.txt
     // compare them
 
     // replace with actual hashes
@@ -236,8 +266,9 @@ fn verify_file_integrity(project: &str, major: &str, minor: &str, patch: &str, r
 {INDENT}are either corrupted or tampered with!");
 
         let fix_files = ask_yes_no("Would you like to fix your files?");
-        // todo!("Implement this!");
 
+        // 🚧 TODO: Make it actually fix files
+        // Re-install the software if needed.
         if fix_files 
         {
             info!("Fixing Files <NOT IMPLEMENTED YET>");
@@ -251,18 +282,10 @@ fn verify_file_integrity(project: &str, major: &str, minor: &str, patch: &str, r
 
 fn init_log4rs_config()
 {
-    // this is wayy too nested but this works for now
     match log4rs::init_file("log4rs.yml", Default::default())
     {
-        Ok(_) => 
-        {
-            trace!("log4rsl.yml initated properly");
-        }
-
-        Err(_error) =>
-        {
-            create_log4rs_file();
-        }
+        Ok(_) => trace!("log4rsl.yml initated properly"),
+        Err(_error) => create_log4rs_file(),
     }
 }
 
@@ -333,15 +356,12 @@ fn check_updates() -> String
 
     if release_level != "stable"
     {
-
         release = format!(":{release_level}.{release_number}");
     }
 
 
     warn!("The function {CODE_START}check_updaes(){ENDBLOCK} currently has no functionality.");
     trace!("Checking for Updates");
-
-    // verify_file_integrity(project, major, minor, patch, release_level, release_number);
 
     return String::from(format!("{project} {major}.{minor}.{patch}{release}",
             project = project.to_string(),
