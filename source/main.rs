@@ -59,6 +59,7 @@ fn main()
     info!("Initalising Program");
 
     let server_version: String = check_updates();
+    // verify_file_integrity(&server_version);
 
     // config variables
 
