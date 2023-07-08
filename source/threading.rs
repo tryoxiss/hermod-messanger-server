@@ -121,16 +121,18 @@ impl Worker
             // this nesting is.... ewwww...
             match message
             {
-                Message::NewJob(job) =>
-                {
-                    trace!("Worker #{id} got a job!");
-                    job();
-                    trace!("Worker #{id} finished its job!");
-                }
-                Message::Terminate => { break }
+                Message::NewJob(job) => Worker::handle_job(job, id),
+                Message::Terminate => break
             }
         });
 
         Worker { id: id, thread: Some(thread) }
+    }
+
+    fn handle_job(job: Job, id: usize)
+    {
+        trace!("Worker #{id} got a job!");
+        job();
+        trace!("Worker #{id} finished its job!");
     }
 }
