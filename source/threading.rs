@@ -25,14 +25,17 @@ impl ThreadPool
     /// The size is the number of threads in the ThreadPool
     ///
     /// This function will panic if threads is 0.
-    pub fn new(threads: usize) -> ThreadPool
+    pub fn new(threads: u16) -> ThreadPool
     {
         assert!(threads > 0);
 
         let (sender, reciever) = mpsc::channel();
         let reciever = Arc::new(Mutex::new(reciever));
 
-        let mut workers = Vec::with_capacity(threads);
+        // 🚩 FIXME: Unnecesary memory useage
+        // We use extra bits to represent a usize when the max size is a u16,
+        // this simply will not stand.
+        let mut workers = Vec::with_capacity(usize::from(threads));
 
         for id in 0..threads + 1
         {
@@ -97,13 +100,13 @@ impl Drop for ThreadPool
 
 struct Worker
 {
-    id: usize,
+    id: u16,
     thread: Option<thread::JoinHandle<()>>
 }
 
 impl Worker
 {
-    fn new(id: usize, reciever: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker
+    fn new(id: u16, reciever: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker
     {
         let thread = thread::spawn(move || loop
         {
@@ -118,7 +121,7 @@ impl Worker
                 .recv()
                 .unwrap();
 
-            // this nesting is.... ewwww...
+        // this nesting is.... ewwww...
             match message
             {
                 Message::NewJob(job) => Worker::handle_job(job, id),
@@ -129,7 +132,7 @@ impl Worker
         Worker { id: id, thread: Some(thread) }
     }
 
-    fn handle_job(job: Job, id: usize)
+    fn handle_job(job: Job, id: u16)
     {
         trace!("Worker #{id} got a job!");
         job();

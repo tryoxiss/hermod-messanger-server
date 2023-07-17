@@ -1,4 +1,4 @@
-/* 
+/*
  *      This file is part of:
  *      Codename Bonfire Instant Messanger
  *
@@ -13,7 +13,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Affero General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -37,37 +37,37 @@ use crate::{ENDBLOCK, CODE_START, INDENT};
 pub fn handle_connection(mut stream: TcpStream)
 {
     // [0; u16::MAX] (we just cant put a u16 in there because type mismacth.)
-    // A u16::MAX is the maximum packet length. Anything longer must be sent 
-    // in multiple packets consecurtive packets. This is specified with a 
+    // A u16::MAX is the maximum packet length. Anything longer must be sent
+    // in multiple packets consecurtive packets. This is specified with a
     // header flag `packet_series="Name";` and `packet_index=u32`
     //
     // This makes the maximum data transfer be:
-    // 
+    //
     // Approx: 281,470,681,700,000 Bytes
     // Approx: or 256 Terrabytes
-    // 
+    //
     // be the maximum data transfer in a single packet, but realistically because
     // of headers and such its only ...
-    // 
+    //
     // Approx: 214,748,364,700,000 bytes
     // Approx: 195.31 Terrabytes
-    // 
+    //
     // But if you need to transfer that much data in one sequence I don't think
     // this is the protocol to do it with, and if it is, then you can just have
-    // something that specifies this continues a previous packet series. 
-    // 
+    // something that specifies this continues a previous packet series.
+    //
     // The packet size limit is to ensure a timely connection for everyone, so
-    // a thread dosen't get stuck on just one request for a long time (making 
-    // it easier to DoS or DDoS), it will still get around to other requests 
+    // a thread dosen't get stuck on just one request for a long time (making
+    // it easier to DoS or DDoS), it will still get around to other requests
     // reasonably quickly before returning to processing the bigger request.
-    // 
+    //
     // THIS TECHNHECALLY ISN'T DEFINED IN THE SPEC!!! IT DEFINES THAT YOU **MAY**
     // HAVE A PAYLOAD SIZE LIMIT, AND WAYS TO SPLIT IT INTO MULTIPLE SEPERATE
     // PAYLOADS, BUT DOES NOT IMPOSE ANY PARTICULAR SIZE LIMITATION!!
-    // 
+    //
     // THIS JUST HAPPENS TO BE A CONVIENIENT AND REASONABLE SIZE LIMITATION!!
-    // 
-    // This also means machines don't need as much memory per thread. 
+    //
+    // This also means machines don't need as much memory per thread.
     // (Each thread takes about 65.535 or 66 KB of memory at most)
 
     // TODO: With this current implementation we simply drop extra bytes rather
@@ -86,14 +86,14 @@ pub fn handle_connection(mut stream: TcpStream)
 
     match stream.read(&mut buffer)
     {
-        Ok(message) => 
+        Ok(message) =>
         {
             trace!("Stream Read Successfully");
         }
 
         Err(error) =>
         {
-            error!("The TCP Stream read failed! 
+            error!("The TCP Stream read failed!
 {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
 {INDENT}Here we provide the compilers error:
 {error} ");
@@ -128,8 +128,8 @@ pub fn handle_connection(mut stream: TcpStream)
         let response = ResponsePacket::create(
             String::from("1.0"),
             411,
-            String::from("Payload Too Large"), 
-            response_variables, 
+            String::from("Payload Too Large"),
+            response_variables,
             String::from("Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `group=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
             );
 
@@ -139,10 +139,10 @@ pub fn handle_connection(mut stream: TcpStream)
             {
                 trace!("Wrote to the TCP Stream");
             }
-    
+
             Err(error) =>
             {
-                error!("The TCP Stream write failed! 
+                error!("The TCP Stream write failed!
     {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
     {INDENT}Here we provide the compilers error:
     {error} ");
@@ -164,13 +164,36 @@ pub fn handle_connection(mut stream: TcpStream)
     response_variables.push(HeaderFlag::new(String::from("channel_type"), String::from("text_message")));
     response_variables.push(HeaderFlag::new(String::from("message_type"), String::from("text")));
     response_variables.push(HeaderFlag::new(String::from("time_sent"), String::from("2023-06-25 12:25:22")));
+    response_variables.push(HeaderFlag::new(String::from("content_type"), String::from("text/plain")));
+
+    // SUPPORTED TYPES;
+    // AAA Support (Virtually Required and officailly endorsed)
+    // - text/plain
+    // - text/rich-markdown (see DIM Markdown Specification)
+    // - text/wikitext
+    // - text/key-value (INI Format)
+    //
+    // AA Support (Probably some fancier clients, not offically endorsed)
+    // - text/commonmark
+    // - text/html
+    //
+    // A Support (Nieche/Ehh?)
+    // - ALL text/arbatrary
+    // - text/arbatrary/uci
+    //
+    // E Support (Deprecated)
+    // - None!
+    //
+    // F Support (Actively Discouraged)
+    // - text/html - DIM Clients are not web browsers!!
+    // - <Any Code> - Use a code block in markdown!!
 
     // DIM
     let response = ResponsePacket::create(
         String::from("1.0"),
         200,
-        String::from("Serving"), 
-        response_variables, 
+        String::from("Serving"),
+        response_variables,
         String::from("Monically laughs at the futility of life. Oh also I got DIM packets sorta being contructed!")
         );
 
@@ -183,8 +206,8 @@ pub fn handle_connection(mut stream: TcpStream)
     // let response = ResponsePacket::create(
     //     String::from("1.0"),
     //     200,
-    //     String::from("Pong"), 
-    //     response_variables, 
+    //     String::from("Pong"),
+    //     response_variables,
     //     String::from("Process Took: <N>ns"));
 
     match stream.write(&response.as_bytes())
@@ -196,7 +219,7 @@ pub fn handle_connection(mut stream: TcpStream)
 
         Err(error) =>
         {
-            error!("The TCP Stream write failed! 
+            error!("The TCP Stream write failed!
 {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
 {INDENT}Here we provide the compilers error:
 {error} ");
@@ -215,7 +238,7 @@ pub fn handle_connection(mut stream: TcpStream)
 
 //         Err(error) =>
 //         {
-//             error!("The TCP Stream write failed! 
+//             error!("The TCP Stream write failed!
 // {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
 // {INDENT}Here we provide the compilers error:
 // {error} ");
@@ -232,7 +255,7 @@ pub fn handle_connection(mut stream: TcpStream)
 
         Err(error)  =>
         {
-            error!("The TCP Stream flush failed! 
+            error!("The TCP Stream flush failed!
 {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
 {INDENT}Here we provide the compilers error:
 {error} ");
@@ -242,13 +265,13 @@ pub fn handle_connection(mut stream: TcpStream)
 }
 
 #[derive(Debug)]
-struct HeaderFlag 
+struct HeaderFlag
 {
     key: String,
     value: String,
 }
 
-impl HeaderFlag 
+impl HeaderFlag
 {
     fn new(key: String, value: String) -> HeaderFlag
     {
@@ -260,7 +283,7 @@ impl HeaderFlag
     }
 }
 
-struct RequestPacket 
+struct RequestPacket
 {
     version: String,
     request_type: String,
@@ -273,7 +296,7 @@ struct RequestPacket
 // We need this so that I can impl it
 // It currently does not do anything
 // I may remove this and make it just like CreateResponsePacket or something
-struct ResponsePacket 
+struct ResponsePacket
 {
     version: String,
     response_code: u16,
@@ -283,7 +306,7 @@ struct ResponsePacket
     message: String,
 }
 
-impl ResponsePacket 
+impl ResponsePacket
 {
     fn create(version: String,
         response_code: u16,
@@ -298,13 +321,13 @@ impl ResponsePacket
         {
             trace!("variable: {:?}", variable);
 
-            // I can't += this for some reason ... 
+            // I can't += this for some reason ...
             response_variables = format!("{pre}{key}={value};", pre=response_variables, key=variable.key, value=variable.value);
         }
 
         trace!("{:?}", response_variables);
 
-        let packet = format!("{response_header}{response_variables}\n---\n{content}\n---");
+        let packet = format!("{response_header}{response_variables}\n{content}");
 
         trace!("{:?}", packet);
 
@@ -314,9 +337,9 @@ impl ResponsePacket
     }
 }
 
-// 
+//
 // Tests!
-// 
+//
 
 #[cfg(test)]
 mod tests
@@ -332,56 +355,8 @@ mod tests
         let response_variables: Vec<HeaderFlag> = vec![];
 
         assert_eq!(
-            "dim/1.0 200 Serving\n\n---\nTest content\n---",
+            "dim/1.0 200 Serving\nTest content",
             ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
         )
     }
-
-    // #[test]
-    // fn with_header_variables()
-    // {
-    //     let response_variables: Vec<HeaderFlag> = vec![];
-
-    //     assert_eq!(
-    //         "dim/1.0 200 Serving\n\n---\nTest content\n---",
-    //         ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
-    //     )
-    // }
-
-    // #[test]
-    // fn all_header_variables()
-    // {
-    //     let response_variables: Vec<HeaderFlag> = vec![];
-
-    //     assert_eq!(
-    //         "dim/1.0 200 Serving\n\n---\nTest content\n---",
-    //         ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
-    //     )
-    // }
-
-    // #[test]
-    // fn encryption_header_variables()
-    // {
-    //     let response_variables: Vec<HeaderFlag> = vec![];
-
-    //     assert_eq!(
-    //         "dim/1.0 200 Serving\n\n---\nTest content\n---",
-    //         ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
-    //     )
-    // }
-
-    // extern crate test;
-    // use test::bench;
-    // use test::Bencher;
-
-    // #[bench]
-    // fn bench_header_variables(benchmark: &mut Bencher)
-    // {
-    //     benchmark.iter(||
-    //     {
-    //         let response_variables: Vec<HeaderFlag> = vec![];
-
-    //         ResponsePacket::create(String::from("1.0"), 200, String::from("Serving"), response_variables, String::from("Test content"))
-    //     })
-    // }
 }

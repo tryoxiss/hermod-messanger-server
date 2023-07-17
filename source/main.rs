@@ -68,7 +68,7 @@ fn main()
     // NO VALUE? -> DEFULT
 
     // these will need to be let eventually
-    static THREADS: usize = 4;                // threads to add to the pool
+    static THREADS: u16 = 4;                // threads to add to the pool
     static MAX_REQUESTS: usize = usize::MAX;  // requests before automatic shutdown
     static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
     static LISTENER_PORT: &str = "8800";      // Send Requests to this port
@@ -149,7 +149,7 @@ fn main()
     info!("Your server is running
 {UL_ITEM}{BOLD}Software:{ENDBLOCK} {server_version}
 {UL_ITEM}{BOLD}Threads:{ENDBLOCK} {THREADS}
-{UL_ITEM}{BOLD}Max Requests:{ENDBLOCK} {MAX_REQUESTS} (warn at 3/4ths though)
+{UL_ITEM}{BOLD}Max Requests:{ENDBLOCK} {MAX_REQUESTS} (Warn: 3/4ths)
 {UL_ITEM}{BOLD}Location:{ENDBLOCK} {UNDERLINE}http://{LISTENER_IP}:{LISTENER_PORT}{ENDBLOCK}
 {INDENT}If this is not correct, please press {BOLD}{UNDERLINE}CTRL+C{ENDBLOCK} during the 
 {INDENT}launch countdown to abort the launch.");

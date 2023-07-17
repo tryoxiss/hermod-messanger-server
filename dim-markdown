@@ -1,0 +1,90 @@
+DIM Markdown Specification
+
+INLINES
+
+* OR _ = italics / weak em
+** = bold / strong em
+__ = underline
+
+[Links]()
+[ID Links][id]
+[id]: https://example.com
+`inline code blocks`
+~~strikethrough~~
+
+<Chips> :
+<User:user-guid> ( [@username][dim:uri] is also acceptable, if discouraged )
+<Channel:channel-guid>
+
+```language
+multi line
+    code
+    blocks
+uwu
+```
+
+Embeds (most commonly, images!)
+![Alt Text](URL)
+
+![ID Links work aswell][id2]
+
+[id2]: url
+
+- Unordered
+    1. and ordered
+        * lists
+            - nested to
+                1. exactly six
+                    1. layers
+
+(ul: `- `, or `* `, space required. OL Just needs to start at 1, numbers after that are figured out on thier own.)
+
+# H1
+## H2
+### H3
+#### H4
+##### H5
+###### H6
+
+$$LaTeX Blocks$$
+
+$$
+LaTeX Blocks
+$$
+
+> BLockquotes
+> They must use `> `, `>` is not good enough!
+
+> [!info]
+> Callouts
+
+> [!info] Naming Callouts
+> They must be able to have any name
+
+> [!info]-
+> Be collapsed by default
+
+> [!info]+
+> Or collapseable but expanded by default
+
+> [!info]+ Neting
+> Callouts and blockquotes must be
+> > [!info]- nestable
+> > to exactly
+> > > six layers
+> > > > deep!
+> > > > > meow
+> > > > > > <3
+
+@username - (Converts to chip)
+#channel - (Converts to chip)
+
+^Superscript^
+
+^^Subscript^^
+
+:emoji_name:
+:emoji_name@instance.tld:
+
+Hr
+---
