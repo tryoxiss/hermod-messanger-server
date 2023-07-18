@@ -120,60 +120,70 @@ pub fn handle_connection(mut stream: TcpStream)
 
     //debug!("buffer: {}; expected: {:?}", buffer[4], "\x00".as_bytes()[0]);
 
+    let mut response_variables: Vec<HeaderVariable> = vec![];
+
     if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
     {
+        response_variables.push(HeaderVariable::new(String::from("encyption"), String::from("aes")));
+        response_variables.push(HeaderVariable::new(String::from("force_encryption"), String::from("t")));
+
+        let response: String = ResponsePacket::create(
+            String::from("1.0"),
+            411,
+            String::from("Payload Too Large"),
+            response_variables,
+            String::from("max_length=1_048_575 ; Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `set=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
+            );
+
+        stream.write(&response.as_bytes())
+            .expect("Failed to write to TCP Stream!");
+
         return;
     }
 
-    let mut response_variables: Vec<HeaderFlag> = vec![];
-    response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
-    response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
-
-    let response = ResponsePacket::create(
-        String::from("1.0"),
-        411,
-        String::from("Payload Too Large"),
-        response_variables,
-        String::from("max_length=1_048_575 ; Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `set=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
-        );
-
-    stream.write(&response.as_bytes())
-        .expect("Failed to write to TCP Stream!");
-
     // Valid HTTP
     // let response = format!("HTTP/1.1 200 OK\r\n\r\n Connection established! \n Bufer_Length: {}; \n Packet_Length: {};", buffer.len(), "Unknown");
-    let mut response_variables: Vec<HeaderFlag> = vec![];
+    let mut header_variables: Vec<HeaderVariable> = vec![];
 
-    response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
-    response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
-    response_variables.push(HeaderFlag::new(String::from("author"), String::from("8d1a0cfb13df4ca3bdb0e912be01863b")));
-    response_variables.push(HeaderFlag::new(String::from("target"), String::from("none")));
-    response_variables.push(HeaderFlag::new(String::from("channel"), String::from("20026f0a1c484f95a0063d148c8898f9")));
-    response_variables.push(HeaderFlag::new(String::from("channel_type"), String::from("text_message")));
-    response_variables.push(HeaderFlag::new(String::from("message_type"), String::from("text")));
-    response_variables.push(HeaderFlag::new(String::from("time_sent"), String::from("2023-06-25 12:25:22")));
-    response_variables.push(HeaderFlag::new(String::from("content_type"), String::from("text/plain")));
+    let header_length: usize = 0;
+    for variable in 0..header_length
+    {
+        header_variables.push(HeaderVariable::new("key", "value"));
+    }
 
-    // SUPPORTED TYPES;
+    header_variables.push(HeaderVariable::new("encyption", "aes"));
+    header_variables.push(HeaderVariable::new("force_encryption", "t"));
+    header_variables.push(HeaderVariable::new("author", "8d1a0cfb13df4ca3bdb0e912be01863b"));
+    header_variables.push(HeaderVariable::new("target", "none"));
+    header_variables.push(HeaderVariable::new("channel", "20026f0a1c484f95a0063d148c8898f9"));
+    header_variables.push(HeaderVariable::new("channel_type", "text_message"));
+    header_variables.push(HeaderVariable::new("content_mime_type", "text/plain"));
+    header_variables.push(HeaderVariable::new("content_formatting", "none"));
+    header_variables.push(HeaderVariable::new("time_sent", "2023-06-25 12:25:22"));
+
+    // SUPPORTED TYPES for `content_formatting`
     // AAA Support (Virtually Required and officailly endorsed)
-    // - text/plain
-    // - text/rich-markdown (see DIM Markdown Specification)
-    // - text/wikitext
-    // - text/key-value (INI Format)
+    // - none (Plain Text)
+    // - rich-markdown (see DIM Markdown Specification)
+    // - wikitext
+    // - variables (INI Format)
+    //      Chosen because, even if its not your prefered format,
+    //      it's dead simple and does everything we need it to do.
+    //      it dosen't have a bunch of fancy stuff, just 
+    //      key = value ; comment
+    //      NOTE: comments with # are NOT ALLOWED!!
     //
     // AA Support (Probably some fancier clients, not offically endorsed)
-    // - text/commonmark
-    // - text/html
+    // - commonmark
     //
     // A Support (Nieche/Ehh?)
-    // - ALL text/arbatrary
-    // - text/arbatrary/uci
+    // - universal-chess-interface
     //
     // E Support (Deprecated)
     // - None!
     //
     // F Support (Actively Discouraged)
-    // - text/html - DIM Clients are not web browsers!!
+    // - html - DIM Clients are not web browsers!!
     // - <Any Code> - Use a code block in markdown!!
 
     // DIM
@@ -181,39 +191,12 @@ pub fn handle_connection(mut stream: TcpStream)
         String::from("1.0"),
         200,
         String::from("Serving"),
-        response_variables,
+        header_variables,
         String::from("Monically laughs at the futility of life. Oh also I got DIM packets sorta being contructed!")
         );
 
-    // response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
-    // response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
-    // response_variables.push(HeaderFlag::new(String::from("message_type"), String::from("pong")));
-    // response_variables.push(HeaderFlag::new(String::from("time_sent"), String::from("2023-06-25 12:29:22.")));
-
-    // // DIM
-    // let response = ResponsePacket::create(
-    //     String::from("1.0"),
-    //     200,
-    //     String::from("Pong"),
-    //     response_variables,
-    //     String::from("Process Took: <N>ns"));
-
-    match stream.write(&response.as_bytes())
-    {
-        Ok(message) =>
-        {
-            trace!("Wrote to the TCP Stream");
-        }
-
-        Err(error) =>
-        {
-            error!("The TCP Stream write failed!
-{INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
-{INDENT}Here we provide the compilers error:
-{error} ");
-            panic!("Why would the TCP stream flush panic !");
-        }
-    }
+    stream.write(&response.as_bytes())
+        .expect("Failed to write to TCP Stream!");
 
     // let plaintext = cipher.decrypt(nonce, response.as_ref()).unwrap();
 
@@ -253,20 +236,20 @@ pub fn handle_connection(mut stream: TcpStream)
 }
 
 #[derive(Debug)]
-struct HeaderFlag
+struct HeaderVariable
 {
     key: String,
     value: String,
 }
 
-impl HeaderFlag
+impl HeaderVariable
 {
-    fn new(key: String, value: String) -> HeaderFlag
+    fn new(key: &str, value: &str) -> HeaderVariable
     {
-        HeaderFlag
+        HeaderVariable
         {
-            key: key,
-            value: value,
+            key: key.to_string(),
+            value: value.to_string(),
         }
     }
 }
@@ -276,7 +259,7 @@ struct RequestPacket
     version: String,
     request_type: String,
     request_target: String,
-    header_flags: Vec<HeaderFlag>,
+    header_flags: Vec<HeaderVariable>,
 
     message: String,
 }
@@ -289,7 +272,7 @@ struct ResponsePacket
     version: String,
     response_code: u16,
     response_message: String,
-    header_flags: Vec<HeaderFlag>,
+    header_flags: Vec<HeaderVariable>,
 
     message: String,
 }
@@ -299,7 +282,7 @@ impl ResponsePacket
     fn create(version: String,
         response_code: u16,
         response_message: String,
-        header_variables: Vec<HeaderFlag>,
+        header_variables: Vec<HeaderVariable>,
         content: String) -> String
     {
         let response_header = format!("dim/{version} {code} {response_message}\n", code=response_code.to_string());
@@ -335,12 +318,12 @@ mod tests
     use log::trace;
 
     use crate::connection_handler::ResponsePacket;
-    use crate::connection_handler::HeaderFlag;
+    use crate::connection_handler::HeaderVariable;
 
     #[test]
     fn no_header_variables()
     {
-        let response_variables: Vec<HeaderFlag> = vec![];
+        let response_variables: Vec<HeaderVariable> = vec![];
 
         assert_eq!(
             "dim/1.0 200 Serving\nTest content",
