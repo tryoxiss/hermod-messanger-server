@@ -124,8 +124,8 @@ pub fn handle_connection(mut stream: TcpStream)
 
     if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
     {
-        response_variables.push(HeaderVariable::new(String::from("encyption"), String::from("aes")));
-        response_variables.push(HeaderVariable::new(String::from("force_encryption"), String::from("t")));
+        response_variables.push(HeaderVariable::new("encyption", "aes"));
+        response_variables.push(HeaderVariable::new("force_encryption", "t"));
 
         let response: String = ResponsePacket::create(
             String::from("1.0"),
