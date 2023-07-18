@@ -58,8 +58,9 @@ fn main()
 
     info!("Initalising Program");
 
+    const REPOSITORY: &str = "tryoxiss.github.io";
     let server_version: String = check_updates();
-    // verify_file_integrity(&server_version);
+    verify_file_integrity(&server_version, REPOSITORY);
 
     // config variables
 
@@ -68,12 +69,12 @@ fn main()
     // NO VALUE? -> DEFULT
 
     // these will need to be let eventually
-    static THREADS: u16 = 4;                  // threads to add to the pool
-    static MAX_REQUESTS: usize = usize::MAX;  // requests before automatic shutdown
-    static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
-    static LISTENER_PORT: &str = "8800";      // Send Requests to this port
+    const THREADS: u16 = 4;                  // threads to add to the pool
+    const MAX_REQUESTS: usize = usize::MAX;  // requests before automatic shutdown
+    const LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
+    const LISTENER_PORT: &str = "3467";      // Send Requests to this port (Rationale: DIMP typed on a telephone)
 
-    static WARN_RESTART_AT: usize = (MAX_REQUESTS / 4) * 3; // this will round but won't error
+    const WARN_RESTART_AT: usize = (MAX_REQUESTS / 4) * 3; // this will round but won't error
 
     debug!("Launch Sequence Initated");
 
@@ -225,7 +226,7 @@ fn main()
 
 // SETUP HELPER FUNCTIONS
 
-fn verify_file_integrity(version: String)
+fn verify_file_integrity(version: &String, repository: &str)
 {
     // 🚧 TODO: verify_file_integrity()
     // get repo from config files
@@ -234,9 +235,19 @@ fn verify_file_integrity(version: String)
     //      - Likely something like $REPO/hashes/VERSION_STRING.txt
     // compare them
 
+    // if repo does not exist
+    // {
+    //    info!("We could not find the repository {CODE_START}{repository}{ENDBLOCK}.");
+    // }
+
+    // if repo/versions/VERSION_STRING.hash does not exist
+    // {
+    //    info!("Could not find <Repo>/.checksums/{version}.hash in the repositories file tree.");
+    // }
+
     // replace with actual hashes
-    let local_software_hash = "Good2Go";
-    let server_match_hash = "Good2Go";
+    let local_software_hash: &str = "Good2Go";
+    let server_match_hash: &str = "Good2Go";
 
     trace!("Checking file integrity ...");
     if local_software_hash == server_match_hash
@@ -265,7 +276,6 @@ fn verify_file_integrity(version: String)
 
     warn!("The function {CODE_START}verify_file_integrity(){ENDBLOCK} currently has 
 {INDENT}no functionality.");
-    trace!("Veryfying file integrity");
 }
 
 fn init_log4rs_config()
@@ -281,7 +291,8 @@ fn create_log4rs_file()
 {
     let mut _file = File::create("log4rs.yml");
     match fs::write("log4rs.yml", 
-b"appenders:
+b"\
+appenders:
     stdout:
     # TODO: 
     # - Make `Capitalsed` instead of `UPPERCASE`.
