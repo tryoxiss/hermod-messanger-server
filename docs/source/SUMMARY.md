@@ -9,6 +9,8 @@
     - [Best Practices](./security/best_practices.md)
 - [Code Documentation](./code/index.md)
     - [Software Stack](./code/software-stack.md)
+- [End User Facing](./usage/index.md)
+    - [Exit Codes](./usage/exit-codes.md)
 
 ---
 

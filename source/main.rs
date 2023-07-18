@@ -201,6 +201,12 @@ fn main()
             info!("\x1b[01mYour server is now shutting down{ENDBLOCK}, since you reached your
 {INDENT}maximum packet limit. We will send a notification to you and your 
 {INDENT}servers usersers, informaing them of what happened.");
+
+            // This is not needed to shut down the program, but it is useful
+            // as the code is passed to the operating system, allowing for
+            // automation of tasks such as spinning up a new server to replace
+            // this one.
+            std::process::exit(255);
         }
         else if packets_handled >= WARN_RESTART_AT
         {

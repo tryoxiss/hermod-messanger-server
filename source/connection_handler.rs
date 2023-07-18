@@ -120,39 +120,25 @@ pub fn handle_connection(mut stream: TcpStream)
 
     //debug!("buffer: {}; expected: {:?}", buffer[4], "\x00".as_bytes()[0]);
 
-    // 65535
     if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
     {
-        let mut response_variables: Vec<HeaderFlag> = vec![];
-        response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
-        response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
-
-        let response = ResponsePacket::create(
-            String::from("1.0"),
-            411,
-            String::from("Payload Too Large"),
-            response_variables,
-            String::from("Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `group=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
-            );
-
-        match stream.write(&response.as_bytes())
-        {
-            Ok(_message) =>
-            {
-                trace!("Wrote to the TCP Stream");
-            }
-
-            Err(error) =>
-            {
-                error!("The TCP Stream write failed!
-    {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
-    {INDENT}Here we provide the compilers error:
-    {error} ");
-                panic!("Why would the TCP stream flush panic !");
-            }
-        }
         return;
     }
+
+    let mut response_variables: Vec<HeaderFlag> = vec![];
+    response_variables.push(HeaderFlag::new(String::from("encyption"), String::from("aes")));
+    response_variables.push(HeaderFlag::new(String::from("force_encryption"), String::from("t")));
+
+    let response = ResponsePacket::create(
+        String::from("1.0"),
+        411,
+        String::from("Payload Too Large"),
+        response_variables,
+        String::from("max_length=1_048_575 ; Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `set=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
+        );
+
+    stream.write(&response.as_bytes())
+        .expect("Failed to write to TCP Stream!");
 
     // Valid HTTP
     // let response = format!("HTTP/1.1 200 OK\r\n\r\n Connection established! \n Bufer_Length: {}; \n Packet_Length: {};", buffer.len(), "Unknown");
