@@ -73,7 +73,7 @@ fn main()
     static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
     static LISTENER_PORT: &str = "8800";      // Send Requests to this port
 
-    static WARN_RESTART_AT: usize = (MAX_REQUESTS / 4) * 3;
+    static WARN_RESTART_AT: usize = (MAX_REQUESTS / 4) * 3; // this will round but won't error
 
     debug!("Launch Sequence Initated");
 
@@ -137,23 +137,25 @@ fn main()
 {INDENT}If this is not correct, please press {BOLD}{UNDERLINE}CTRL+C{ENDBLOCK} during the 
 {INDENT}launch countdown to abort the launch.");
 
-    // 📔 Note
-    // set count to 0 to skip launch sequence. Is always 0 when hosting
-    // a local server. Defult is 5 secconds when testing anything else.
-    // This mostly is to prevent the "onoseccond", where you do something
-    // and immeditely realise that you have just made a very big mistake.
+    /* 📔 Note
+     * set count to 0 to skip launch sequence. Is always 0 when hosting
+     * a local server. Defult is 5 secconds when testing anything else.
+     * This mostly is to prevent the "onoseccond", where you do something
+     * and immeditely realise that you have just made a very big mistake.
+     */
     let launch_countdown: u8 = 0;
 
     for count in 0..launch_countdown
     {
         use std::time::Duration;
-        // 📔 Note
-        // The extra spaces get rid of trailing "s" characters when the digits drop.
-        // e.g.
-        // Launching in 10 secconds
-        // launching in 9 seccondss
-        //                        ^ Stayed because it was never overwritten.
-        // We only allow up to a count of 256 (u8), so two trailing spaces is enough.
+        /* 📔 Note
+         * The extra spaces get rid of trailing "s" characters when the digits drop.
+         * e.g.
+         * Launching in 10 secconds
+         * launching in 9 seccondss
+         *                        ^ Stayed because it was never overwritten.
+         * We only allow up to a count of 256 (u8), so two trailing spaces is enough.
+         */
         info!("Launching in {BOLD}{n}{ENDBLOCK} secconds  \x1b[A\r", n=launch_countdown-count);
         thread::sleep(Duration::from_secs(1));
     }
@@ -164,12 +166,12 @@ fn main()
 {INDENT}(NECESARLY) CRYPTOGRAPHICALLY SECURE!!
 {INDENT}It often is, but not always!");
 
-    // This unwrap is 100% since since we get out of the way earlier if its an Err
     for (packets_handled, stream) in network_listener
         .incoming()
         .enumerate()
         .take(MAX_REQUESTS)
     {
+        // can we `.expect` this too? Probably not since its not init.
         match &stream
         {
             Ok(_message) => { trace!("Stream is OK"); }
@@ -216,8 +218,6 @@ fn main()
         }
 
         trace!("lifetime: {packets_handled} packets handled");
-
-        // println!("\x1b[30mEnter Command ...\x1b[A\r{ENDBLOCK}");
     }
 
     info!("Begining server shutdown ...");
