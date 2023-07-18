@@ -101,6 +101,8 @@ pub fn handle_connection(mut stream: TcpStream)
         }
     }
 
+    debug!("{:?}", stream);
+
     let key = Aes256GcmSiv::generate_key(&mut OsRng);
     // let cipher = Aes256GcmSiv::new(&key);
     // let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
@@ -116,7 +118,7 @@ pub fn handle_connection(mut stream: TcpStream)
     // warn!("Unsafe {CODE_START}.unwrap(){ENDBLOCK} in {CODE_START}connection_handler.rs{ENDBLOCK}");
     // let response: Vec<u8> = response.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
 
-    trace!("buffer: {}; expected: {:?}", buffer[4], "\x00".as_bytes()[0]);
+    //debug!("buffer: {}; expected: {:?}", buffer[4], "\x00".as_bytes()[0]);
 
     // 65535
     if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]

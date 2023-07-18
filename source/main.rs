@@ -68,14 +68,12 @@ fn main()
     // NO VALUE? -> DEFULT
 
     // these will need to be let eventually
-    static THREADS: u16 = 4;                // threads to add to the pool
+    static THREADS: u16 = 4;                  // threads to add to the pool
     static MAX_REQUESTS: usize = usize::MAX;  // requests before automatic shutdown
     static LISTENER_IP: &str = "127.0.255.1"; // send requests to this IP
     static LISTENER_PORT: &str = "8800";      // Send Requests to this port
 
-    // When do we send a warning that the server has been on
-    // for a bit too long?
-    let warn_restart = (MAX_REQUESTS / 4) * 3;
+    static WARN_RESTART_AT: usize = (MAX_REQUESTS / 4) * 3;
 
     debug!("Launch Sequence Initated");
 
@@ -128,23 +126,8 @@ fn main()
     // If a user attempts to access a media server or file they do not
     // explictly have access to, they are to get a 403 Forbidden, reguardless
     // of the existance of media at that location.
-    let network_listener = TcpListener::bind(format!("{LISTENER_IP}:{LISTENER_PORT}"));
-
-    match network_listener
-    {
-        Ok(_) =>
-        {
-            debug!("Network listeer initalised!");
-        }
-
-        Err(error) =>
-        {
-            error!("An error occured when binding to the network listner.
-    {INDENT}Here is the rust compiler message:
-    {error}");
-            panic!();
-        }
-    }
+    let network_listener = TcpListener::bind(format!("{LISTENER_IP}:{LISTENER_PORT}"))
+        .expect(format!("Failed to bind to listner address {}:{}", LISTENER_IP, LISTENER_PORT).as_str());
 
     info!("Your server is running
 {UL_ITEM}{BOLD}Software:{ENDBLOCK} {server_version}
@@ -183,7 +166,6 @@ fn main()
 
     // This unwrap is 100% since since we get out of the way earlier if its an Err
     for (packets_handled, stream) in network_listener
-        .unwrap()
         .incoming()
         .enumerate()
         .take(MAX_REQUESTS)
@@ -205,7 +187,7 @@ fn main()
         // just above and if it is `continue;` the loop, skipping this block.
         thread_pool.run(|| { connection_handler::handle_connection(stream.unwrap()); });
 
-        if packets_handled == warn_restart
+        if packets_handled == WARN_RESTART_AT
         {
             info!("Your server has passed the imment restart threadhold.
 {INDENT}Your server will restart soon (ish). If this was too short, we
@@ -220,7 +202,7 @@ fn main()
 {INDENT}maximum packet limit. We will send a notification to you and your 
 {INDENT}servers usersers, informaing them of what happened.");
         }
-        else if packets_handled >= warn_restart
+        else if packets_handled >= WARN_RESTART_AT
         {
             info!("Plesae restart your server soon! It has handled more
 {INDENT}than 3/4ths of its single-run lifetime.
