@@ -54,6 +54,9 @@ static UL_ITEM: &str    = "              • ";
 /// program loop.
 fn main()
 {
+    // 🚩 FIXME: The main log file needs to be renammed to when it was run
+    // once a new file is created/after the program ends, so that recent.log
+    // can take its place instead of appending new logs to recent.log
     init_log4rs_config();
 
     info!("Initalising Program");
@@ -280,11 +283,8 @@ fn verify_file_integrity(version: &String, repository: &str)
 
 fn init_log4rs_config()
 {
-    match log4rs::init_file("log4rs.yml", Default::default())
-    {
-        Ok(_) => trace!("log4rsl.yml initated properly"),
-        Err(_error) => create_log4rs_file(),
-    }
+    log4rs::init_file("log4rs.yml", Default::default())
+        .expect("Failed to init log4rs file!");
 }
 
 fn create_log4rs_file()
@@ -305,15 +305,16 @@ appenders:
         kind: console
         encoder:
             pattern: \"{h(\\x1b[1m{l}):>16.16}\\x1b[0m {m}{n}\"
-    # my_file_logger:
-    #     kind: file
-    #     path: \"log/my.log\"
-    #     encoder:
-    #         pattern: \"{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}\"
+    file:
+        kind: file
+        path: \"logs/recent.log\"
+        encoder:
+            pattern: \"{d} : {m}{n}\"
 root:
-    level: info
+    level: trace
     appenders:
-        - stdout")
+        - stdout
+        - file")
     {
         Ok(_) =>
         {

@@ -1,0 +1,30 @@
+2023-07-18T18:27:54.551297057-07:00 : Initalising Program
+2023-07-18T18:27:54.551572828-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-18T18:27:54.551612163-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-18T18:27:54.551852066-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttp://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-18T18:27:54.551889106-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-18T18:27:54.551918041-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-18T18:29:02.871188266-07:00 : Initalising Program
+2023-07-18T18:29:02.871445392-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-18T18:29:02.871475338-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-18T18:29:02.871700273-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttp://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-18T18:29:02.871734889-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-18T18:29:02.871753053-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
