@@ -22,6 +22,9 @@ log4rs.yml
 *.pdb
 
 *.secret.*
+*.pem
+*.srl
+*.pfx
 
 # Why people??? Don't get your luggage in our repo!
 .vscode

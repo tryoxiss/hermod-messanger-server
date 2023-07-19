@@ -29,12 +29,15 @@ use terminal_out::ask_yes_no;
 mod threading;
 use threading::ThreadPool;
 
-use std::net::TcpListener;
+use std::net::{TcpListener, TcpStream};
+use native_tls::{Identity, TlsAcceptor, TlsStream};
 
 use std::thread;
 
 use std::fs;
 use std::fs::File;
+use std::io::{Read};
+use std::sync::Arc;
 
 use log::{trace, debug, info, warn, error};
 use log4rs;
@@ -103,38 +106,47 @@ fn main()
     debug!("Initalising Thread Pool");
     let thread_pool = ThreadPool::new(THREADS);
 
-    debug!("Initalising TCP Stream");
+    // debug!("Initalising TCP Stream");
 
-    // 🚩 FIXME: TCP is not encrypted!
-    // We need this TCP stream, but all content needs to be send over a secure
-    // end-to-end-encrypted channel. All items recieved must be decrypted, all
-    // items sent must be encrypted. This encryption will happen with
-    // AES-GCM-SIV.
-    //
-    // We also need to perform the AES/TLS/SSL handshakes to make this work.
-    // Anything that is intermediated by a server also has its contents
-    // encrypted seperately, to avoid exposing information. All the server does
-    // when one is involved is:
-    // - Route Traffic
-    // - Store ENCRYPTED data
-    // - Cache information for zero-trust architecure.
-    //      - This protocol, and this implementation, are built with the
-    //        assumpstions that:
-    //      - The only instance that can be trusted is that the user chose, and
-    //        any other instance is unsafe and possibly malicuous.
-    //      - Therefore, any possibly private data (IPs, Profile Names, Etc) is
-    //        to be cached and proxied by the server.
-    //
-    // Since DIM is NOT A MEDIA TRANSFER PROTOCOL, it is not uncommon to store
-    // data seperately and transfer it via HTTPS, FTP, or a simillar protocol.
-    // This is considered acceptable, as long as it maintains the same
-    // zero-trust arcitecture, and can only be accessed by authorised parties.
-    //
-    // If a user attempts to access a media server or file they do not
-    // explictly have access to, they are to get a 403 Forbidden, reguardless
-    // of the existance of media at that location.
-    let network_listener = TcpListener::bind(format!("{LISTENER_IP}:{LISTENER_PORT}"))
-        .expect(format!("Failed to bind to listner address {}:{}", LISTENER_IP, LISTENER_PORT).as_str());
+    // // 🚩 FIXME: TCP is not encrypted!
+    // // We need this TCP stream, but all content needs to be send over a secure
+    // // end-to-end-encrypted channel. All items recieved must be decrypted, all
+    // // items sent must be encrypted. This encryption will happen with
+    // // AES-GCM-SIV.
+    // //
+    // // We also need to perform the AES/TLS/SSL handshakes to make this work.
+    // // Anything that is intermediated by a server also has its contents
+    // // encrypted seperately, to avoid exposing information. All the server does
+    // // when one is involved is:
+    // // - Route Traffic
+    // // - Store ENCRYPTED data
+    // // - Cache information for zero-trust architecure.
+    // //      - This protocol, and this implementation, are built with the
+    // //        assumpstions that:
+    // //      - The only instance that can be trusted is that the user chose, and
+    // //        any other instance is unsafe and possibly malicuous.
+    // //      - Therefore, any possibly private data (IPs, Profile Names, Etc) is
+    // //        to be cached and proxied by the server.
+    // //
+    // // Since DIM is NOT A MEDIA TRANSFER PROTOCOL, it is not uncommon to store
+    // // data seperately and transfer it via HTTPS, FTP, or a simillar protocol.
+    // // This is considered acceptable, as long as it maintains the same
+    // // zero-trust arcitecture, and can only be accessed by authorised parties.
+    // //
+    // // If a user attempts to access a media server or file they do not
+    // // explictly have access to, they are to get a 403 Forbidden, reguardless
+    // // of the existance of media at that location.
+//     let network_listener = TcpListener::bind(format!("{LISTENER_IP}:{LISTENER_PORT}"))
+//         .expect(format!("Failed to bind to listner address {}:{}", LISTENER_IP, LISTENER_PORT).as_str());
+
+    let mut file = File::open("identity.pfx").unwrap();
+    let mut identity = vec![];
+    file.read_to_end(&mut identity).unwrap();
+    let identity = Identity::from_pkcs12(&identity, "admin").unwrap();
+
+    let network_listener = TcpListener::bind("127.0.255.1:3467").unwrap();
+    let acceptor = TlsAcceptor::new(identity).unwrap();
+    let acceptor = Arc::new(acceptor);
 
     info!("Your server is running
 {UL_ITEM}{BOLD}Software:{ENDBLOCK} {server_version}
@@ -173,28 +185,48 @@ fn main()
 {INDENT}(NECESARLY) CRYPTOGRAPHICALLY SECURE!!
 {INDENT}It often is, but not always!");
 
+
+
     for (packets_handled, stream) in network_listener
         .incoming()
         .enumerate()
         .take(MAX_REQUESTS)
     {
-        // can we `.expect` this too? Probably not since its not init.
-        match &stream
-        {
-            Ok(_message) => { trace!("Stream is OK"); }
-
-            Err(error) =>
-            {
+        match &stream {
+            Ok(stream) => { info!("TCP stream found!"); }
+            Err(error) => 
+            { 
                 error!("TCP Stream is an {CODE_START}Err{ENDBLOCK} type!! Something went
 {INDENT}terribly wrong! Attached is the compilers error
-{error}");
+{error}"); 
                 continue;
             }
         }
 
+        let acceptor = acceptor.clone();
+        
         // This .unwrap() is 100% safe, since we check if its an `Err` type 
         // just above and if it is `continue;` the loop, skipping this block.
-        thread_pool.run(|| { connection_handler::handle_connection(stream.unwrap()); });
+        thread_pool.run(move || 
+        { 
+            info!("Meow 2");
+
+            let stream = acceptor.accept(stream.unwrap());
+
+            match &stream
+            {
+                Ok(T) => { info!("Shit do be good right meow"); },
+                Err(E) => { warn!("Hissy fit"); }
+            }
+
+            info!("Meow");
+
+            // stream
+            //     .expect("wth?")
+            //     .write("Hiss");
+
+            connection_handler::handle_connection(stream.unwrap()); 
+        });
 
         if packets_handled == WARN_RESTART_AT
         {

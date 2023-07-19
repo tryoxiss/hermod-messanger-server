@@ -25,6 +25,8 @@ ini = "1.3.0"           # MIT  -OR-  LGPL 3.0 Or Later
 log = "0.4"
 log4rs = "1"
 
+native-tls = "0.2.11"   # MIT  -OR-  Apache 2.0
+
 # FOR CONFIG: 
 # INI Format
 # `hermod.config`
