@@ -18,8 +18,7 @@ As many exit code
 `3467` DIMP
 
 `0` : Unknown Exit Reason
-`1` : Catch-All Exit
-`2` : User Manual Exit
+`1` : Catch-All Error Exit
 `123` : Failed to Iterate (Rationale: Iterators count, this counts)
 `236` : Config Files Missing (Rationale: when typed on a telephone, this could be "CFM", or "Config Files Missing")
 `255` : Max Packet Capacity Reached. This error code is 255 since it is easily recignised as an intiger limit, in the hopes that people may have an idea of what happened without looking at the docs.
