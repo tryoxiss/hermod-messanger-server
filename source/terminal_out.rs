@@ -1,3 +1,59 @@
+macro_rules! variable_trace
+{
+    ($variable:expr, $value:expr) =>
+    {
+        eprintln!("\x1b[90m\x1b[1m    Variable\x1b[0m {} = {}", $variable, $value);
+    }
+}
+
+// macro_rules! memory_trace
+// {
+//     ($variable:expr, $value:expr) =>
+//     {
+//         eprintln!("\x1b[90m\x1b[1m    Variable\x1b[0m {} = {}", $variable, $value);
+//     }
+// }
+
+// macro_rules! started
+// {
+//     ($job:expr, $thread:expr) =>
+//     {
+//         eprintln!("\x1b[90m\x1b[1m     Started\x1b[0m {} on thread {}", $job, $thread);
+//     }
+// }
+
+// macro_rules! progress
+// {
+//     ($variable:expr, $value:expr) =>
+//     {
+//         eprintln!("\x1b[90m\x1b[1m     Recieved\x1b[0m {} = {}", $variable, $value);
+//     }
+// }
+
+// macro_rules! completed
+// {
+//     ($variable:expr, $value:expr) =>
+//     {
+//         eprintln!("\x1b[90m\x1b[1m     Recieved\x1b[0m {} = {}", $variable, $value);
+//     }
+// }
+
+// macro_rules! recieved
+// {
+//     ($variable:expr, $value:expr) =>
+//     {
+//         eprintln!("\x1b[90m\x1b[1m     Recieved\x1b[0m {} = {}", $variable, $value);
+//     }
+// }
+
+// macro_rules! warn
+// {
+//     ($message:expr) =>
+//     {
+//         eprintln!("\x1b[93m\x1b[1m     Warning\x1b[0m {}", $message);
+//     }
+// }
+
 // macro_rules! trace
 // {
 //     ($message:expr) =>

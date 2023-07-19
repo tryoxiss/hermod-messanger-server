@@ -21,7 +21,8 @@
 
 mod connection_handler;
 
-// #[macro_use]
+// Make our own logging system, with messaghes being *what is it doing* and not *what level is it*
+#[macro_use]
 mod terminal_out;
 use terminal_out::ask_yes_no;
 
@@ -78,6 +79,8 @@ fn main()
     const LISTENER_PORT: &str = "3467";      // Send Requests to this port (Rationale: DIMP typed on a telephone)
 
     const WARN_RESTART_AT: usize = (MAX_REQUESTS / 4) * 3; // this will round but won't error
+
+    // variable_trace!("THREADS", THREADS);
 
     debug!("Launch Sequence Initated");
 
@@ -309,7 +312,7 @@ appenders:
         kind: file
         path: \"logs/recent.log\"
         encoder:
-            pattern: \"{d} : {m}{n}\"
+            pattern: \"{d(%Y-%m-%d %H:%M:%S)} : {m}{n}\"
 root:
     level: trace
     appenders:
