@@ -80,6 +80,22 @@ pub fn handle_connection(mut stream: TlsStream<TcpStream>)
         {
             header_variables.push(HeaderVariable::new("key", "value"));
         }
+
+
+        // Use Aes-Gcm-Siv for Client-to-Server (aka not Peer-to-Peer)
+        // ---
+        // We can use a CSPRNG or Crypographically Secure Psudo-Random Number
+        // Generator for encryption values. We will use ChaCha20-poly1305 since
+        // - It can produce 1.8gb of randomness every seccond, making it far from
+        //   a bottleneck.
+        // - initalises fast (but startup times are not very important)
+        // - only uses 136 bytes of perpetual memory 
+        // - has been [deeply analyised](ChaCha20Analysis) 
+        // 
+        // [ChaCha20Analysis]: https://datatracker.ietf.org/doc/html/rfc7539#section-1
+        // (Same as Above)   : https://www.cryptrec.go.jp/exreport/cryptrec-ex-2601-2016.pdf
+        // (Summary)         : https://en.wikipedia.org/wiki/ChaCha20-Poly1305
+        // ---
     
         header_variables.push(HeaderVariable::new("encyption", "aes"));
         header_variables.push(HeaderVariable::new("force_encryption", "t"));
@@ -166,135 +182,6 @@ pub fn handle_connection(mut stream: TlsStream<TcpStream>)
             }
         }
 }
-
-// pub fn handle_connection(mut stream: TcpStream)
-// {
-
-
-
-//     let key = Aes256GcmSiv::generate_key(&mut OsRng);
-//     // let cipher = Aes256GcmSiv::new(&key);
-//     // let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
-//     // let ciphertext: Vec<u8> = cipher.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
-//     // let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
-//     // assert_eq!(&plaintext.unwrap(), b"plaintext message");
-
-//     // trace!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
-
-//     let cipher = Aes256GcmSiv::new(&key);
-//     let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
-
-//     let mut response_variables: Vec<HeaderVariable> = vec![];
-
-//     if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
-//     {
-//         response_variables.push(HeaderVariable::new("encyption", "aes"));
-//         response_variables.push(HeaderVariable::new("force_encryption", "t"));
-
-//         let response: String = ResponsePacket::create(
-//             String::from("1.0"),
-//             411,
-//             String::from("Payload Too Large"),
-//             response_variables,
-//             String::from("max_length=1_048_575 ; Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `set=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS.")
-//             );
-
-//         stream.write(&response.as_bytes())
-//             .expect("Failed to write to TCP Stream!");
-
-//         return;
-//     }
-
-//     let mut header_variables: Vec<HeaderVariable> = vec![];
-
-//     let header_length: usize = 0;
-//     for variable in 0..header_length
-//     {
-//         header_variables.push(HeaderVariable::new("key", "value"));
-//     }
-
-//     header_variables.push(HeaderVariable::new("encyption", "aes"));
-//     header_variables.push(HeaderVariable::new("force_encryption", "t"));
-//     header_variables.push(HeaderVariable::new("author", "8d1a0cfb13df4ca3bdb0e912be01863b"));
-//     header_variables.push(HeaderVariable::new("target", "none"));
-//     header_variables.push(HeaderVariable::new("channel", "20026f0a1c484f95a0063d148c8898f9"));
-//     header_variables.push(HeaderVariable::new("channel_type", "text_message"));
-//     header_variables.push(HeaderVariable::new("content_mime_type", "text/plain"));
-//     header_variables.push(HeaderVariable::new("content_formatting", "none"));
-//     header_variables.push(HeaderVariable::new("time_sent", "2023-06-25 12:25:22"));
-
-//     /*
-//      * SUPPORTED TYPES for `content_formatting`
-//      * AAA Support (Virtually Required and officailly endorsed)
-//      * - none (Plain Text)
-//      * - rich-markdown (see DIM Markdown Specification)
-//      * - wikitext
-//      * - variables (INI Format)
-//      *      Chosen because, even if its not your prefered format,
-//      *      it's dead simple and does everything we need it to do.
-//      *      it dosen't have a bunch of fancy stuff, just 
-//      *      key = value ; comment
-//      *      NOTE: comments with # are NOT ALLOWED!!
-//      *
-//      * AA Support (Probably some fancier clients, not offically endorsed)
-//      * - commonmark
-//      *
-//      * A Support (Nieche/Ehh?)
-//      * - universal-chess-interface
-//      *
-//      * E Support (Deprecated)
-//      * - None!
-//      *
-//      * F Support (Actively Discouraged)
-//      * - html - DIM Clients are not web browsers!!
-//      * - <Any Code> - Use a code block in markdown!!
-//      */
-
-//     // DIM
-//     let response = ResponsePacket::create(
-//         String::from("1.0"),
-//         200,
-//         String::from("Serving"),
-//         header_variables,
-//         String::from("Manically laughs at the futility of life. Oh also I got DIM packets sorta being contructed!")
-//         );
-
-//     // let plaintext = cipher.decrypt(nonce, response.as_ref()).unwrap();
-
-// //     match stream.write(&plaintext)
-// //     {
-// //         Ok(message) =>
-// //         {
-// //             trace!("Wrote to the TCP Stream");
-// //         }
-
-// //         Err(error) =>
-// //         {
-// //             error!("The TCP Stream write failed!
-// // {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
-// // {INDENT}Here we provide the compilers error:
-// // {error} ");
-// //             panic!("Why would the TCP stream flush panic !");
-// //         }
-// //     }
-
-//     match stream.flush()
-//     {
-//         Ok(_message) =>
-//         {
-//             trace!("TCP Stream Flushed");
-//         }
-
-//         Err(error)  =>
-//         {
-//             error!("The TCP Stream flush failed!
-// {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
-// {INDENT}Here we provide the compilers error:
-// {error} ");
-//             panic!("Why would the TCP stream flush panic !");
-//         }
-//     }
-// }
 
 #[derive(Debug)]
 struct HeaderVariable

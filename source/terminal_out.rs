@@ -98,40 +98,6 @@ use std::io;
 
 use log::{trace, debug, info, warn, error};
 
-pub fn ask_yes_no(question: &str) -> bool
-{
-    let mut answer: String = String::from("");
-
-    eprint!("\x1b[96m\x1b[1m         Ask\x1b[0m {} (Y/n) ", question);
-
-    loop
-    {
-        io::stdin()
-            .read_line(&mut answer)
-            .expect("Failed to read lines");
-
-        answer = answer.trim().to_lowercase();
-        trace!("Read answer as: {}", answer);
-
-        if answer == String::from("y")
-        {
-            trace!("Read 'y' (yes), returning `true`.");
-            return true;
-        }
-        else if answer == String::from("n")
-        {
-            trace!("Read 'n' (no), returning `false`.");
-            return false;
-        }
-        else 
-        {
-            error!("Not a valid answer. Please input 'y' or 'n'.");
-        }
-
-        answer = String::from("");
-    }
-}
-
 macro_rules! fatal
 {
     // Codes:
