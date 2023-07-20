@@ -154,3 +154,432 @@
 2023-07-18T19:33:24.595482452-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
              (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
              It often is, but not always!
+2023-07-19T15:28:37.046264434-07:00 : Initalising Program
+2023-07-19T15:28:37.046554112-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-19T15:28:37.046573088-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-19T15:28:37.050717200-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttp://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-19T15:28:37.050751404-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-19T15:28:37.050777173-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-19T15:30:11.511730363-07:00 : TCP stream found!
+2023-07-19T15:30:11.511858405-07:00 : Meow 2
+2023-07-19T15:30:11.577721061-07:00 : Hissy fit
+2023-07-19T15:30:11.577779342-07:00 : Meow
+2023-07-19T15:30:11.577883438-07:00 : TCP stream found!
+2023-07-19T15:30:11.577951236-07:00 : Meow 2
+2023-07-19T15:30:11.578128812-07:00 : Hissy fit
+2023-07-19T15:30:11.578160622-07:00 : Meow
+2023-07-19T15:30:11.578238800-07:00 : TCP stream found!
+2023-07-19T15:30:11.578292361-07:00 : Meow 2
+2023-07-19T15:30:11.578404293-07:00 : Hissy fit
+2023-07-19T15:30:11.578423068-07:00 : Meow
+2023-07-19T15:30:11.578513078-07:00 : TCP stream found!
+2023-07-19T15:30:11.578568242-07:00 : Meow 2
+2023-07-19T15:30:11.578714840-07:00 : Hissy fit
+2023-07-19T15:30:11.578741490-07:00 : Meow
+2023-07-19T15:30:11.578795783-07:00 : TCP stream found!
+2023-07-19T15:30:11.578826270-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:30:11.578945415-07:00 : TCP stream found!
+2023-07-19T15:30:11.578972817-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:30:11.579085791-07:00 : TCP stream found!
+2023-07-19T15:30:11.579113493-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:30:11.579236395-07:00 : TCP stream found!
+2023-07-19T15:30:11.579263246-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:30:11.579376560-07:00 : TCP stream found!
+2023-07-19T15:30:11.579404152-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:30:11.579518017-07:00 : TCP stream found!
+2023-07-19T15:30:11.579545329-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.201001073-07:00 : TCP stream found!
+2023-07-19T15:32:05.201068431-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.201256266-07:00 : TCP stream found!
+2023-07-19T15:32:05.201279950-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.201456664-07:00 : TCP stream found!
+2023-07-19T15:32:05.201479127-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.201628168-07:00 : TCP stream found!
+2023-07-19T15:32:05.201649609-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.201811164-07:00 : TCP stream found!
+2023-07-19T15:32:05.201830030-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.202012886-07:00 : TCP stream found!
+2023-07-19T15:32:05.202030028-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.202182696-07:00 : TCP stream found!
+2023-07-19T15:32:05.202199879-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.202347698-07:00 : TCP stream found!
+2023-07-19T15:32:05.202364941-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.202520405-07:00 : TCP stream found!
+2023-07-19T15:32:05.202537327-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:32:05.202704372-07:00 : TCP stream found!
+2023-07-19T15:32:05.202722476-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.306054321-07:00 : TCP stream found!
+2023-07-19T15:36:18.306160462-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.306430803-07:00 : TCP stream found!
+2023-07-19T15:36:18.306456321-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.306717825-07:00 : TCP stream found!
+2023-07-19T15:36:18.306742752-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.307074639-07:00 : TCP stream found!
+2023-07-19T15:36:18.307098585-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.307319342-07:00 : TCP stream found!
+2023-07-19T15:36:18.307342726-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.307566439-07:00 : TCP stream found!
+2023-07-19T15:36:18.307587048-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.307836609-07:00 : TCP stream found!
+2023-07-19T15:36:18.307866496-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.308104636-07:00 : TCP stream found!
+2023-07-19T15:36:18.308127329-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.308330412-07:00 : TCP stream found!
+2023-07-19T15:36:18.308348156-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:36:18.308596676-07:00 : TCP stream found!
+2023-07-19T15:36:18.308629948-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:37:59.220637654-07:00 : Initalising Program
+2023-07-19T15:37:59.220805962-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-19T15:37:59.220830970-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-19T15:37:59.224193744-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttp://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-19T15:37:59.224222288-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-19T15:37:59.224243999-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-19T15:38:02.581341760-07:00 : TCP stream found!
+2023-07-19T15:38:02.581449984-07:00 : Meow 2
+2023-07-19T15:38:02.581750682-07:00 : Hissy fit
+2023-07-19T15:38:02.581777273-07:00 : Meow
+2023-07-19T15:38:02.581899954-07:00 : TCP stream found!
+2023-07-19T15:38:02.581955249-07:00 : Meow 2
+2023-07-19T15:38:02.582088651-07:00 : Hissy fit
+2023-07-19T15:38:02.582111805-07:00 : Meow
+2023-07-19T15:38:02.582213497-07:00 : TCP stream found!
+2023-07-19T15:38:02.582261728-07:00 : Meow 2
+2023-07-19T15:38:02.582393407-07:00 : Hissy fit
+2023-07-19T15:38:02.582421460-07:00 : Meow
+2023-07-19T15:38:02.582511831-07:00 : TCP stream found!
+2023-07-19T15:38:02.582562346-07:00 : Meow 2
+2023-07-19T15:38:02.582695197-07:00 : Hissy fit
+2023-07-19T15:38:02.582719163-07:00 : Meow
+2023-07-19T15:38:02.582809343-07:00 : TCP stream found!
+2023-07-19T15:38:02.582838999-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:38:02.583019801-07:00 : TCP stream found!
+2023-07-19T15:38:02.583050208-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:38:02.583213136-07:00 : TCP stream found!
+2023-07-19T15:38:02.583241830-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:38:02.583414226-07:00 : TCP stream found!
+2023-07-19T15:38:02.583445866-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:38:02.583704585-07:00 : TCP stream found!
+2023-07-19T15:38:02.583743699-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:38:02.583998991-07:00 : TCP stream found!
+2023-07-19T15:38:02.584023588-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:42.771557105-07:00 : Initalising Program
+2023-07-19T15:51:42.771641905-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-19T15:51:42.771664688-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-19T15:51:42.775108949-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttp://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-19T15:51:42.775139556-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-19T15:51:42.775162400-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-19T15:51:44.541760633-07:00 : TCP stream found!
+2023-07-19T15:51:44.541872244-07:00 : Meow 2
+2023-07-19T15:51:44.548198591-07:00 : Shit do be good right meow
+2023-07-19T15:51:44.548234419-07:00 : Meow
+2023-07-19T15:51:49.113342707-07:00 : TCP stream found!
+2023-07-19T15:51:49.113468996-07:00 : Meow 2
+2023-07-19T15:51:49.113702086-07:00 : Hissy fit
+2023-07-19T15:51:49.113732614-07:00 : Meow
+2023-07-19T15:51:49.113875013-07:00 : TCP stream found!
+2023-07-19T15:51:49.113935698-07:00 : Meow 2
+2023-07-19T15:51:49.114067507-07:00 : Hissy fit
+2023-07-19T15:51:49.114089929-07:00 : Meow
+2023-07-19T15:51:49.114230886-07:00 : TCP stream found!
+2023-07-19T15:51:49.114276612-07:00 : Meow 2
+2023-07-19T15:51:49.114387382-07:00 : Hissy fit
+2023-07-19T15:51:49.114406608-07:00 : Meow
+2023-07-19T15:51:49.114503331-07:00 : TCP stream found!
+2023-07-19T15:51:49.114545190-07:00 : Meow 2
+2023-07-19T15:51:49.114616024-07:00 : Hissy fit
+2023-07-19T15:51:49.114634258-07:00 : Meow
+2023-07-19T15:51:49.114738004-07:00 : TCP stream found!
+2023-07-19T15:51:49.114769434-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:49.114969372-07:00 : TCP stream found!
+2023-07-19T15:51:49.115-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:49.115145715-07:00 : TCP stream found!
+2023-07-19T15:51:49.115174980-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:49.115313672-07:00 : TCP stream found!
+2023-07-19T15:51:49.115343699-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:49.115487401-07:00 : TCP stream found!
+2023-07-19T15:51:49.115522096-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:49.115655418-07:00 : TCP stream found!
+2023-07-19T15:51:49.115685405-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.564013781-07:00 : TCP stream found!
+2023-07-19T15:51:51.564097379-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.564269495-07:00 : TCP stream found!
+2023-07-19T15:51:51.564298550-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.564444505-07:00 : TCP stream found!
+2023-07-19T15:51:51.564473320-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.564628042-07:00 : TCP stream found!
+2023-07-19T15:51:51.564646978-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.564769660-07:00 : TCP stream found!
+2023-07-19T15:51:51.564788345-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.564915716-07:00 : TCP stream found!
+2023-07-19T15:51:51.564933039-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.565051643-07:00 : TCP stream found!
+2023-07-19T15:51:51.565068565-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.565204101-07:00 : TCP stream found!
+2023-07-19T15:51:51.565221855-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.565342833-07:00 : TCP stream found!
+2023-07-19T15:51:51.565359364-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:51:51.565490733-07:00 : TCP stream found!
+2023-07-19T15:51:51.565508055-07:00 : Something went wrong in [40mthreading.rs:ThreadPool:run[0m (line 62).
+             Here is the rust error message: 
+ sending on a closed channel
+2023-07-19T15:52:00.419371952-07:00 : Initalising Program
+2023-07-19T15:52:00.419480377-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-19T15:52:00.419508931-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-19T15:52:00.422661620-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttp://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-19T15:52:00.422697548-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-19T15:52:00.422721684-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-19T15:52:08.036233907-07:00 : TCP stream found!
+2023-07-19T15:52:08.036353803-07:00 : Meow 2
+2023-07-19T15:52:08.042575623-07:00 : Shit do be good right meow
+2023-07-19T15:52:08.042607273-07:00 : Meow
+2023-07-19T15:52:08.051438084-07:00 : TCP stream found!
+2023-07-19T15:52:08.051528064-07:00 : Meow 2
+2023-07-19T15:52:08.058801412-07:00 : Shit do be good right meow
+2023-07-19T15:52:08.058833412-07:00 : Meow
+2023-07-19T15:52:11.908658069-07:00 : TCP stream found!
+2023-07-19T15:52:11.908876391-07:00 : Meow 2
+2023-07-19T15:52:11.915858669-07:00 : Shit do be good right meow
+2023-07-19T15:52:11.915898524-07:00 : Meow
+2023-07-19T15:52:12.008050613-07:00 : TCP stream found!
+2023-07-19T15:52:12.008151042-07:00 : Meow 2
+2023-07-19T15:52:12.009446942-07:00 : Shit do be good right meow
+2023-07-19T15:52:12.009474814-07:00 : Meow
+2023-07-19T15:53:51.072981071-07:00 : Initalising Program
+2023-07-19T15:53:51.073159328-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-19T15:53:51.073176601-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-19T15:53:51.076252304-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttp://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-19T15:53:51.076277191-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-19T15:53:51.076291158-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-19T15:53:52.162017122-07:00 : TCP stream found!
+2023-07-19T15:53:52.162127761-07:00 : Meow 2
+2023-07-19T15:53:52.168306960-07:00 : Shit do be good right meow
+2023-07-19T15:53:52.168341295-07:00 : Meow
+2023-07-19T15:53:52.254804480-07:00 : TCP stream found!
+2023-07-19T15:53:52.254914228-07:00 : Meow 2
+2023-07-19T15:53:52.256117953-07:00 : Shit do be good right meow
+2023-07-19T15:53:52.256142429-07:00 : Meow
+2023-07-19T15:55:08.086208399-07:00 : TCP stream found!
+2023-07-19T15:55:08.086326152-07:00 : Meow 2
+2023-07-19T15:55:08.094674371-07:00 : Shit do be good right meow
+2023-07-19T15:55:08.094713014-07:00 : Meow
+2023-07-19T15:55:08.181870692-07:00 : TCP stream found!
+2023-07-19T15:55:08.181964790-07:00 : Meow 2
+2023-07-19T15:55:08.183065310-07:00 : Shit do be good right meow
+2023-07-19T15:55:08.183090458-07:00 : Meow
+2023-07-19T15:55:08.863522113-07:00 : TCP stream found!
+2023-07-19T15:55:08.863613796-07:00 : Meow 2
+2023-07-19T15:55:08.868623906-07:00 : Shit do be good right meow
+2023-07-19T15:55:08.868654123-07:00 : Meow
+2023-07-19T15:55:08.934347812-07:00 : TCP stream found!
+2023-07-19T15:55:08.934437101-07:00 : Meow 2
+2023-07-19T15:55:08.935612122-07:00 : Shit do be good right meow
+2023-07-19T15:55:08.935643271-07:00 : Meow
+2023-07-19T15:55:09.286963818-07:00 : TCP stream found!
+2023-07-19T15:55:09.287103021-07:00 : Meow 2
+2023-07-19T15:55:09.294169337-07:00 : Shit do be good right meow
+2023-07-19T15:55:09.294227277-07:00 : Meow
+2023-07-19T15:55:09.350914382-07:00 : TCP stream found!
+2023-07-19T15:55:09.351016776-07:00 : Meow 2
+2023-07-19T15:55:09.353426941-07:00 : Shit do be good right meow
+2023-07-19T15:55:09.353466095-07:00 : Meow
+2023-07-19T15:55:09.581382313-07:00 : TCP stream found!
+2023-07-19T15:55:09.581480689-07:00 : Meow 2
+2023-07-19T15:55:09.586821023-07:00 : Shit do be good right meow
+2023-07-19T15:55:09.586858534-07:00 : Meow
+2023-07-19T15:55:09.665410827-07:00 : TCP stream found!
+2023-07-19T15:55:09.665513051-07:00 : Meow 2
+2023-07-19T15:55:09.666783352-07:00 : Shit do be good right meow
+2023-07-19T15:55:09.666811986-07:00 : Meow
+2023-07-19T16:14:19.562182291-07:00 : Initalising Program
+2023-07-19T16:14:19.562269115-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-19T16:14:19.562301186-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-19T16:14:19.565385656-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttp://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-19T16:14:19.565414109-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-19T16:14:19.565435319-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-19T16:14:22.778650226-07:00 : TCP stream found!
+2023-07-19T16:14:22.778772928-07:00 : Meow 2
+2023-07-19T16:14:22.784844504-07:00 : Shit do be good right meow
+2023-07-19T16:14:22.784878478-07:00 : Meow
+2023-07-19T16:14:22.864532560-07:00 : TCP stream found!
+2023-07-19T16:14:22.864635534-07:00 : Meow 2
+2023-07-19T16:14:22.865823169-07:00 : Shit do be good right meow
+2023-07-19T16:14:22.865846192-07:00 : Meow
+2023-07-19T16:16:06.747465775-07:00 : Initalising Program
+2023-07-19T16:16:06.747578979-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-19T16:16:06.747605088-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-19T16:16:06.753505069-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-19T16:16:06.753538983-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-19T16:16:06.753566125-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-19T16:16:08.132449691-07:00 : TCP stream found!
+2023-07-19T16:16:08.132551844-07:00 : Meow 2
+2023-07-19T16:16:08.138461734-07:00 : Shit do be good right meow
+2023-07-19T16:16:08.138495117-07:00 : Meow
+2023-07-19T16:16:08.321469921-07:00 : TCP stream found!
+2023-07-19T16:16:08.321583886-07:00 : Meow 2
+2023-07-19T16:16:08.322812258-07:00 : Shit do be good right meow
+2023-07-19T16:16:08.322835182-07:00 : Meow
+2023-07-19T17:04:24.461125128-07:00 : TCP stream found!
+2023-07-19T17:04:24.461221751-07:00 : Meow 2
+2023-07-19T17:04:24.468211011-07:00 : Shit do be good right meow
+2023-07-19T17:04:24.468250436-07:00 : Meow
+2023-07-19T17:04:24.547835660-07:00 : TCP stream found!
+2023-07-19T17:04:24.547932964-07:00 : Meow 2
+2023-07-19T17:04:24.549038214-07:00 : Shit do be good right meow
+2023-07-19T17:04:24.549060416-07:00 : Meow

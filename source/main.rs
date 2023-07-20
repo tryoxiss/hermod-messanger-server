@@ -152,7 +152,7 @@ fn main()
 {UL_ITEM}{BOLD}Software:{ENDBLOCK} {server_version}
 {UL_ITEM}{BOLD}Threads:{ENDBLOCK} {THREADS}
 {UL_ITEM}{BOLD}Max Requests:{ENDBLOCK} {MAX_REQUESTS} (Warn: 3/4ths)
-{UL_ITEM}{BOLD}Location:{ENDBLOCK} {UNDERLINE}http://{LISTENER_IP}:{LISTENER_PORT}{ENDBLOCK}
+{UL_ITEM}{BOLD}Location:{ENDBLOCK} {UNDERLINE}https://{LISTENER_IP}:{LISTENER_PORT}{ENDBLOCK}
 {INDENT}If this is not correct, please press {BOLD}{UNDERLINE}CTRL+C{ENDBLOCK} during the 
 {INDENT}launch countdown to abort the launch.");
 

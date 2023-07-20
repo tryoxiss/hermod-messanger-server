@@ -19,3 +19,9 @@ When asked for a password, enter a simple password used ONLY for testing. Our ch
 2. openssl req -newkey rsa:4096 -keyout server-key.pem -out server-req.pem -subj "/C=FR/ST=Ile de France/L=Paris/O=PC Book/OU=Computer/CN=*.pcbook.com/emailAddress=pcbook@gmail.com"
 3. openssl x509 -req -in server-req.pem -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem
 4. openssl pkcs12 -export -out identity.pfx -inkey server-key.pem -in server-cert.pem
+5. (OPTIONAL) open your web browser of choice to the test site and download the chain of certificates from the more information > certificate, download and put it into your bonfire-server directory
+6. (OPTIONAL) openssl pkcs12 -export -out identity.pfx -inkey server-key.pem -in server-cert.pem -certfile chain_certs.pem
+
+
+To check use this:
+openssl verify -CAfile ca-cert.pem server-cert.pem

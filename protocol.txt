@@ -1,0 +1,268 @@
+                                DIM/1.0                        July 2023
+
+                             19 July 2023
+                Distributed Instant Messaging Protcol
+                               DIM/1.0
+
+Status of this Memo
+
+    This document specifies an unoffical RFC, the Distributed
+    Instant Messaging Protocol, for Internet community. Distribution
+    of this RFC is unlimited.
+
+Copyright Notice
+
+    Copyright (C) Madeline "tryoxiss". All rights reserved.
+
+Abstract
+
+    The distributed instant messaging protcol (DIM) is an
+    applicaton-level protcol for distributed, collaborative,
+    messaging systems.
+
+Table of Contents
+
+    1  Introduction
+        1.1  Pourpose
+        1.2  Requirements
+        1.3  Termolonolgy
+    2  Packet Definition
+        2.1  Version
+        2.2  Request Segment
+	     2.2.1  Request
+	     2.2.2  Location
+	2.3  Response Segment
+	     2.3.1  Response Code
+	     2.3.2  Response Message
+	2.4  Header Line
+	2.5  Content Format
+    3  Connection
+
+1     Introduction
+
+1.1   Pourpose
+
+    Distributed Instant Messaging protcol, refered to as "DIM" here in,
+    is a protocol for distributed instant messaging systems. It's 
+    goal is to be a unanimous protocol for messaging systems, simillar
+    to email.
+
+1.2   Requirements
+
+    The key words "MUST", "MUST NOT', "SHOULD", "SHOULD NOT", and "MAY"
+    this document are to be interprited as described in rfc-2119.
+
+1.3   Termonology
+
+    This speficiation uses many terms to refer to the parts, roles,
+    and items refered to. Contained in this section are the defintions
+    for said terms. Many of these are simillar, or identical to, those
+    specified in rfc-2616
+
+    connection
+        A transport later virtual circuit established between two
+        programs for the pourposes of communication
+
+    packet  -OR-  message
+        A structured sequence of bytes (octets) matching the definition
+        in section 2.
+
+    request
+        A DIM request message, as defined in section 2 excluding
+        subsection 2.3.
+
+    response
+        A DIM response message, as defined in section 2 excluding
+        subsection 2.2.
+
+    resouerce
+        A file or subset of data, such as a PNG file, or a users
+        table which may be contained in a larger file, such as
+        a database.
+
+    variant
+        A resource may have multiple correct formats, each of these
+        is considered its own variant.
+
+    client
+        The program which initatesand handles a requests or acts on
+        behalf of a user. 
+
+    user agent
+        A user-side client. These often also have user interfaces, 
+        but do not require them to be considered a client for the 
+        pourposes of this specification.
+
+    server
+        A server-side user agent. These often have a more advanced data
+        storage method, such as a database, but do not require one to
+        be considered a server for the pourposes of this specification.
+
+    origin server
+        The server on which a given resource, such as an image, user
+        account, or group resides.
+
+    home server
+        The server that a server-bound resource resides with, such
+        as a user or group.
+
+    proxy
+        An intermedite program which acts as both a server and a client
+        for the pourpose of making requests on behalf of other clients.
+
+    gateway
+        A server which acts as an intermediary for other servers.
+        Unlike a proxy, a gateway recieves requests as if it were the
+
+    tunnel
+        An intermediary program acting as a blind relay between
+        two connections. Once established, a tunnel is not considred
+        party to any connection.
+
+    cache
+        A programs local store of requests, responses, and other
+        applicable resources.
+
+    first-hand
+        A request or response that comes directly from the client,
+        without any proxies, gateways, or tunnels in between.
+
+    nth-hand
+        A request or response that has been through at least one
+        tunnel, proxy, or gateway.
+
+    age
+        The age is the time since it was sent or validated by the
+        origin server
+
+    freshness lifetime  -OR-  lifetime
+        The length of time in which a packet is considered usable.
+
+    fresh
+        A packet that has not yet exeeded its freshness lifetime
+
+    stale
+        A packet that has exeeded its freshness lifetime.
+
+    upstream/downstream
+        The flow of a message. All messages flow from upstream to
+        downstream
+
+    inbound/outbound
+        Inbound refers to any incoming packets.
+        Outbound refers to any outgoing packets.
+
+        A message can be both, for example a proxy gets an inbound
+        packet, which then becomes an outbound packet as they send it
+        out. A message can not be both at once.
+
+2     Packet Definition
+
+    A DIM packet is has its version, followed by a space, followed
+    by either a request segment OR a response segment. It is then
+    followed by a OA byte, a list of header variables, and another
+    0A byte.
+
+    Begining directly after the second 0A byte through to the end of
+    the message is the content. This may be in any format, but this
+    specification defines severil formats that may be commonly
+    desired.
+
+        <Version> SP <Request OR Response Segment>
+        <Header Line>
+        <Content>
+
+    These are each defined in thier own sections.
+
+2.1   Version
+
+    The version component is defined as the following block. These MUST
+    all be ASCII lowercase
+
+        dim/<Major>.<Minor>[.<Patch>]
+        
+        Major  =  A real number between 0 and 256
+        Minor  =  A real number between 0 and 256
+        Patch  =  A real number between 0 and 266
+    
+    The pourpose of the version component is to ensure that the packet
+    is being parsed correctly.
+
+2.2   Request Segment
+
+    The request segment is defined as the following block.
+
+        <REQUEST> <location>
+
+    See the following sections for elaboration
+
+2.2.1 Request
+
+    The request field MUST be ALL CAPITALISED. All methods are as
+    follows.
+
+        o   GET      =  Requests a resource at the specified location
+        o   EDIT     =  Applies partial changes to a resource at the
+                        specified location.
+        o   POST     =  Submits a message to the server or another
+                        user agent, often causing it to be created.
+        o   REMOVE   =  Request that a resource at the specified
+                        location be removed.
+    
+    For POST, a location does not need to be provided.
+
+2.2.2 Location
+
+    A location segment doubbles as a Universal Resource Indicator (URI)
+    for dim protocol by placing "dim:" at the begining.
+
+        <Type>:<Type-Specific-Segment>/<Path>
+
+    Examples:
+
+        user:forest@example.com/oak
+        group:the-forest@example.com
+        group:the-forest@example.com/clearing/log-stool
+
+    The standard group channel format is, but is not always: 
+    
+        [<Category>/]<channel>/[<Thread>/][<Message>/]
+
+    A URI must be hierarchical, as in, it MUST include every segment
+    up to the resource it points to, but this does not need to be in
+    the same order always. It depends what resources are present.
+    Some examples of this include:
+
+        admin-stuff/rules              ; Rules channel
+        general/main                   ; Main channel
+        general/games/dwarf-fortress   ; A thread in the games channel
+        admin-stuff/staff/GUID         ; A message in the staff list
+        hello        ; A channel without a category
+        admin-stuff  ; A category, you will get its list of channels.
+        admin-stuff/ ; is equivlent to the location above, since it is
+                     ; just a container.
+
+        general/games/   ; Get the channels list of threads within the
+                         ; games channel. Notice the trailing slash.
+        general/games    ; get the general/games details messages,
+                         ; description, etc.
+
+    Text
+
+2.3   Response Segment
+
+2.3.1 Response Code
+2.3.2 Response Message
+
+2.4   Header Line
+2.5   Content Format
+
+3     Connection
+
+Refrences
+
+Security Considerations
+
+Full Copyright Statement
+
+
