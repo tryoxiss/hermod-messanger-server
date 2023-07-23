@@ -28,7 +28,7 @@ log4rs.yml
 *.pfx
 
 # Logs
-*.log
+**/*.log
 
 # Why people??? Don't get your luggage in our repo!
 .vscode
