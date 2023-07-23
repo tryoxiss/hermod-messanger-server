@@ -583,3 +583,103 @@
 2023-07-19T17:04:24.547932964-07:00 : Meow 2
 2023-07-19T17:04:24.549038214-07:00 : Shit do be good right meow
 2023-07-19T17:04:24.549060416-07:00 : Meow
+2023-07-20T14:10:04.971404520-07:00 : Initalising Program
+2023-07-20T14:10:04.971954339-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-20T14:10:04.971975639-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-20T14:10:04.976115104-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-20T14:10:04.976140803-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-20T14:10:04.976155731-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-20T14:10:07.511231505-07:00 : TCP stream found!
+2023-07-20T14:10:07.735819757-07:00 : TCP stream found!
+2023-07-20T15:27:53.021644576-07:00 : Initalising Program
+2023-07-20T15:27:53.021901933-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-20T15:27:53.021931589-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-20T15:27:53.026181052-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-20T15:27:53.026228592-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-20T15:27:53.026253299-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-20T15:27:54.380851707-07:00 : TCP stream found!
+2023-07-20T15:27:54.588737198-07:00 : TCP stream found!
+2023-07-20T15:50:18.148998695-07:00 : Initalising Program
+2023-07-20T15:50:18.149082934-07:00 : The function [40mcheck_updaes()[0m currently has no functionality.
+2023-07-20T15:50:18.149100738-07:00 : The function [40mverify_file_integrity()[0m currently has 
+             no functionality.
+2023-07-20T15:50:18.152395245-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-20T15:50:18.152427747-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-20T15:50:18.152450850-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-20T15:50:25.382837651-07:00 : TCP stream found!
+2023-07-20T15:50:25.519818463-07:00 : TCP stream found!
+2023-07-20T16:21:59.387531914-07:00 : Initalising Program
+2023-07-20T16:21:59.387865444-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-20T16:21:59.387885011-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-20T16:21:59.392058911-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-20T16:21:59.392085611-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-20T16:21:59.392100099-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-20T16:22:00.614274191-07:00 : TCP stream found!
+2023-07-20T16:22:00.932209659-07:00 : TCP stream found!
+2023-07-20T16:22:33.161593408-07:00 : Initalising Program
+2023-07-20T16:22:33.161680402-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-20T16:22:33.161710199-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-20T16:22:33.164833542-07:00 : Your server is running
+              • [1mSoftware:[0m hermod 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-20T16:22:33.164871614-07:00 : Launching in [1m5[0m secconds  [A
+2023-07-20T16:22:34.164995221-07:00 : Launching in [1m4[0m secconds  [A
+2023-07-20T16:22:35.165160166-07:00 : Launching in [1m3[0m secconds  [A
+2023-07-20T16:22:36.165346020-07:00 : Launching in [1m2[0m secconds  [A
+2023-07-20T16:22:37.165533617-07:00 : Launching in [1m1[0m secconds  [A
+2023-07-20T16:22:38.165715875-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-20T16:22:38.165812899-07:00 : We currently are encrypting with [40mOsRng[0m, which is NOT 
+             (NECESARLY) CRYPTOGRAPHICALLY SECURE!!
+             It often is, but not always!
+2023-07-20T16:41:15.456321924-07:00 : Initalising Program
+2023-07-20T16:41:15.456604288-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-20T16:41:15.456623655-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-20T16:41:15.460218891-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-20T16:41:15.460244209-07:00 : Initation completed! Your server is now live! 🎉
