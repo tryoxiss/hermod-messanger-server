@@ -1,3 +1,5 @@
+use std::io::ErrorKind;
+use std::net::TcpListener;
 use std::thread;
 
 use log::trace;
@@ -25,6 +27,21 @@ pub fn launch_countdown(launch_countdown: u8) -> ()
         */
         info!("Launching in {BOLD}{n}{ENDBLOCK} secconds  \x1b[A\r", n=launch_countdown-count);
         thread::sleep(Duration::from_secs(1));
+    }
+}
+
+pub fn tcp_bind(ip: &str, port: &str) -> TcpListener
+{
+    let listener = TcpListener::bind(format!("{ip}:{port}"));
+
+    match listener
+    {
+        Err(e) => match e.kind()
+        {
+            ErrorKind::AddrInUse => { error!("You cannot use an address thats already in use! \nCompiler Error:\n {e}"); panic!(); },
+            _ => { panic!("An unknown error occured. {e}"); }
+        }
+        Ok(_) => { return listener.unwrap(); }
     }
 }
 

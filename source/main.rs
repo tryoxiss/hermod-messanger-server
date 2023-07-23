@@ -59,7 +59,7 @@ fn main()
     // can take its place instead of appending new logs to recent.log
     startup::init_log4rs_config();
 
-    info!("Initalising Program");
+    log!("Initalising", "program master thread");
 
     const REPOSITORY: &str = "tryoxiss.github.io";
     let server_version: String = startup::check_updates(
@@ -84,8 +84,6 @@ fn main()
     let listener_port: &str = "3467";      // Send Requests to this port (Rationale: DIMP typed on a telephone)
 
     let warn_restart_at: usize = (max_requests / 4) * 3; // this will round but won't error
-
-    debug!("Launch Sequence Initated");
 
     // main portion
     debug!("Initalising Thread Pool");
@@ -114,8 +112,46 @@ fn main()
     // of the existance of media at that location.
 
     let identity = startup::get_identity("identity.pfx");
-    let tcp_listener = TcpListener::bind("127.0.255.1:3467").unwrap();
+    let tcp_listener = startup::tcp_bind("127.0.255.1", "3467");
     let tls_manager = startup::create_network_acceptor(identity);
+
+    // Instead of constant terminal messages maybe have this one box which prints important info constantly?
+
+    // Box drawing characters are 2 characters wide, so if these look like they
+    // are not lined up your IDE is displaying them as thin, not correct.
+//     let production_message: String = format!("\
+// ╭──────────────────────────────╮
+// │ [Server Name]                                              │
+// ├──────────────────────────────┤
+// │ Uptime: 0h 0m 0s                                           │
+// │ Memory: 00KiB                                              │
+// │ Threads: 1/4                                               │
+// │ Request Buffer: 0                                          │
+// │ Requests: 0 / {max_requests}                         │
+// │                                                            │
+// │ hermod_server 0.3.5:pre-release.4                          │
+// ╰──────────────────────────────╯
+// ").to_string();
+
+//     println!("{}", production_message);
+
+//     let production_message: String = format!("\
+// ╭──────────────────────────────╮
+// │ [Server Name]                                              │
+// ├──────────────────────────────┤
+// │ Uptime: 0h 0m 0s                                           │
+// │ Memory: 00KiB                                              │
+// │ Threads: 1/4                                               │
+// │ Request Buffer: 0                                          │
+// │ Requests: 0 / {max_requests:>20}                         │
+// │                                                            │
+// │ hermod_server 0.3.5:pre-release.4                          │
+// ╰──────────────────────────────╯
+// ").to_string();
+
+//     println!("{}", production_message);
+
+
 
     info!("Your server is running
 {UL_ITEM}{BOLD}Software:{ENDBLOCK} {server_version}
@@ -133,7 +169,8 @@ fn main()
      */
     startup::launch_countdown(0);
 
-    info!("Initation completed! Your server is now live! 🎉");
+    log!("Completed", "initation! Your server is now live! 🎉");
+    // info!("Initation completed! Your server is now live! 🎉");
 
     for (packets_handled, stream) in tcp_listener
         .incoming()
@@ -168,7 +205,7 @@ fn main()
         }
         else if packets_handled == max_requests
         {
-            info!("Shutting down: Max Packet Limit reached.");
+            log!("Shutdown", "Shutting down: Max Packet Limit reached.");
             std::process::exit(255);
         }
         else if packets_handled >= warn_restart_at
@@ -179,5 +216,6 @@ fn main()
         trace!("lifetime: {packets_handled} packets handled");
     }
 
-    info!("Begining server shutdown ...");
+    log!("Shutdown", "in progress");
+    // info!("Begining server shutdown ...");
 }

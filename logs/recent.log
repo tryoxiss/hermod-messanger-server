@@ -683,3 +683,594 @@
              If this is not correct, please press [1m[4mCTRL+C[0m during the 
              launch countdown to abort the launch.
 2023-07-20T16:41:15.460244209-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:25:56.259139685-07:00 : Initalising Program
+2023-07-22T21:25:56.259253010-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:25:56.259269491-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:27:02.598948865-07:00 : Initalising Program
+2023-07-22T21:27:02.599034948-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:27:02.599052141-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:27:21.939546933-07:00 : Initalising Program
+2023-07-22T21:27:21.939629580-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:27:21.939646592-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:27:36.710199896-07:00 : Initalising Program
+2023-07-22T21:27:36.710294134-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:27:36.710321196-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:27:36.713752542-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:27:36.713779503-07:00 : Launching in [1m5[0m secconds  [A
+2023-07-22T21:27:37.713898791-07:00 : Launching in [1m4[0m secconds  [A
+2023-07-22T21:27:45.848100890-07:00 : Initalising Program
+2023-07-22T21:27:45.848186381-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:27:45.848203123-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:27:45.851492561-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:27:45.851518530-07:00 : Launching in [1m5[0m secconds  [A
+2023-07-22T21:27:46.851639562-07:00 : Launching in [1m4[0m secconds  [A
+2023-07-22T21:27:47.851812382-07:00 : Launching in [1m3[0m secconds  [A
+2023-07-22T21:27:48.149487915-07:00 : Initalising Program
+2023-07-22T21:27:48.149571994-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:27:48.149588435-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:27:48.851982867-07:00 : Launching in [1m2[0m secconds  [A
+2023-07-22T21:27:49.852150388-07:00 : Launching in [1m1[0m secconds  [A
+2023-07-22T21:27:50.852316164-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:32:19.885287254-07:00 : Initalising Program
+2023-07-22T21:32:19.885422209-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:32:19.885444692-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:33:12.738586452-07:00 : Initalising Program
+2023-07-22T21:33:12.738766393-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:33:12.738784347-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:33:12.741978073-07:00 : You cannot use an address thats already in use!
+2023-07-22T21:33:51.244064376-07:00 : Initalising Program
+2023-07-22T21:33:51.244145279-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:33:51.244161710-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:33:51.246891279-07:00 : You cannot use an address thats already in use! Error: Address already in use (os error 98)
+2023-07-22T21:34:02.414720541-07:00 : Initalising Program
+2023-07-22T21:34:02.414802195-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:34:02.414819067-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:34:02.417868902-07:00 : You cannot use an address thats already in use! 
+Error
+: Address already in use (os error 98)
+2023-07-22T21:34:11.370507669-07:00 : Initalising Program
+2023-07-22T21:34:11.370589964-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:34:11.370607828-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:34:11.373403452-07:00 : You cannot use an address thats already in use! 
+Error:
+ Address already in use (os error 98)
+2023-07-22T21:34:19.886307311-07:00 : Initalising Program
+2023-07-22T21:34:19.886482802-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:34:19.886500546-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:34:19.889336356-07:00 : You cannot use an address thats already in use! 
+Compiler Error:
+ Address already in use (os error 98)
+2023-07-22T21:34:33.237532166-07:00 : Initalising Program
+2023-07-22T21:34:33.237614642-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:34:33.237631073-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:34:33.240667633-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:34:33.240762752-07:00 : Launching in [1m5[0m secconds  [A
+2023-07-22T21:34:34.240882682-07:00 : Launching in [1m4[0m secconds  [A
+2023-07-22T21:34:35.241056113-07:00 : Launching in [1m3[0m secconds  [A
+2023-07-22T21:34:36.241238411-07:00 : Launching in [1m2[0m secconds  [A
+2023-07-22T21:34:37.241407734-07:00 : Launching in [1m1[0m secconds  [A
+2023-07-22T21:34:38.241593529-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:34:39.133214672-07:00 : Initalising Program
+2023-07-22T21:34:39.133299412-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:34:39.133326213-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:34:39.136361450-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:34:39.136393200-07:00 : Launching in [1m5[0m secconds  [A
+2023-07-22T21:34:40.136523860-07:00 : Launching in [1m4[0m secconds  [A
+2023-07-22T21:34:40.962376736-07:00 : Initalising Program
+2023-07-22T21:34:40.962460194-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:34:40.962477266-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:34:40.965666835-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:34:40.965699477-07:00 : Launching in [1m5[0m secconds  [A
+2023-07-22T21:34:42.303277748-07:00 : Initalising Program
+2023-07-22T21:34:42.303363821-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:34:42.303386975-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:34:42.306485772-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:34:42.306516150-07:00 : Launching in [1m5[0m secconds  [A
+2023-07-22T21:34:45.775132419-07:00 : Initalising Program
+2023-07-22T21:34:45.775216177-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:34:45.775232859-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:34:45.778283515-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:34:45.778308282-07:00 : Launching in [1m5[0m secconds  [A
+2023-07-22T21:35:53.571948932-07:00 : Initalising Program
+2023-07-22T21:35:53.572127169-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:35:53.572144321-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:35:53.575284937-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:35:53.575317719-07:00 : Launching in [1m1[0m secconds  [A
+2023-07-22T21:35:54.575435515-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:36:00.022050565-07:00 : Initalising Program
+2023-07-22T21:36:00.022140074-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:36:00.022166404-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:36:00.025485908-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:36:00.025517017-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:56:26.111266837-07:00 : Initalising Program
+2023-07-22T21:56:26.111555202-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:56:26.111587192-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:56:26.115632659-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:56:26.115662545-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:58:33.147657316-07:00 : Initalising Program
+2023-07-22T21:58:33.147798704-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:58:33.147816427-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:58:33.151341891-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:58:33.151365927-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:58:44.427197458-07:00 : Initalising Program
+2023-07-22T21:58:44.427275946-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:58:44.427292367-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:58:44.430517453-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:58:44.430542110-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:58:50.387732998-07:00 : Initalising Program
+2023-07-22T21:58:50.387918338-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:58:50.387946221-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:58:50.391110011-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:58:50.391162691-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T21:59:24.822430260-07:00 : Initalising Program
+2023-07-22T21:59:24.822560977-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T21:59:24.822587948-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T21:59:24.826980501-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T21:59:24.827006621-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T22:00:40.800021434-07:00 : Initalising Program
+2023-07-22T22:00:40.800134368-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:00:40.800160708-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:00:40.804282128-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:00:40.804307606-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T22:00:45.458146194-07:00 : Initalising Program
+2023-07-22T22:00:45.458227547-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:00:45.458243948-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:00:45.461362964-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:00:45.461387851-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T22:00:49.992547726-07:00 : Initalising Program
+2023-07-22T22:00:49.992719301-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:00:49.992736864-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:00:49.995820132-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:00:49.995844508-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T22:01:41.638489574-07:00 : Initalising Program
+2023-07-22T22:01:41.638568453-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:01:41.638584673-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:01:41.641751870-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:01:41.641783420-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T22:02:06.942033625-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:02:06.942117023-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:02:06.945144986-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:02:06.945169452-07:00 : Initation completed! Your server is now live! 🎉
+2023-07-22T22:03:30.158675581-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:03:30.158857685-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:03:30.162028619-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:04:00.528100981-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:04:00.528238972-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:04:00.531748967-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:04:40.725880410-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:04:40.725959960-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:04:40.728984337-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:06:59.159778360-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:06:59.159960414-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:06:59.163135155-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-22T22:07:58.429832421-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-22T22:07:58.429913123-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-22T22:07:58.433112972-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:39:04.331904908-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:39:04.332393502-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:39:04.337034665-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:39:27.233882103-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:39:27.233975459-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:39:27.238009895-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:39:33.785076302-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:39:33.785160271-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:39:33.788221577-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:39:42.506646583-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:39:42.506757572-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:39:42.511240716-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:39:48.980773449-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:39:48.980854261-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:39:48.983863109-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:41:42.772661597-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:41:42.772751767-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:41:42.775869961-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:41:51.738492160-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:41:51.738575157-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:41:51.741661050-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:41:56.145867254-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:41:56.145946664-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:41:56.148987952-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:41:59.695885952-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:41:59.695970282-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:41:59.699041106-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:42:02.858222535-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:42:02.858346940-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:42:02.862575292-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:44:08.576171853-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:44:08.576310996-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:44:08.579359819-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:44:16.636428581-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:44:16.636528941-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:44:16.639764577-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:45:18.799994722-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:45:18.800076196-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:45:18.804022115-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:46:05.037975213-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:46:05.038057689-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:46:05.041145666-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:47:11.678842107-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:47:11.678921046-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:47:11.681905558-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:47:19.052687124-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:47:19.052772346-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:47:19.055928942-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:47:23.184684948-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:47:23.184771121-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:47:23.187829903-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:47:27.278003632-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:47:27.278201175-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:47:27.281362871-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:50:49.409256535-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:50:49.409346405-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:50:49.412557465-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:50:56.832240849-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:50:56.832374392-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:50:56.835388780-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:51:21.242076713-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:51:21.242192973-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:51:21.246558204-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:51:28.629630069-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:51:28.629718075-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:51:28.632849795-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:51:33.821342038-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:51:33.821422009-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:51:33.824602641-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T09:53:06.478566091-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T09:53:06.478652745-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T09:53:06.482488064-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.
+2023-07-23T10:10:31.664005675-07:00 : The function `check_updaes()` currently has no functionality.
+2023-07-23T10:10:31.664352941-07:00 : The function `verify_file_integrity()` currently has 
+             no functionality.
+2023-07-23T10:10:31.669159076-07:00 : Your server is running
+              • [1mSoftware:[0m hermod_server 0.3.5:pre-release.4
+              • [1mThreads:[0m 4
+              • [1mMax Requests:[0m 18446744073709551615 (Warn: 3/4ths)
+              • [1mLocation:[0m [4mhttps://127.0.255.1:3467[0m
+             If this is not correct, please press [1m[4mCTRL+C[0m during the 
+             launch countdown to abort the launch.

@@ -6,27 +6,32 @@ macro_rules! variable_trace
     }
 }
 
-// macro_rules! memory_trace
-// {
-//     ($variable:expr, $value:expr) =>
-//     {
-//         eprintln!("\x1b[90m\x1b[1m    Variable\x1b[0m {} = {}", $variable, $value);
-//     }
-// }
+// I bet this can be a pretty good log implementation, give each of them
+// a message field and such but still get levels.
+macro_rules! log
+{
+    ($job:expr, $message:expr) =>
+    {
+        eprintln!("\x1b[92m\x1b[1m {:>11}\x1b[0m {}", $job, $message);
+        trace!("{} : {}", $job, $message);
+    }
+}
+
+pub fn status_box()
+{
+    
+}
+
+// Network got request
+//   Found item
+//  Search item
+//  Search item
 
 // macro_rules! started
 // {
-//     ($job:expr, $thread:expr) =>
-//     {
-//         eprintln!("\x1b[90m\x1b[1m     Started\x1b[0m {} on thread {}", $job, $thread);
-//     }
-// }
-
-// macro_rules! progress
-// {
 //     ($variable:expr, $value:expr) =>
 //     {
-//         eprintln!("\x1b[90m\x1b[1m     Recieved\x1b[0m {} = {}", $variable, $value);
+//         eprintln!("\x1b[90m\x1b[1m    Started\x1b[0m {} = {}", $variable, $value);
 //     }
 // }
 
@@ -34,7 +39,15 @@ macro_rules! variable_trace
 // {
 //     ($variable:expr, $value:expr) =>
 //     {
-//         eprintln!("\x1b[90m\x1b[1m     Recieved\x1b[0m {} = {}", $variable, $value);
+//         eprintln!("\x1b[90m\x1b[1m    Variable\x1b[0m {} = {}", $variable, $value);
+//     }
+// }
+
+// macro_rules! warning
+// {
+//     ($variable:expr, $value:expr) =>
+//     {
+//         eprintln!("\x1b[90m\x1b[1m    Variable\x1b[0m {} = {}", $variable, $value);
 //     }
 // }
 
@@ -46,53 +59,6 @@ macro_rules! variable_trace
 //     }
 // }
 
-// macro_rules! warn
-// {
-//     ($message:expr) =>
-//     {
-//         eprintln!("\x1b[93m\x1b[1m     Warning\x1b[0m {}", $message);
-//     }
-// }
-
-// macro_rules! trace
-// {
-//     ($message:expr) =>
-//     {
-//         eprintln!("\x1b[92m\x1b[1m         Log\x1b[0m {}", $message);
-//     }
-// }
-
-// macro_rules! info
-// {
-//     ($message:expr) =>
-//     {
-//         eprintln!("\x1b[96m\x1b[1m        Info\x1b[0m {}", $message);
-//     }
-// }
-
-// macro_rules! waiting
-// {
-//     ($cycles:expr) =>
-//     {
-//         eprintln!("\x1b[96m\x1b[1m     Waiting\x1b[0m for input ({}) ...\x1b[F", $cycles)
-//     }
-// }
-
-// macro_rules! warn
-// {
-//     ($message:expr) =>
-//     {
-//         eprintln!("\x1b[93m\x1b[1m     Warning\x1b[0m {}", $message);
-//     }
-// }
-
-// macro_rules! error
-// {
-//     ($message:expr) =>
-//     {
-//         eprintln!("\x1b[91m\x1b[1m       Error\x1b[0m {}", $message);
-//     }
-// }
 
 use std::io;
 

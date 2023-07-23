@@ -134,6 +134,7 @@ impl Worker
 
     fn handle_job(job: Job, id: u16)
     {
+        // log!("Job", "started by worker #{id}");
         trace!("Worker #{id} got a job!");
         job();
         trace!("Worker #{id} finished its job!");
