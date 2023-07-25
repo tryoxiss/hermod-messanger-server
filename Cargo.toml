@@ -10,23 +10,21 @@ edition = "2021"  # Rust Edition
 name = "codename_bonfire_server"
 path = "source/main.rs"
 
-# [dev-dependencies]
-# [build-dependencies]
-
 [dependencies] # Sorted By Licence
 
 # MIT Licence Crates
 aes-gcm-siv = "0.11.1"  # MIT  -OR-  Apache 2.0
-
-# Config is `hermod.config` and is in INI format since it is simple and fast
-# to parse.
 ini = "1.3.0"           # MIT  -OR-  LGPL 3.0 Or Later
-
-log = "0.4"
-log4rs = "1"
-
+log = "0.4"             # MIT  -OR-  Apache 2.0
+log4rs = "1"            # MIT  -OR-  Apache 2.0
 native-tls = "0.2.11"   # MIT  -OR-  Apache 2.0
 
-# FOR CONFIG: 
-# INI Format
+# GNU GPL 3.0
+licenser = "1.2.1"      # GPL 3.0
+
+# FOR CONFIG:
+# INI Format -- simple and fast to parse
 # `hermod.config`
+
+# [dev-dependencies]
+# [build-dependencies]
