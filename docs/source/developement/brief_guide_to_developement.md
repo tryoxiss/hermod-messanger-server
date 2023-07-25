@@ -25,3 +25,7 @@ When asked for a password, enter a simple password used ONLY for testing. Our ch
 
 To check use this:
 openssl verify -CAfile ca-cert.pem server-cert.pem
+
+## File Requirements
+
+Every file MUST contain the licence notice found in `source/_filenotice.txt`. It is not a requirement of the licence we use (AGPL v3 only), but of this project. It is incredbily easy to de-assosiate a file with a project, and therefore its licence. This increses the chance are code is used in ways not compliant with the licence. If every file has the attached notice, it shows clear intent to dis-assosiate it with the licence if that section is removed.
