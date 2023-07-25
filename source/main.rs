@@ -18,6 +18,10 @@
  *    https://www.gnu.org/licenses/agpl-3.0                                  *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* @authors
+ *  *  tryoxiss 'madeline'
+ *  *  khaim0919
+ */
 
 mod connection_handler;
 mod startup;
@@ -28,8 +32,6 @@ mod terminal_out;
 
 mod threading;
 use threading::ThreadPool;
-
-use std::net::TcpListener;
 
 // Make our own logging system, with messaghes being *what is it doing* and not *what level is it*
 use log::trace;
@@ -44,10 +46,10 @@ static INDENT: &str     = "             ";
 static BOLD: &str       = "\x1b[1m";
 static UNDERLINE: &str  = "\x1b[4m";
 
-// - (margin) = INDENT
-// = (padding) = 1ch left, 1ch right
-// C (content) = 1ch
-//                         -------------=C=
+/// - (margin) = INDENT
+/// = (padding) = 1ch left, 1ch right
+/// C (content) = 1ch
+///                        -------------=C=
 static UL_ITEM: &str    = "              • ";
 
 /// The main function contains all initalisation steps, aswell as the main
@@ -117,6 +119,9 @@ fn main()
 
     // Instead of constant terminal messages maybe have this one box which prints important info constantly?
 
+
+    // can be configured, but is info box by default
+
     // Box drawing characters are 2 characters wide, so if these look like they
     // are not lined up your IDE is displaying them as thin, not correct.
 //     let production_message: String = format!("\
@@ -132,6 +137,8 @@ fn main()
 // │ hermod_server 0.3.5:pre-release.4                          │
 // ╰──────────────────────────────╯
 // ").to_string();
+    
+    // terminal_out::status_box();
 
 //     println!("{}", production_message);
 

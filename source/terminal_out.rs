@@ -17,10 +17,65 @@ macro_rules! log
     }
 }
 
-pub fn status_box()
-{
-    
-}
+// pub struct Status
+// {
+//     server_name: String,
+//     // uptime: TimeSpan;
+//     threads: usize,
+//     max_threads: usize,
+
+//     requests: usize,
+//     max_requests: usize,
+
+//     version: String,
+// }
+
+// impl Status
+// {
+//     pub fn init()
+//     {
+
+//     }
+
+//     // needs to run constantly so the uptime dosent jump
+//     pub async fn uptime()
+//     {
+
+//     }
+
+//     pub async fn memory()
+//     {
+
+//     }
+// }
+
+// pub fn status_box()
+// {
+//     let top_bar = "╭──────────────────────────────╮";
+//     let no_key_info = "│ [Server Name]                                              │";
+//     let divider = "├──────────────────────────────┤";
+//     let info = "│ Uptime: 0h 0m 0s                                           │";
+//     let bottom = "╰──────────────────────────────╯";
+
+//     for iter in 0..10
+//     {
+//         let key = iter;
+//         let value = iter * 10;
+
+//         println!("│ {key}: {value}                                           │");
+//     }
+
+    //     let production_message: String = format!("\
+// │ Uptime: 0h 0m 0s                                           │
+// │ Memory: 00KiB                                              │
+// │ Threads: 1/4                                               │
+// │ Request Buffer: 0                                          │
+// │ Requests: 0 / {max_requests}                         │
+// │                                                            │
+// │ hermod_server 0.3.5:pre-release.4                          │
+// ╰──────────────────────────────╯
+// ").to_string();
+// }
 
 // Network got request
 //   Found item
