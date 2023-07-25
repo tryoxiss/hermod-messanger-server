@@ -22,7 +22,7 @@
 
 use log::{trace, debug, info, warn, error};
 
-use std::net::TcpStream;
+use std::{net::TcpStream, error};
 use std::io::prelude::*;
 use native_tls::TlsStream;
 
@@ -109,31 +109,31 @@ pub fn handle_connection(mut stream: TlsStream<TcpStream>)
     header_variables.push(HeaderVariable::new("time_sent", "2023-06-25 12:25:22"));
 
     /*
-        * SUPPORTED TYPES for `content_formatting`
-        * AAA Support (Virtually Required and officailly endorsed)
-        * - none (Plain Text)
-        * - rich-markdown (see DIM Markdown Specification)
-        * - wikitext
-        * - variables (INI Format)
-        *      Chosen because, even if its not your prefered format,
-        *      it's dead simple and does everything we need it to do.
-        *      it dosen't have a bunch of fancy stuff, just 
-        *      key = value ; comment
-        *      NOTE: comments with # are NOT ALLOWED!!
-        *
-        * AA Support (Probably some fancier clients, not offically endorsed)
-        * - commonmark
-        *
-        * A Support (Nieche/Ehh?)
-        * - universal-chess-interface
-        *
-        * E Support (Deprecated)
-        * - None!
-        *
-        * F Support (Actively Discouraged)
-        * - html - DIM Clients are not web browsers!!
-        * - <Any Code> - Use a code block in markdown!!
-        */
+     * SUPPORTED TYPES for `content_formatting`
+     * AAA Support (Virtually Required and officailly endorsed)
+     * - none (Plain Text)
+     * - rich-markdown (see DIM Markdown Specification)
+     * - wikitext
+     * - variables (INI Format)
+     *      Chosen because, even if its not your prefered format,
+     *      it's dead simple and does everything we need it to do.
+     *      it dosen't have a bunch of fancy stuff, just 
+     *      key = value ; comment
+     *      NOTE: comments with # are NOT ALLOWED!!
+     *
+     * AA Support (Probably some fancier clients, not offically endorsed)
+     * - commonmark
+     *
+     * A Support (Nieche/Ehh?)
+     * - universal-chess-interface
+     *
+     * E Support (Deprecated)
+     * - None!
+     *
+     * F Support (Actively Discouraged)
+     * - html - DIM Clients are not web browsers!!
+     * - <Any Code> - Use a code block in markdown!!
+     */
 
     // DIM
     let response = ResponsePacket::create(
@@ -142,7 +142,7 @@ pub fn handle_connection(mut stream: TlsStream<TcpStream>)
         "Serving",
         header_variables,
         "Manically laughs at the futility of life. Oh also I got DIM packets sorta being contructed!"
-        );
+    );
     
     // Writes some prefix of the byte string, not necessarily all of it.
     stream.write(response.as_bytes()).unwrap();
@@ -203,6 +203,14 @@ impl HeaderVariable
     }
 }
 
+enum RequestType
+{
+    Get,
+    Edit,
+    Post,
+    Remove
+}
+
 /// 🚧 Temperary
 /// We will want this for ease of parsing incoming pacekets, but it is
 /// not currently used.
@@ -210,11 +218,40 @@ impl HeaderVariable
 struct RequestPacket
 {
     version: String,
-    request_type: String,
-    request_target: String,
+    request_type: RequestType,
+    requested_resource: String,
     header_flags: Vec<HeaderVariable>,
 
     message: String,
+}
+
+impl RequestPacket
+{
+    fn parse(mut stream: TlsStream<TcpStream>, packet: &str)
+    {
+        let version: &str = "";
+        let request_type: &str = "";
+        let requested_resource: &str = "";
+        let header_flags: &str = "";
+        let message: &str = "";
+
+        // do some stuff to deserialise the packet into its parts
+
+        match request_type
+        {
+            // its ugly but we want to shadow request_type to save memory
+            "GET"    => { let request_type: RequestType = RequestType::Get; },
+            "POST"   => { let request_type: RequestType = RequestType::Post; },
+            "EDIT"   => { let request_type: RequestType = RequestType::Edit; },
+            "REMOVE" => { let request_type: RequestType = RequestType::Remove; },
+            _        => ResponsePacket::error_response(
+                stream, "1.0",
+                401,
+                "Invalid Method",
+                ""
+            ),
+        }
+    }
 }
 
 /// 📔 Note
@@ -264,6 +301,33 @@ impl ResponsePacket
         return packet.to_string();
 
         // return response_header.as_bytes() + response_variables.as_bytes() + response_message.as_bytes();
+    }
+
+    fn error_response(mut stream: TlsStream<TcpStream>, version: &str, response_code: u16, response_message: &str, content: &str)
+    {
+        let mut header_variables: Vec<HeaderVariable> = vec![];
+
+        header_variables.push(HeaderVariable::new("encyption", "aes"));
+        header_variables.push(HeaderVariable::new("force_encryption", "t"));
+        // header_variables.push(HeaderVariable::new("author", "8d1a0cfb13df4ca3bdb0e912be01863b"));
+        // header_variables.push(HeaderVariable::new("target", "none"));
+        // header_variables.push(HeaderVariable::new("channel", "20026f0a1c484f95a0063d148c8898f9"));
+        // header_variables.push(HeaderVariable::new("channel_type", "text_message"));
+        header_variables.push(HeaderVariable::new("content_mime_type", "text/plain"));
+        header_variables.push(HeaderVariable::new("content_formatting", "none"));
+        header_variables.push(HeaderVariable::new("time_sent", "2023-06-25 12:25:22"));
+        // -- send an error response. Do not return.
+        // use a set of pre-existing 
+
+        let response = ResponsePacket::create(
+            version,
+            response_code,
+            response_message,
+            header_variables,
+            content
+        );
+
+        stream.write(response.as_bytes()).unwrap();
     }
 }
 
