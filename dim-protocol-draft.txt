@@ -329,7 +329,6 @@ Table of Contents
     507 Loop Detected
     508 Bandwidth Limit Exeeded
     509 Site Overloaded
-    510 Request Timeout
 
 2.3.2 Response Message
 
