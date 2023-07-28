@@ -203,57 +203,6 @@ impl HeaderVariable
     }
 }
 
-enum RequestType
-{
-    Get,
-    Edit,
-    Post,
-    Remove
-}
-
-/// 🚧 Temperary
-/// We will want this for ease of parsing incoming pacekets, but it is
-/// not currently used.
-#[allow(dead_code)]
-struct RequestPacket
-{
-    version: String,
-    request_type: RequestType,
-    requested_resource: String,
-    header_flags: Vec<HeaderVariable>,
-
-    message: String,
-}
-
-impl RequestPacket
-{
-    fn parse(mut stream: TlsStream<TcpStream>, packet: &str)
-    {
-        let version: &str = "";
-        let request_type: &str = "";
-        let requested_resource: &str = "";
-        let header_flags: &str = "";
-        let message: &str = "";
-
-        // do some stuff to deserialise the packet into its parts
-
-        match request_type
-        {
-            // its ugly but we want to shadow request_type to save memory
-            "GET"    => { let request_type: RequestType = RequestType::Get; },
-            "POST"   => { let request_type: RequestType = RequestType::Post; },
-            "EDIT"   => { let request_type: RequestType = RequestType::Edit; },
-            "REMOVE" => { let request_type: RequestType = RequestType::Remove; },
-            _        => ResponsePacket::error_response(
-                stream, "1.0",
-                401,
-                "Invalid Method",
-                ""
-            ),
-        }
-    }
-}
-
 /// 📔 Note
 /// The reason none of these variables is read is because this object exists
 /// for easier packet construction. We make the packet, and then write to

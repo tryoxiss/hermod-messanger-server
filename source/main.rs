@@ -25,6 +25,7 @@
 
 mod connection_handler;
 mod startup;
+mod deserialization;
 
 // Make our own logging system, with messaghes being *what is it doing* and not *what level is it*
 #[macro_use]
