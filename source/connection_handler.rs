@@ -230,7 +230,7 @@ struct RequestPacket
     version: String,
     method: RequestMethod,
     header_flags: Vec<HeaderVariable>,
-    resource: String,
+    resource: String,     // MAYBE REQUEST DEPTH? So you can like get a group without getting all channels and messages in it.
 
     body: String,
 }

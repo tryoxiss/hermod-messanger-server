@@ -83,8 +83,8 @@ fn main() -> ()
 
     let threads: u16 = 4;                  // threads to add to the pool
     let max_requests: usize = usize::MAX;  // requests before automatic shutdown
-    let listener_ip: &str = "127.0.255.1"; // send requests to this IP
-    let listener_port: &str = "3467";      // Send Requests to this port (Rationale: DIMP typed on a telephone)
+    let listener_ip:[u16; 8] = [0, 0, 0, 0, 0, 0, 0, 1]; // send requests to this IP
+    let listener_port: u16 = 3467;      // Send Requests to this port (Rationale: DIMP typed on a telephone)
 
     let warn_restart_at: usize = (max_requests / 4) * 3; // this will round but won't error
 
@@ -116,7 +116,7 @@ fn main() -> ()
 
     let identity = startup::get_identity("identity.pfx");
     // let tcp_listener = startup::tcp_bind("127.0.255.1", "3467");
-    let tcp_listener = startup::tcp_bind("::1/128", "3467");
+    let tcp_listener = startup::tcp_bind(listener_ip, listener_port);
     let tls_manager = startup::create_network_acceptor(identity);
 
     // Instead of constant terminal messages maybe have this one box which prints important info constantly?
@@ -161,12 +161,23 @@ fn main() -> ()
 //     println!("{}", production_message);
 
 
+    let formatted_listner_ip = format!(
+        "{a}:{b}:{c}:{d}:{e}:{f}:{g}:{h}",
+        a = listener_ip[0],
+        b = listener_ip[1],
+        c = listener_ip[2],
+        d = listener_ip[3],
+        e = listener_ip[4],
+        f = listener_ip[5],
+        g = listener_ip[6],
+        h = listener_ip[7],
+    );
 
     info!("Your server is running
 {UL_ITEM}{BOLD}Software:{ENDBLOCK} {server_version}
 {UL_ITEM}{BOLD}Threads:{ENDBLOCK} {threads}
 {UL_ITEM}{BOLD}Max Requests:{ENDBLOCK} {max_requests} (Warn: 3/4ths)
-{UL_ITEM}{BOLD}Location:{ENDBLOCK} {UNDERLINE}https://{listener_ip}:{listener_port}{ENDBLOCK}
+{UL_ITEM}{BOLD}Location:{ENDBLOCK} {UNDERLINE}https://[{formatted_listner_ip}]:{listener_port}{ENDBLOCK}
 {INDENT}If this is not correct, please press {BOLD}{UNDERLINE}CTRL+C{ENDBLOCK} during the 
 {INDENT}launch countdown to abort the launch.");
 

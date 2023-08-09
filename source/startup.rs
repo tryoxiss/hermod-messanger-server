@@ -1,6 +1,7 @@
 use std::io::ErrorKind;
 use std::net::TcpListener;
 use std::net::Ipv6Addr;
+use std::net::SocketAddr;
 use std::thread;
 
 use log::trace;
@@ -31,11 +32,22 @@ pub fn launch_countdown(launch_countdown: u8) -> ()
     }
 }
 
-pub fn tcp_bind(ip: &str, port: &str) -> TcpListener
+pub fn tcp_bind(ip: [u16; 8], port: u16) -> TcpListener
 {
-    let address: Ipv6Addr = Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 1);
-    // let listener = TcpListener::bind(address);
-    let listener = TcpListener::bind(format!("{ip}:{port}"));
+    let address: Ipv6Addr = Ipv6Addr::new(
+        ip[0],
+        ip[1],
+        ip[2],
+        ip[3],
+        ip[4],
+        ip[5],
+        ip[6],
+        ip[7]
+    );
+
+    let address: Ipv6Addr = Ipv6Addr::LOCALHOST;
+    let listener = TcpListener::bind((address, port));
+    // let listener = TcpListener::bind(format!("{ip}:{port}"));
 
     match listener
     {
