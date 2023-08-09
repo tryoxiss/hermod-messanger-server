@@ -22,58 +22,88 @@
 
 use log::{trace, debug, info, warn, error};
 
-use std::{net::TcpStream, error};
+use std::net::TcpStream;
 use std::io::prelude::*;
+
 use native_tls::TlsStream;
-
-use aes_gcm_siv::{
-    aead::{/* Aead, */ KeyInit, OsRng},
-    Aes256GcmSiv, Nonce // Or `Aes128GcmSiv`
-};
-
-// use rand_chacha::ChaCha20Rng;
 
 use crate::{ENDBLOCK, CODE_START, INDENT};
 
 pub fn handle_connection(mut stream: TlsStream<TcpStream>)
 {
-    let key = Aes256GcmSiv::generate_key(&mut OsRng);
-    // let cipher = Aes256GcmSiv::new(&key);
-    // let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
-    // let ciphertext: Vec<u8> = cipher.encrypt(nonce, b"plaintext message".as_ref()).unwrap();
-    // let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
-    // assert_eq!(&plaintext.unwrap(), b"plaintext message");
+    // const MAX_PACKET_LENGTH: usize = 1048576;
+    // let mut buffer = [0; MAX_PACKET_LENGTH];
 
-    // trace!("{:?}, {:?}", &plaintext.unwrap(), b"plaintext message");
+    // // we return an error if the packet is too long.
+    // if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
+    // {
+    //     let mut response_variables: Vec<HeaderVariable> = vec![];
 
-    const MAX_PACKET_LENGTH: usize = 1048576;
-    let mut buffer = [0; MAX_PACKET_LENGTH];
+    //     response_variables.push(HeaderVariable::new("encyption", "aes"));
+    //     response_variables.push(HeaderVariable::new("force_encryption", "t"));
 
-    let cipher = Aes256GcmSiv::new(&key);
-    let nonce = Nonce::from_slice(b"unique nonce"); // 96-bits; unique per message
+    //     let response: String = ResponsePacket::create(
+    //         "1.0",
+    //         410,
+    //         "Payload Too Large",
+    //         response_variables,
+    //         "max_length=1_048_575 ; Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `set=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS."
+    //         );
 
-    let mut response_variables: Vec<HeaderVariable> = vec![];
+    //     stream.write(&response.as_bytes())
+    //         .expect("Failed to write to TCP Stream!");
 
-    // we return an error if the packet is too long.
-    if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
-    {
-        response_variables.push(HeaderVariable::new("encyption", "aes"));
-        response_variables.push(HeaderVariable::new("force_encryption", "t"));
+    //     return;
+    // }
 
-        let response: String = ResponsePacket::create(
-            "1.0",
-            410,
-            "Payload Too Large",
-            response_variables,
-            "max_length=1_048_575 ; Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `set=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS."
-            );
+    // // Process incoming packet
+    // // -- TODO:
 
-        stream.write(&response.as_bytes())
-            .expect("Failed to write to TCP Stream!");
+    // // Process Request
+    // // -- TODO:
 
-        return;
-    }
+    // // return response packet to TlsStream
+    // let response_variables = create_header_variables();
 
+    // the request can be returned in such a way that an error was found in process_incoming()
+    let (request, stream) = process_incoming(stream);
+
+    // if there was a problem in process_incoming(), construct the error.
+    let response = handle_request(request);
+    return_result(response, stream)
+
+    /*
+     * SUPPORTED TYPES for `content_formatting`
+     * AAA Support (Virtually Required and officailly endorsed)
+     * - none (Plain Text)
+     * - rich-markdown (see DIM Markdown Specification)
+     * - wikitext
+     * - variables (INI Format)
+     *      Chosen because, even if its not your prefered format,
+     *      it's dead simple and does everything we need it to do.
+     *      it dosen't have a bunch of fancy stuff, just 
+     *      key = value ; comment
+     *      NOTE: comments with # are NOT ALLOWED!!
+     *
+     * AA Support (Probably some fancier clients, not offically endorsed)
+     * - commonmark
+     *
+     * A Support (Nieche/Ehh?)
+     * - universal-chess-interface
+     *
+     * E Support (Deprecated)
+     * - None!
+     *
+     * F Support (Actively Discouraged)
+     * - html - DIM Clients are not web browsers!!
+     * - <Any Code> - Use a code block in markdown!!
+     */
+
+    // DIM
+}
+
+fn create_header_variables() -> Vec<HeaderVariable>
+{
     let mut header_variables: Vec<HeaderVariable> = vec![];
 
     let header_length: usize = 0;
@@ -108,63 +138,42 @@ pub fn handle_connection(mut stream: TlsStream<TcpStream>)
     header_variables.push(HeaderVariable::new("content_formatting", "none"));
     header_variables.push(HeaderVariable::new("time_sent", "2023-06-25 12:25:22"));
 
-    /*
-     * SUPPORTED TYPES for `content_formatting`
-     * AAA Support (Virtually Required and officailly endorsed)
-     * - none (Plain Text)
-     * - rich-markdown (see DIM Markdown Specification)
-     * - wikitext
-     * - variables (INI Format)
-     *      Chosen because, even if its not your prefered format,
-     *      it's dead simple and does everything we need it to do.
-     *      it dosen't have a bunch of fancy stuff, just 
-     *      key = value ; comment
-     *      NOTE: comments with # are NOT ALLOWED!!
-     *
-     * AA Support (Probably some fancier clients, not offically endorsed)
-     * - commonmark
-     *
-     * A Support (Nieche/Ehh?)
-     * - universal-chess-interface
-     *
-     * E Support (Deprecated)
-     * - None!
-     *
-     * F Support (Actively Discouraged)
-     * - html - DIM Clients are not web browsers!!
-     * - <Any Code> - Use a code block in markdown!!
-     */
+    return header_variables;
+}
 
-    // DIM
+fn process_incoming(mut stream: TlsStream<TcpStream>) -> (RequestPacket, TlsStream<TcpStream>)
+{
+    return (RequestPacket::new(), stream);
+}
+
+fn handle_request(request: RequestPacket) -> ResponsePacket
+{
+    let compliance_vars = create_header_variables();
+    
+    return ResponsePacket
+    {
+        version: "1.0".to_string(),
+        response_code: 501,
+        header_flags: compliance_vars,
+        response_message: "Not Implemented".to_string(),
+        message: "Sorry :/".to_string()
+    }
+}
+
+fn return_result(packet: ResponsePacket, mut stream: TlsStream<TcpStream>) -> ()
+{
+    let response_variables = create_header_variables();
+
     let response = ResponsePacket::create(
         "1.0",
         200,
         "Serving",
-        header_variables,
+        response_variables,
         "Manically laughs at the futility of life. Oh also I got DIM packets sorta being contructed!"
     );
-    
+
     // Writes some prefix of the byte string, not necessarily all of it.
     stream.write(response.as_bytes()).unwrap();
-
-    // let plaintext = cipher.decrypt(nonce, response.as_ref()).unwrap();
-
-//     match stream.write(&plaintext)
-//     {
-//         Ok(message) =>
-//         {
-//             trace!("Wrote to the TCP Stream");
-//         }
-
-//         Err(error) =>
-//         {
-//             error!("The TCP Stream write failed!
-// {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
-// {INDENT}Here we provide the compilers error:
-// {error} ");
-//             panic!("Why would the TCP stream flush panic !");
-//         }
-//     }
 
     match stream.flush()
     {
@@ -179,9 +188,10 @@ pub fn handle_connection(mut stream: TlsStream<TcpStream>)
 {INDENT}{CODE_START}connection_handler.rs::handle_connection(){ENDBLOCK}
 {INDENT}Here we provide the compilers error:
 {error} ");
-            panic!("Why would the TCP stream flush panic !");
         }
     }
+
+    return ()
 }
 
 #[derive(Debug)]
@@ -203,6 +213,45 @@ impl HeaderVariable
     }
 }
 
+enum RequestMethod
+{
+    Get,
+    Edit,
+    Post,
+    Remove,
+
+    // not an actual method, simply used to indicate that the content
+    // is to be taken as a parsable error and not literal content.
+    InternalServerError
+}
+
+struct RequestPacket
+{
+    version: String,
+    method: RequestMethod,
+    header_flags: Vec<HeaderVariable>,
+    resource: String,
+
+    body: String,
+}
+
+impl RequestPacket
+{
+    fn new() -> RequestPacket
+    {
+        let compliance_vars = create_header_variables();
+
+        return RequestPacket
+        {
+            version: "1.0".to_string(),
+            method: RequestMethod::Get,
+            header_flags: compliance_vars,
+            resource: "hiss".to_string(),
+            body: "meow".to_string()
+        }
+    }
+}
+
 /// 📔 Note
 /// The reason none of these variables is read is because this object exists
 /// for easier packet construction. We make the packet, and then write to
@@ -212,8 +261,8 @@ struct ResponsePacket
 {
     version: String,
     response_code: u16,
-    response_message: String,
     header_flags: Vec<HeaderVariable>,
+    response_message: String,
 
     message: String,
 }

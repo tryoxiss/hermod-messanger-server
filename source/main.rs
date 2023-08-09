@@ -55,7 +55,7 @@ static UL_ITEM: &str    = "              • ";
 
 /// The main function contains all initalisation steps, aswell as the main
 /// program loop.
-fn main()
+fn main() -> ()
 {
     // 🚩 FIXME: The main log file needs to be renammed to when it was run
     // once a new file is created/after the program ends, so that recent.log
@@ -68,7 +68,7 @@ fn main()
     let server_version: String = startup::check_updates(
         0,
         3,
-        5, 
+        5,
         "hermod_server",
         "pre-release",
         4);
@@ -115,7 +115,8 @@ fn main()
     // of the existance of media at that location.
 
     let identity = startup::get_identity("identity.pfx");
-    let tcp_listener = startup::tcp_bind("127.0.255.1", "3467");
+    // let tcp_listener = startup::tcp_bind("127.0.255.1", "3467");
+    let tcp_listener = startup::tcp_bind("::1/128", "3467");
     let tls_manager = startup::create_network_acceptor(identity);
 
     // Instead of constant terminal messages maybe have this one box which prints important info constantly?
