@@ -236,6 +236,7 @@ Table of Contents
         user:forest@example.com/oak
         group:the-forest@example.com
         group:the-forest@example.com/clearing/log-stool
+        guid:OfulDoJu8UeNHBD393KE4Q==
 
     The standard group channel format is, but is not always: 
     
@@ -245,6 +246,9 @@ Table of Contents
     up to the resource it points to, but this does not need to be in
     the same order always. It depends what resources are present.
     Some examples of this include:
+
+    // TODO: NOTE TO SELF: DEFINE THE TYPES!!! Mostly GUID being
+    // v4 GUID that is base64 encoded as per rfc ????.
 
         admin-stuff/rules              ; Rules channel
         general/main                   ; Main channel
