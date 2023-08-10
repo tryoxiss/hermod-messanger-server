@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *  This file is part of:         https://github.com/tryoxiss/bonfire-server *
- *  Hermod Messanger                          https://en.ourdomain.ext/docs/ *
+ *  Hermod Messanger Server                   https://en.ourdomain.ext/docs/ *
  *                                                                           *
  *  Copyright (C) 2023—present : Hermod Messenger Contributers (AUTHORS.md)  *
  *                                                                           *

@@ -18,8 +18,6 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// use crate::terminal_out;
-
 use log::{trace, debug, info, warn, error};
 
 use std::net::TcpStream;
@@ -31,75 +29,12 @@ use crate::{ENDBLOCK, CODE_START, INDENT};
 
 pub fn handle_connection(mut stream: TlsStream<TcpStream>)
 {
-    // const MAX_PACKET_LENGTH: usize = 1048576;
-    // let mut buffer = [0; MAX_PACKET_LENGTH];
-
-    // // we return an error if the packet is too long.
-    // if buffer[MAX_PACKET_LENGTH - 1] != "\x00".as_bytes()[0]
-    // {
-    //     let mut response_variables: Vec<HeaderVariable> = vec![];
-
-    //     response_variables.push(HeaderVariable::new("encyption", "aes"));
-    //     response_variables.push(HeaderVariable::new("force_encryption", "t"));
-
-    //     let response: String = ResponsePacket::create(
-    //         "1.0",
-    //         410,
-    //         "Payload Too Large",
-    //         response_variables,
-    //         "max_length=1_048_575 ; Our maximum packet length is 1_048_575 bytes (1 MiB - 1 byte). If your content is larger than this, please use a packet series. You can do this by adding the `set=<u64>;`, and `index=<u64>` variable in the header to designate thier order. Alternatively, you may choose to load media through alternate sources such as HTTPS."
-    //         );
-
-    //     stream.write(&response.as_bytes())
-    //         .expect("Failed to write to TCP Stream!");
-
-    //     return;
-    // }
-
-    // // Process incoming packet
-    // // -- TODO:
-
-    // // Process Request
-    // // -- TODO:
-
-    // // return response packet to TlsStream
-    // let response_variables = create_header_variables();
-
     // the request can be returned in such a way that an error was found in process_incoming()
     let (request, stream) = process_incoming(stream);
 
     // if there was a problem in process_incoming(), construct the error.
     let response = handle_request(request);
     return_result(response, stream)
-
-    /*
-     * SUPPORTED TYPES for `content_formatting`
-     * AAA Support (Virtually Required and officailly endorsed)
-     * - none (Plain Text)
-     * - rich-markdown (see DIM Markdown Specification)
-     * - wikitext
-     * - variables (INI Format)
-     *      Chosen because, even if its not your prefered format,
-     *      it's dead simple and does everything we need it to do.
-     *      it dosen't have a bunch of fancy stuff, just 
-     *      key = value ; comment
-     *      NOTE: comments with # are NOT ALLOWED!!
-     *
-     * AA Support (Probably some fancier clients, not offically endorsed)
-     * - commonmark
-     *
-     * A Support (Nieche/Ehh?)
-     * - universal-chess-interface
-     *
-     * E Support (Deprecated)
-     * - None!
-     *
-     * F Support (Actively Discouraged)
-     * - html - DIM Clients are not web browsers!!
-     * - <Any Code> - Use a code block in markdown!!
-     */
-
-    // DIM
 }
 
 fn create_header_variables() -> Vec<HeaderVariable>
@@ -149,14 +84,14 @@ fn process_incoming(mut stream: TlsStream<TcpStream>) -> (RequestPacket, TlsStre
 fn handle_request(request: RequestPacket) -> ResponsePacket
 {
     let compliance_vars = create_header_variables();
-    
+
     return ResponsePacket
     {
         version: "1.0".to_string(),
         response_code: 501,
         header_flags: compliance_vars,
         response_message: "Not Implemented".to_string(),
-        message: "Sorry :/".to_string()
+        body: "Sorry :/".to_string()
     }
 }
 
@@ -230,7 +165,7 @@ struct RequestPacket
     version: String,
     method: RequestMethod,
     header_flags: Vec<HeaderVariable>,
-    resource: String,     // MAYBE REQUEST DEPTH? So you can like get a group without getting all channels and messages in it.
+    resource_location: String,     // MAYBE REQUEST DEPTH? So you can like get a group without getting all channels and messages in it.
 
     body: String,
 }
@@ -246,7 +181,7 @@ impl RequestPacket
             version: "1.0".to_string(),
             method: RequestMethod::Get,
             header_flags: compliance_vars,
-            resource: "hiss".to_string(),
+            resource_location: "hiss".to_string(),
             body: "meow".to_string()
         }
     }
@@ -264,7 +199,7 @@ struct ResponsePacket
     header_flags: Vec<HeaderVariable>,
     response_message: String,
 
-    message: String,
+    body: String, // Anything that implements Resource
 }
 
 impl ResponsePacket

@@ -24,6 +24,8 @@
  */
 //
 
+// use guid::GUID;
+
 // This should be defined somewhere else
 #[derive(Debug)]
 struct HeaderVariable
@@ -122,7 +124,7 @@ mod tests
 // user: @username, guid
 // group: guid/channel, guid/guid
 
-    use crate::deserialization::RequestPacket;
+    use crate::packet_handler::RequestPacket;
 
     #[test]
     fn deserialization()
@@ -135,4 +137,21 @@ Manically laughs at the futility of life. Oh also I got DIM packets sorta being 
 
         println!("{:?}", request_packet);
     }
+}
+
+// struct Resource
+// {
+//     name: String,
+//     data: Vec<u8>, // byte vector
+// }
+
+enum ResourceLocation
+{
+    ResourceHierLocation(String),
+    ResourceGuidLocation(u128), // GUID
+}
+
+trait Resource
+{
+    fn load() {}
 }

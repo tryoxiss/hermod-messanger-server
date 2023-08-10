@@ -233,9 +233,10 @@ Table of Contents
 
     Examples:
 
-        user:forest@example.com/oak
-        group:the-forest@example.com
-        group:the-forest@example.com/clearing/log-stool
+        dim:user:forest@example.com/oak
+        dim:group:the-forest@example.com
+        dim:group:the-forest@example.com/clearing/log-stool
+        OfulDoJu8UeNHBD393KE4Q==
         guid:OfulDoJu8UeNHBD393KE4Q==
 
     The standard group channel format is, but is not always: 
