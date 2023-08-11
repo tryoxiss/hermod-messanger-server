@@ -1,3 +1,6 @@
+use log::info;
+use log::error;
+
 struct Packet
 {
     version: String,
@@ -53,14 +56,6 @@ impl Packet
     }
 }
 
-enum RequestMethod
-{
-    Get,
-    Edit,
-    Post,
-    Remove
-}
-
 enum ResourceIdentifierVariant
 {
     Guid,
@@ -85,6 +80,14 @@ impl ResourceIdentifier
     }
 }
 
+enum RequestMethod
+{
+    Get,
+    Edit,
+    Post,
+    Remove
+}
+
 pub struct RequestPacket
 {
     method: RequestMethod,
@@ -94,8 +97,65 @@ pub struct RequestPacket
 
 impl RequestPacket
 {
-    pub fn deserialise() -> RequestPacket
+    pub fn deserialise(packet: &str) -> RequestPacket
     {
+        // <Version> SP <RequestMethod> SP <ResourceIdentifier> LF (0A)
+        // <Variables> LF (0A)
+        // <Body (optional)>
+
+        // split into 3 variables: 1 before the first 0A, then before
+        // the next 0A, then everything after that.
+
+        // line1.split_at(" ")
+        // version = line1.0
+        // request_type = line1.1 matched to the method
+        // resource = lines1.2 resource (parse seperately)
+
+        // line2 just gets thrown into PacketVariable::deserialise()
+
+        // line3 is explict content that can be ignored most of the time, or copied exactly.
+        // since there is no reason to run code from it, and never ever gets executed!
+
+        let mut version: &str = "";
+        let mut request_type: &str = "";
+        let mut requested_resource: &str = "";
+        let mut header_flags: &str = "";
+        let mut message: &str = "";
+
+        // Deserialize packet into structure for future use
+
+        packet.to_string();
+
+        // let packet = packet.split_at(packet.clone().find(" ").unwrap());
+        // version = packet.0;
+
+        // let packet = packet.1.split_at(packet.1.clone().find(" ").unwrap());
+        // request_type = packet.0;
+
+        // // TODO: Needs to handle GUIDs and usernames seperately as well as telling if group or user
+        // let packet = packet.1.split_at(packet.1.clone().find(" ").unwrap());
+        // requested_resource = packet.0;
+
+        // Header flags
+
+        // Message
+
+        match request_type
+        {
+            // its ugly but we want to shadow request_type to save memory
+            "GET"    => { let request_type: RequestMethod = RequestMethod::Get; },
+            "POST"   => { let request_type: RequestMethod = RequestMethod::Post; },
+            "EDIT"   => { let request_type: RequestMethod = RequestMethod::Edit; },
+            "REMOVE" => { let request_type: RequestMethod = RequestMethod::Remove; },
+            // _        => ResponsePacket::error_response(
+            //     stream, "1.0",
+            //     401,
+            //     "Invalid Method",
+            //     ""
+            // ),
+            _ => { error!("OOPSY DOOPSY ! connection/packets.rs line ~150") }
+        }
+
         return RequestPacket
         {
             method: RequestMethod::Get,

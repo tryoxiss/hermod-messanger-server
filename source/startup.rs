@@ -1,7 +1,6 @@
 use std::io::ErrorKind;
 use std::net::TcpListener;
 use std::net::Ipv6Addr;
-use std::net::SocketAddr;
 use std::thread;
 
 use log::trace;
@@ -45,7 +44,6 @@ pub fn tcp_bind(ip: [u16; 8], port: u16) -> TcpListener
         ip[7]
     );
 
-    let address: Ipv6Addr = Ipv6Addr::LOCALHOST;
     let listener = TcpListener::bind((address, port));
     // let listener = TcpListener::bind(format!("{ip}:{port}"));
 

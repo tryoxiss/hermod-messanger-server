@@ -12,6 +12,9 @@ use log::error;
 
 pub fn handle(stream: TlsStream<TcpStream>)
 {
+    // test pourposes:
+    RequestPacket::deserialise("dim/1.0 GET groups/groupname/category/channel\n\nContent");
+
     // the request can be returned in such a way that an error was found in process_incoming()
     let (request, stream) = process_incoming(stream);
 

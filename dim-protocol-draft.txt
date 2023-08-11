@@ -233,6 +233,11 @@ Table of Contents
 
     Examples:
 
+    NOTE TO SELF:/TODO:/FIXME: CHANGE TO ALWAYS USE DIM URIs!!
+    NOTE TO SELF: GUIDs or channel namespaces can be used, the GUID
+    is just used to look up the current name of the channel/user/etc!
+    (or the name can be used to look up the GUID!)
+
         dim:user:forest@example.com/oak
         dim:group:the-forest@example.com
         dim:group:the-forest@example.com/clearing/log-stool
