@@ -271,8 +271,8 @@ impl ResponsePacket
 #[cfg(test)]
 mod tests
 {
-    use crate::connection_handler::ResponsePacket;
-    use crate::connection_handler::HeaderVariable;
+    use crate::_connection_handler::ResponsePacket;
+    use crate::_connection_handler::HeaderVariable;
 
     #[test]
     fn no_header_variables()

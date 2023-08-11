@@ -23,9 +23,9 @@
  *  *  khaim0919
  */
 
-mod connection_handler;
+mod connection;
 mod startup;
-mod packet_handler;
+//mod connection::packets;
 
 // extern crate guid;
 
@@ -211,7 +211,7 @@ fn main() -> ()
                 Err(_) => { return; }
             }
 
-            connection_handler::handle_connection(stream
+            connection::handle(stream
                 .expect("Failed to read stream")
             );
         });
