@@ -14,37 +14,70 @@ pub fn handle(stream: TlsStream<TcpStream>)
     // test pourposes:
     RequestPacket::from("dim/1.0 GET groups/groupname/category/channel\n\nThis\nis my\n content!!");
 
-    // the request can be returned in such a way that an error was found in process_incoming()
+    // Option::None = Malformed Packet
+    // Option::Some(packet) = Successful
     let (request, stream) = process_incoming(stream);
 
-    // if there was a problem in process_incoming(), construct the error.
-    let response = handle_request(request);
+    let response: ResponsePacket;
+    match request
+    {
+        Some(packet) =>
+        {
+            response = handle_request(packet);
+        },
+        None =>
+        {
+            response = ResponsePacket::error(401, "Malformed Packet");
+        }
+    }
+
     respond(response, stream)
 }
 
-fn process_incoming(stream: TlsStream<TcpStream>) -> (RequestPacket, TlsStream<TcpStream>)
+fn process_incoming(stream: TlsStream<TcpStream>) -> (Option<RequestPacket>, TlsStream<TcpStream>)
 {
-    let request: RequestPacket = RequestPacket::debug();
+    // println!("{:?}", &stream); // doesn't contain request??
 
-    // body
+    // let request: &str = somehow get the request;
+    // let request: RequestPacket = RequestPacket::from(request);
 
-    return (request, stream)
+    let request = RequestPacket::debug();
+
+    match request
+    {
+        Option::Some(packet) => { return (Option::Some(packet), stream); }
+        Option::None => { return { return (Option::None, stream) }; }
+    }
 }
 
 fn handle_request(request: RequestPacket) -> ResponsePacket
 {
     let response: ResponsePacket = ResponsePacket::debug();
 
+    // identify privlage
+    //   Privlaged? =>
+    //      Find requested data
+    //      return requested data
+    //   Not Privlaged? => Why?
+    //      Proxy Auth Requires
+    //      Not authenticated
+    //      Unauthorised
+    //      Forbidden
+    //      Non Existent?
+    //          => Return appropriate error, except non-existent which
+    //             always returns forbidden.
+
     return response;
 }
 
 fn respond(response_object: ResponsePacket, mut stream: TlsStream<TcpStream>) -> ()
 {
+    // TODO: Parse the packet object into the actual packet string.
     let response_string: String = "meow".to_string();
 
     match stream.write(response_string.as_bytes())
     {
-        Ok(_)  => trace!("Wrote to TLS Stream!"),
-        Err(e) => error!("Failed to write to TLS Stream!"),
+        Ok(_) => trace!("Wrote to TLS Stream!"),
+        Err(error) => error!("Failed to write to TLS Stream! {}", error),
     }
 }

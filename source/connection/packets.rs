@@ -187,12 +187,6 @@ impl RequestPacket
             "POST"   => { let method: RequestMethod = RequestMethod::Post; },
             "EDIT"   => { let method: RequestMethod = RequestMethod::Edit; },
             "REMOVE" => { let method: RequestMethod = RequestMethod::Remove; },
-            // _        => ResponsePacket::error_response(
-            //     stream, "1.0",
-            //     401,
-            //     "Invalid Method",
-            //     ""
-            // ),
             _ =>
             {
                 error!("Invalid Method! connection/packets.rs line ~150");
@@ -210,9 +204,11 @@ impl RequestPacket
         })
     }
 
-    pub fn debug() -> RequestPacket
+    /// Never returns None, its an Option to make it the same interface
+    /// for debug pourposes.
+    pub fn debug() -> Option<RequestPacket>
     {
-        return RequestPacket
+        return Option::Some(RequestPacket
         {
             method: RequestMethod::Edit,
             resource: ResourceIdentifier
@@ -227,7 +223,7 @@ impl RequestPacket
                     "etc".to_string()])
             },
             packet: Packet::from("1.0", "NOT IMPLEMENETED YET", "NOT IMPLEMENTED YET")
-        }
+        })
     }
 }
 
@@ -256,7 +252,17 @@ impl ResponsePacket
         {
             code: u16::MAX,
             message: "DEBUG PACKET: DO NOT USE IN PROD!".to_string(),
-            packet: Packet::from("1.0", "NOT IMPLEMENETED YET", "NOT IMPLEMENTED YET")
+            packet: Packet::from("1.0", "TODO: NOT IMPLEMENETED YET", "TODO: NOT IMPLEMENTED YET")
+        }
+    }
+
+    pub fn error(code: u16, message: &str) -> ResponsePacket
+    {
+        return ResponsePacket
+        {
+            code: code,
+            message: message.to_string(),
+            packet: Packet::from("1.0", "TODO: NOT IMPLEMENETED YET", "TODO: NOT IMPLEMENTED YET")
         }
     }
 }

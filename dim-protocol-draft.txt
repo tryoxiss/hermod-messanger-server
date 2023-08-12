@@ -309,7 +309,7 @@ Table of Contents
     304 TLS Certificate Not Verified
 
     400 Client Error
-    401 Invalid Request
+    401 Invalid Request (Malformed Packet)
     402 Unathorised
     403 Forbidden
     404 Not Found
