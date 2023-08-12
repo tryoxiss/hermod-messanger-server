@@ -1,6 +1,8 @@
 use log::info;
 use log::error;
 
+#[derive(Debug)]
+#[derive(PartialEq)]
 struct Packet
 {
     version: String,
@@ -8,6 +10,8 @@ struct Packet
     body: String
 }
 
+#[derive(Debug)]
+#[derive(PartialEq)]
 struct PacketVariable (String, String);
 
 impl PacketVariable
@@ -56,6 +60,8 @@ impl Packet
     }
 }
 
+#[derive(Debug)]
+#[derive(PartialEq)]
 struct ResourceIdentifier
 {
     path: Vec<String>
@@ -72,6 +78,8 @@ impl ResourceIdentifier
     }
 }
 
+#[derive(Debug)]
+#[derive(PartialEq)]
 enum RequestMethod
 {
     Get,
@@ -80,6 +88,9 @@ enum RequestMethod
     Remove
 }
 
+
+#[derive(Debug)]
+#[derive(PartialEq)]
 pub struct RequestPacket
 {
     method: RequestMethod,
@@ -250,29 +261,33 @@ impl ResponsePacket
     }
 }
 
-// #[cfg(test)]
-// mod request_tests
-// {
-//     use super::ResourceIdentifier;
-//     use super::RequestPacket;
-//     use super::Packet
+#[cfg(test)]
+mod request_tests
+{
+    use super::ResourceIdentifier;
+    use super::RequestPacket;
+    use super::Packet;
+    use super::RequestMethod;
 
-//     #[test]
-//     fn get_group_guid_guid_message()
-//     {
-//         assert_eq!(
-//             RequestPacket::from("dim/1.0 GET group/category/channel/message\n\nThis is my\n Content\n   Meow!").unwrap(),
-//             RequestPacket
-//             {
-//                 method: RequestMethod::GET,
-//                 resource: Vec::from(["group", "category", "channel", "message"]),
-//                 packet: Packet
-//                 {
-//                     version: "1.0".to_string(),
-//                     variables: Vec::from(),
-//                     body: "This is my\n Content\n   Meow!".to_string()
-//                 }
-//             }
-//         );
-//     }
-// }
+    #[test]
+    fn get_group_guid_guid_message()
+    {
+        assert_eq!(
+            RequestPacket::from("dim/1.0 GET group/category/channel/message\n\nThis is my\n Content\n   Meow!").unwrap(),
+            RequestPacket
+            {
+                method: RequestMethod::Get,
+                resource: ResourceIdentifier
+                {
+                    path: Vec::from(["group".to_string(), "category".to_string(), "channel".to_string(), "message".to_string()])
+                },
+                packet: Packet
+                {
+                    version: "1.0".to_string(),
+                    variables: Vec::from([]),
+                    body: "This is my\n Content\n   Meow!".to_string()
+                }
+            }
+        );
+    }
+}
