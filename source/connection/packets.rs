@@ -109,21 +109,14 @@ impl RequestPacket
         // split into 3 variables: 1 before the first 0A, then before
         // the next 0A, then everything after that.
 
-        // line1.split_at(" ")
-        // version = line1.0
-        // request_type = line1.1 matched to the method
-        // resource = lines1.2 resource (parse seperately)
-
         // line2 just gets thrown into PacketVariable::deserialise()
-
-        // line3 is explict content that can be ignored most of the time, or copied exactly.
-        // since there is no reason to run code from it, and never ever gets executed!
 
         // Deserialize packet into structure for future use
 
         packet.to_string();
 
-        let mut lines = ("", "", "");
+        // only the first two lines matter, after thats its `body`
+        let mut lines = ("", "");
         let mut iterations: u8 = 0;
         let mut body: String = "".to_string();
 
@@ -140,24 +133,27 @@ impl RequestPacket
             }
             else
             {
+                // I had this working, then my solution got deleted and I
+                // forgot how I did it. This is a much worse solution than
+                // what I had though.
                 body = format!("{}{}\n", body, part);
             }
 
             iterations += 1;
         }
 
-        lines.2 = body.as_str();
+        let body = body.as_str();
 
         // info!("{}", lines.0);
         // info!("{}", lines.1);
         // info!("{}", lines.2);
+        
+        info!("{:?}", lines);
 
         if iterations <= 2
         {
             return Option::None;
         }
-
-        lines.2 = &body;
 
         // if we ever return an empty thing, we got problems.
         // but I believe this is safe since we confirm that iterations is 2.
