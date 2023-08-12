@@ -138,26 +138,31 @@ impl RequestPacket
             {
                 lines.1 = part;
             }
-            else if iterations == 2
+            else
             {
-                lines.1 = part;
-            }
-            else if iterations == 3
-            {
-                return Option::None;
+                body = format!("{}{}\n", body, part);
             }
 
             iterations += 1;
         }
 
-        lines.2 = &body;
+        lines.2 = body.as_str();
 
         // info!("{}", lines.0);
         // info!("{}", lines.1);
         // info!("{}", lines.2);
 
+        if iterations <= 2
+        {
+            return Option::None;
+        }
+
+        lines.2 = &body;
+
+        // if we ever return an empty thing, we got problems.
+        // but I believe this is safe since we confirm that iterations is 2.
         let mut method = "";
-        let mut version;
+        let mut version = "";
         let mut resource: ResourceIdentifier;
 
         // parse the first line
@@ -180,9 +185,14 @@ impl RequestPacket
             iterations += 1;
         }
 
+        if iterations != 2
+        {
+            return Option::None;
+        }
+
         match method
         {
-            // its ugly but we want to shadow request_type to save memory
+            // its ugly but we want to shadow method to save memory
             "GET"    => { let method: RequestMethod = RequestMethod::Get; },
             "POST"   => { let method: RequestMethod = RequestMethod::Post; },
             "EDIT"   => { let method: RequestMethod = RequestMethod::Edit; },
@@ -200,7 +210,7 @@ impl RequestPacket
         {
             method: RequestMethod::Get,
             resource: ResourceIdentifier::from("nil"),
-            packet: Packet::from("1.0", "NOT IMPLEMENETED YET", "NOT IMPLEMENTED YET")
+            packet: Packet::from(version, "NOT IMPLEMENETED YET", "NOT IMPLEMENTED YET")
         })
     }
 

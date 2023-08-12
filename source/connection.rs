@@ -12,7 +12,7 @@ use log::error;
 pub fn handle(stream: TlsStream<TcpStream>)
 {
     // test pourposes:
-    RequestPacket::from("dim/1.0 GET groups/groupname/category/channel\n\nThis\nis my\n content!!");
+    RequestPacket::from("dim/1.0 GET groups/groupname/category/channel\n\nThis\nis my\n content!!\n   UWU\n");
 
     // Option::None = Malformed Packet
     // Option::Some(packet) = Successful
