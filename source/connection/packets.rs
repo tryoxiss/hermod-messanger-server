@@ -89,7 +89,7 @@ pub struct RequestPacket
 
 impl RequestPacket
 {
-    pub fn deserialise(packet: &str) -> Option<RequestPacket>
+    pub fn from(packet: &str) -> Option<RequestPacket>
     {
         // <Version> SP <RequestMethod> SP <ResourceIdentifier> LF (0A)
         // <Variables> LF (0A)
@@ -249,3 +249,30 @@ impl ResponsePacket
         }
     }
 }
+
+// #[cfg(test)]
+// mod request_tests
+// {
+//     use super::ResourceIdentifier;
+//     use super::RequestPacket;
+//     use super::Packet
+
+//     #[test]
+//     fn get_group_guid_guid_message()
+//     {
+//         assert_eq!(
+//             RequestPacket::from("dim/1.0 GET group/category/channel/message\n\nThis is my\n Content\n   Meow!").unwrap(),
+//             RequestPacket
+//             {
+//                 method: RequestMethod::GET,
+//                 resource: Vec::from(["group", "category", "channel", "message"]),
+//                 packet: Packet
+//                 {
+//                     version: "1.0".to_string(),
+//                     variables: Vec::from(),
+//                     body: "This is my\n Content\n   Meow!".to_string()
+//                 }
+//             }
+//         );
+//     }
+// }
