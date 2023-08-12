@@ -4,7 +4,6 @@ use packets::*;
 use std::net::TcpStream;
 use std::io::prelude::*;
 
-use log4rs::filter::Response;
 use native_tls::TlsStream;
 
 use log::trace;
@@ -13,7 +12,7 @@ use log::error;
 pub fn handle(stream: TlsStream<TcpStream>)
 {
     // test pourposes:
-    RequestPacket::deserialise("dim/1.0 GET groups/groupname/category/channel\n\nContent");
+    RequestPacket::deserialise("dim/1.0 GET groups/groupname/category/channel\n\nThis\nis my\n content!!");
 
     // the request can be returned in such a way that an error was found in process_incoming()
     let (request, stream) = process_incoming(stream);

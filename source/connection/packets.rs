@@ -12,7 +12,7 @@ struct PacketVariable (String, String);
 
 impl PacketVariable
 {
-    fn deserialise() -> Vec<PacketVariable>
+    fn from(string: &str) -> Vec<PacketVariable>
     {
         let result: Vec<PacketVariable> = Vec::new();
 
@@ -56,25 +56,17 @@ impl Packet
     }
 }
 
-enum ResourceIdentifierVariant
-{
-    Guid,
-    Dim,
-}
-
 struct ResourceIdentifier
 {
-    variant: ResourceIdentifierVariant,
     path: Vec<String>
 }
 
 impl ResourceIdentifier
 {
-    fn from(variant: &str, body: &str) -> ResourceIdentifier
+    fn from(body: &str) -> ResourceIdentifier
     {
         return ResourceIdentifier
         {
-            variant: ResourceIdentifierVariant::Dim,
             path: Vec::from(["meow".to_string(), "purr".to_string()])
         }
     }
@@ -97,7 +89,7 @@ pub struct RequestPacket
 
 impl RequestPacket
 {
-    pub fn deserialise(packet: &str) -> RequestPacket
+    pub fn deserialise(packet: &str) -> Option<RequestPacket>
     {
         // <Version> SP <RequestMethod> SP <ResourceIdentifier> LF (0A)
         // <Variables> LF (0A)
@@ -116,52 +108,95 @@ impl RequestPacket
         // line3 is explict content that can be ignored most of the time, or copied exactly.
         // since there is no reason to run code from it, and never ever gets executed!
 
-        let mut version: &str = "";
-        let mut request_type: &str = "";
-        let mut requested_resource: &str = "";
-        let mut header_flags: &str = "";
-        let mut message: &str = "";
-
         // Deserialize packet into structure for future use
 
         packet.to_string();
 
-        // let packet = packet.split_at(packet.clone().find(" ").unwrap());
-        // version = packet.0;
+        let mut lines = ("", "", "");
+        let mut iterations: u8 = 0;
+        let mut body: String = "".to_string();
 
-        // let packet = packet.1.split_at(packet.1.clone().find(" ").unwrap());
-        // request_type = packet.0;
+        // split into lines
+        for part in packet.split("\n")
+        {
+            if iterations == 0
+            {
+                lines.0 = part;
+            }
+            else if iterations == 1
+            {
+                lines.1 = part;
+            }
+            else if iterations == 2
+            {
+                lines.1 = part;
+            }
+            else if iterations == 3
+            {
+                return Option::None;
+            }
 
-        // // TODO: Needs to handle GUIDs and usernames seperately as well as telling if group or user
-        // let packet = packet.1.split_at(packet.1.clone().find(" ").unwrap());
-        // requested_resource = packet.0;
+            iterations += 1;
+        }
 
-        // Header flags
+        lines.2 = &body;
 
-        // Message
+        // info!("{}", lines.0);
+        // info!("{}", lines.1);
+        // info!("{}", lines.2);
 
-        match request_type
+        let mut method = "";
+        let mut version;
+        let mut resource: ResourceIdentifier;
+
+        // parse the first line
+        let mut iterations: u8 = 0;
+        for part in lines.0.split(" ")
+        {
+            if iterations == 0
+            {
+                version = part;
+            }
+            else if iterations == 1
+            {
+                method = part;
+            }
+            else if iterations == 2
+            {
+                resource = ResourceIdentifier::from(part);
+            }
+
+            iterations += 1;
+        }
+
+        match method
         {
             // its ugly but we want to shadow request_type to save memory
-            "GET"    => { let request_type: RequestMethod = RequestMethod::Get; },
-            "POST"   => { let request_type: RequestMethod = RequestMethod::Post; },
-            "EDIT"   => { let request_type: RequestMethod = RequestMethod::Edit; },
-            "REMOVE" => { let request_type: RequestMethod = RequestMethod::Remove; },
+            "GET"    => { let method: RequestMethod = RequestMethod::Get; },
+            "POST"   => { let method: RequestMethod = RequestMethod::Post; },
+            "EDIT"   => { let method: RequestMethod = RequestMethod::Edit; },
+            "REMOVE" => { let method: RequestMethod = RequestMethod::Remove; },
             // _        => ResponsePacket::error_response(
             //     stream, "1.0",
             //     401,
             //     "Invalid Method",
             //     ""
             // ),
-            _ => { error!("OOPSY DOOPSY ! connection/packets.rs line ~150") }
+            _ =>
+            {
+                error!("Invalid Method! connection/packets.rs line ~150");
+                return Option::None;
+            }
         }
 
-        return RequestPacket
+        let variables = PacketVariable::from(lines.1);
+
+        return Option::Some(RequestPacket
         {
             method: RequestMethod::Get,
-            resource: ResourceIdentifier::from("guid", "nil"),
+            resource: ResourceIdentifier::from("nil"),
             packet: Packet::from("1.0", "NOT IMPLEMENETED YET", "NOT IMPLEMENTED YET")
-        }
+        })
     }
 
     pub fn debug() -> RequestPacket
@@ -171,7 +206,6 @@ impl RequestPacket
             method: RequestMethod::Edit,
             resource: ResourceIdentifier
             {
-                variant: ResourceIdentifierVariant::Dim,
                 path: Vec::from([
                     "group".to_string(),
                     "name".to_string(),
@@ -195,6 +229,16 @@ pub struct ResponsePacket
 
 impl ResponsePacket
 {
+    // pub fn serialise(code: u16, message: &str, packet: Packet) -> ResponsePacket
+    // {
+    //     return ResponsePacket
+    //     {
+    //         code: code,
+    //         message: message.to_string(),
+    //         packet: packet,
+    //     }
+    // }
+
     pub fn debug() -> ResponsePacket
     {
         return ResponsePacket
