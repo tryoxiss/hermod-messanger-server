@@ -21,7 +21,11 @@ log4rs.yml
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
 
+# Secrets
 *.secret.*
+*.pem
+*.srl
+*.pfx
 
 # Why people??? Don't get your luggage in our repo!
 .vscode
