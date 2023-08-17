@@ -108,7 +108,7 @@ impl Worker
 {
     fn new(id: u16, reciever: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker
     {
-        let thread = thread::spawn(move || loop
+        let thread = thread::Builder::new().name(id.to_string()).spawn(move || loop
         {
             // this is absolutely disgusting.
 
@@ -129,11 +129,14 @@ impl Worker
             }
         });
 
-        Worker { id: id, thread: Some(thread) }
+        // this should always be a safe unwrap since every valid u16 should be able to complete
+        // .to_string()
+        Worker { id: id, thread: Some(thread.unwrap()) }
     }
 
     fn handle_job(job: Job, id: u16)
     {
+        // log!("Job", "started by worker #{id}");
         trace!("Worker #{id} got a job!");
         job();
         trace!("Worker #{id} finished its job!");
