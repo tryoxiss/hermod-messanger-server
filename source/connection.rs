@@ -11,8 +11,8 @@ use log::error;
 
 pub fn handle(stream: TlsStream<TcpStream>)
 {
-    // test pourposes:
-    RequestPacket::from("dim/1.0 GET groups/groupname/category/channel\n\nThis\nis my\n content!!\n   UWU\n");
+    // test pourposes: (REMOVE THE UNWRAP!) (even tho this is constant and therefore always safe)
+    RequestPacket::from("dim/1.0 GET groups/groupname/category/channel\nencryption=aes;force_encryption=t;\nThis\nis my\n content!!\n   UWU\n").unwrap();
 
     // Option::None = Malformed Packet
     // Option::Some(packet) = Successful
@@ -21,32 +21,47 @@ pub fn handle(stream: TlsStream<TcpStream>)
     let response: ResponsePacket;
     match request
     {
-        Some(packet) =>
+        Ok(packet) =>
         {
             response = handle_request(packet);
         },
-        None =>
-        {
-            response = ResponsePacket::error(401, "Malformed Packet");
-        }
+        Err(RequestError::Unknown) => response = ResponsePacket::error(401, "Malformed Packet"),
+        Err(RequestError::HeaderTooLong) => response = ResponsePacket::error(401, "Malformed Packet"),
+        Err(RequestError::InvalidMethod) => response = ResponsePacket::error(405, "Invalid Method"),
+
     }
 
     respond(response, stream)
 }
 
-fn process_incoming(stream: TlsStream<TcpStream>) -> (Option<RequestPacket>, TlsStream<TcpStream>)
+#[allow(unused)] // yes the stream will need to be mutable later.
+fn process_incoming(mut stream: TlsStream<TcpStream>) -> (Result<RequestPacket, RequestError>, TlsStream<TcpStream>)
 {
     // println!("{:?}", &stream); // doesn't contain request??
 
     // let request: &str = somehow get the request;
     // let request: RequestPacket = RequestPacket::from(request);
 
+    // // 2^16 bytes, should be more than plenty.
+    // const MAX_SIZE: usize = 65_536;
+
+    // // we want to read the exact amount of content but EOF is deprecated I think...
+
+    // let mut buffer: Vec<u8> = Vec::new();
+
+    // // read_to_end uses the (deprecated?) EOF!!
+    // let stream_content = stream.read_to_end(&mut buffer);
+
+    // println!("{:?}", stream_content.unwrap());
+    // println!("{:?}", String::from_utf8(buffer));
+
     let request = RequestPacket::debug();
+    // let request = RequestPacket::from();
 
     match request
     {
-        Option::Some(packet) => { return (Option::Some(packet), stream); }
-        Option::None => { return { return (Option::None, stream) }; }
+        Result::Ok(packet) => return (Result::Ok(packet), stream),
+        Result::Err(e) => return (Result::Err(e), stream),
     }
 }
 

@@ -1,4 +1,3 @@
-use log::info;
 use log::error;
 
 #[derive(Debug)]
@@ -54,7 +53,7 @@ impl Packet
         return Packet
         {
             version: "1.0".to_string(),
-            variables: Vec::from([PacketVariable::single_from("a")]),
+            variables: Vec::from([PacketVariable::single_from("k=v;")]),
             body: "purr".to_string()
         }
     }
@@ -98,9 +97,17 @@ pub struct RequestPacket
     packet: Packet
 }
 
+#[derive(Debug)]
+pub enum RequestError
+{
+    Unknown,          // ????
+    HeaderTooLong,    // The header had more than 3 fields (<version> <method> <message>)
+    InvalidMethod,    // Method did not match GET, EDIT, POST, or REMOVE.
+}
+
 impl RequestPacket
 {
-    pub fn from(packet: &str) -> Option<RequestPacket>
+    pub fn from(packet: &str) -> Result<RequestPacket, RequestError>
     {
         // <Version> SP <RequestMethod> SP <ResourceIdentifier> LF (0A)
         // <Variables> LF (0A)
@@ -144,16 +151,11 @@ impl RequestPacket
 
         let body = body.as_str();
 
-        // info!("{}", lines.0);
-        // info!("{}", lines.1);
-        // info!("{}", lines.2);
-        
-        info!("{:?}", lines);
-
-        if iterations <= 2
-        {
-            return Option::None;
-        }
+        // Dosen't this just prevent messages longer than a line? Also the RequestError is wrong.
+        // if iterations <= 2
+        // {
+        //     return Result::Err(RequestError::HeaderTooLong);
+        // }
 
         // if we ever return an empty thing, we got problems.
         // but I believe this is safe since we confirm that iterations is 2.
@@ -183,7 +185,7 @@ impl RequestPacket
 
         if iterations != 2
         {
-            return Option::None;
+            return Err(RequestError::HeaderTooLong);
         }
 
         match method
@@ -196,13 +198,13 @@ impl RequestPacket
             _ =>
             {
                 error!("Invalid Method! connection/packets.rs line ~150");
-                return Option::None;
+                return Err(RequestError::InvalidMethod);
             }
         }
 
         let variables = PacketVariable::from(lines.1);
 
-        return Option::Some(RequestPacket
+        return Result::Ok(RequestPacket
         {
             method: RequestMethod::Get,
             resource: ResourceIdentifier::from("nil"),
@@ -212,9 +214,9 @@ impl RequestPacket
 
     /// Never returns None, its an Option to make it the same interface
     /// for debug pourposes.
-    pub fn debug() -> Option<RequestPacket>
+    pub fn debug() -> Result<RequestPacket, RequestError>
     {
-        return Option::Some(RequestPacket
+        return Result::Ok(RequestPacket
         {
             method: RequestMethod::Edit,
             resource: ResourceIdentifier
