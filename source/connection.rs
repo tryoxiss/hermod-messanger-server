@@ -11,7 +11,7 @@ use log::error;
 
 pub fn handle(stream: TlsStream<TcpStream>)
 {
-    // test pourposes: (REMOVE THE UNWRAP!) (even tho this is constant and therefore always safe)
+    // test pourposes: (REMOVE THE UNWRAP!) (even tho this is constant and  always safe)
     RequestPacket::from("dim/1.0 GET groups/groupname/category/channel\nencryption=aes;force_encryption=t;\nThis\nis my\n content!!\n   UWU\n").unwrap();
 
     // Option::None = Malformed Packet
@@ -25,10 +25,9 @@ pub fn handle(stream: TlsStream<TcpStream>)
         {
             response = handle_request(packet);
         },
-        Err(RequestError::Unknown) => response = ResponsePacket::error(401, "Malformed Packet"),
         Err(RequestError::HeaderTooLong) => response = ResponsePacket::error(401, "Malformed Packet"),
         Err(RequestError::InvalidMethod) => response = ResponsePacket::error(405, "Invalid Method"),
-
+        Err(RequestError::Unknown) => response = ResponsePacket::error(401, "Malformed Packet"),
     }
 
     respond(response, stream)
@@ -61,7 +60,7 @@ fn process_incoming(mut stream: TlsStream<TcpStream>) -> (Result<RequestPacket, 
     match request
     {
         Result::Ok(packet) => return (Result::Ok(packet), stream),
-        Result::Err(e) => return (Result::Err(e), stream),
+        Result::Err(error) => return (Result::Err(error), stream),
     }
 }
 

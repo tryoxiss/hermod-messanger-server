@@ -1,4 +1,5 @@
 use log::error;
+use log::info;
 
 #[derive(Debug)]
 #[derive(PartialEq)]
@@ -183,7 +184,7 @@ impl RequestPacket
             iterations += 1;
         }
 
-        if iterations != 2
+        if iterations != 3 // for some reason a valid one has 3 iterations, not 2.
         {
             return Err(RequestError::HeaderTooLong);
         }
