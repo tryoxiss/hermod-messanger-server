@@ -21,6 +21,7 @@ When asked for a password, enter a simple password used ONLY for testing. Our ch
 4. openssl pkcs12 -export -out identity.pfx -inkey server-key.pem -in server-cert.pem
 5. (OPTIONAL, NOT-YET-WORKING) open your web browser of choice to the test site and download the chain of certificates from the more information > certificate, download and put it into your bonfire-server directory
 6. (OPTIONAL, NOT-YET-WORKING) openssl pkcs12 -export -out identity.pfx -inkey server-key.pem -in server-cert.pem -certfile chain_certs.pem
+7. You should now be able to delete all the certificate files except `identity.pfx`, which is required. The others were only requires to create identity.pfx.
 
 
 To check use this:

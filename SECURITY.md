@@ -17,5 +17,5 @@ In exchange, we promise to
 
 Unfortuntely, as we are a small team working as a passion project, **we are not currently able to offer monetary incestives** as rewards for major bugs.
 
-## Attribution 
+## Attribution
 Large sections of this document are copied from [Hacker1](https://www.hackerone.com/disclosure-guidelines)'s vulerability disclosure guidelines.
