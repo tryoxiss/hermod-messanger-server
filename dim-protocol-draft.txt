@@ -142,7 +142,8 @@ Table of Contents
         The length of time in which a packet is considered usable.
 
     fresh
-        A packet that has not yet exeeded its freshness lifetime
+        A packet that has not yet exeeded its freshness lifetime.
+        A packet MUST NOT be fresh for more than 1 hour.
 
     stale
         A packet that has exeeded its freshness lifetime.
@@ -163,7 +164,7 @@ Table of Contents
 
     A DIM packet is has its version, followed by a space, followed
     by either a request segment OR a response segment. It is then
-    followed by a OA byte, a list of header variables, and another
+    followed by a 0A byte, a list of header variables, and another
     0A byte.
 
     Begining directly after the second 0A byte through to the end of
@@ -184,9 +185,9 @@ Table of Contents
 
         dim/<Major>.<Minor>[.<Patch>]
         
-        Major  =  A real number between 0 and 256
-        Minor  =  A real number between 0 and 256
-        Patch  =  A real number between 0 and 266
+        Major  =  A real number between 0 and 255
+        Minor  =  A real number between 0 and 255
+        Patch  =  A real number between 0 and 265
     
     The pourpose of the version component is to ensure that the packet
     is being parsed correctly. Future versions are to be avoided,
@@ -225,6 +226,8 @@ Table of Contents
         time_recieved,processing_time_in_millaseconds
 
 2.2.2 Location
+
+	THIS IS CHANGNG BIG!
 
     A location segment doubbles as a Universal Resource Indicator (URI)
     for dim protocol by placing "dim:" at the begining.
