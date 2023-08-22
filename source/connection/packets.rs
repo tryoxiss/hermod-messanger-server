@@ -245,16 +245,6 @@ pub struct ResponsePacket
 
 impl ResponsePacket
 {
-    // pub fn serialise(code: u16, message: &str, packet: Packet) -> ResponsePacket
-    // {
-    //     return ResponsePacket
-    //     {
-    //         code: code,
-    //         message: message.to_string(),
-    //         packet: packet,
-    //     }
-    // }
-
     pub fn debug() -> ResponsePacket
     {
         return ResponsePacket
