@@ -227,51 +227,45 @@ Table of Contents
 
 2.2.2 Location
 
-	THIS IS CHANGNG BIG!
+    A DIM location is made up of two primary parts, the
+    type-specific-part, which varries depending on its
+    starting character, followed by a commercial at-sign,
+    followed by a path string.
 
-    A location segment doubbles as a Universal Resource Indicator (URI)
-    for dim protocol by placing "dim:" at the begining.
+    Any identifier may be a string literal, requiring no
+    annotation, or a base64 GUID as specified in RFC-4648
+    indicated by the segment starting with a dollar sign
+    ("$") character.
 
-        <Type>:<Type-Specific-Segment>/<Path>
+        ["dim:"]<Type-Specific-Part><"@">[Path]
 
-    Examples:
+    If the Type-Specific-Part begins with a "#", it is a
+    location, such as a channel or file. If it begins with A
+    commercial at-sign, it identifies a user account.
 
-    NOTE TO SELF:/TODO:/FIXME: CHANGE TO ALWAYS USE DIM URIs!!
-    NOTE TO SELF: GUIDs or channel namespaces can be used, the GUID
-    is just used to look up the current name of the channel/user/etc!
-    (or the name can be used to look up the GUID!)
+        Path-Segment = <$GUID or string_name>
 
-        dim:user:forest@example.com/oak
-        dim:group:the-forest@example.com
-        dim:group:the-forest@example.com/clearing/log-stool
-        OfulDoJu8UeNHBD393KE4Q==
-        guid:OfulDoJu8UeNHBD393KE4Q==
+    Type specific part (case: User ID ("@"))
 
-    The standard group channel format is, but is not always: 
+            (user account)       (profile)
+        "@" <Path-Segment> ["/"] <Path-Segment>
     
-        [<Category>/]<channel>/[<Thread>/][<Message>/]
+    Type specific part (case: Location ("#"))
 
-    A URI must be hierarchical, as in, it MUST include every segment
-    up to the resource it points to, but this does not need to be in
-    the same order always. It depends what resources are present.
-    Some examples of this include:
+        "#" <Path-Segment>
+    
+    You likely noticed that the account may have many profiles,
+    since they are detached. This is by design.
 
-    // TODO: NOTE TO SELF: DEFINE THE TYPES!!! Mostly GUID being
-    // v4 GUID that is base64 encoded as per rfc ????.
+    The path is any number of path segments seperated by a
+    forward slash ("/") character to denote the resource
+    you want. We reccommend you make this 1:1 with the file
+    system representation, with containers being directories
+    and resources being files.
 
-        admin-stuff/rules              ; Rules channel
-        general/main                   ; Main channel
-        general/games/dwarf-fortress   ; A thread in the games channel
-        admin-stuff/staff/GUID         ; A message in the staff list
-        hello        ; A channel without a category
-        admin-stuff  ; A category, you will get its list of channels.
-        admin-stuff/ ; is equivlent to the location above, since it is
-                     ; just a container.
-
-        general/games/   ; Get the channels list of threads within the
-                         ; games channel. Notice the trailing slash.
-        general/games    ; get the general/games details messages,
-                         ; description, etc.
+    An item can be both a container and a resource by including
+    a directory with a resource of the same name (any extension)
+    inside it.
 
 2.3   Response Segment
 
@@ -400,17 +394,12 @@ Table of Contents
         time    =  A timestamp as defined in RFC-3339 in the format
                    YYYY-MM-DD HH:MM:SS.msms , all in UTC time.
 
-        guid    =  Any valid Globally Unique Identifier as defined in
-                   RFC-4122 with no braces and no hyphens. Just a
-                   string of hexdigits.
-
     Exact String        Type     Required   Notes
     ------------------- -------- ---------- --------------------------
     encryption          string   Yes        Algorithum used
     force_encryption    bool     Yes       
-    author              guid     Yes       
-    target              guid     Sometimes 
-    channel             guid     Sometimes 
+    author              dim uri  Yes       
+    target              dim uri  Sometimes 
     channel_type        string   Sometimes 
     content_mime_type   string   Yes        Defined in RFC-2045
     content_format      string   Yes        See section 2.5
