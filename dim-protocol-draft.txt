@@ -234,8 +234,9 @@ Table of Contents
 
     Any identifier may be a string literal, requiring no
     annotation, or a base64 GUID as specified in RFC-4648
-    indicated by the segment starting with a dollar sign
-    ("$") character.
+    with the "/" character swapped for an "_" character
+    for path compatability. indicated by the segment
+    starting with a dollar sign ("$") character.
 
         ["dim:"]<Type-Specific-Part><"@">[Path]
 
@@ -266,6 +267,55 @@ Table of Contents
     An item can be both a container and a resource by including
     a directory with a resource of the same name (any extension)
     inside it.
+
+    The following test cases use these GUIDs:
+
+        forest_system       = uvkc9gBskEK5rwux1dz5jA
+        forest_system/birch = YqWslsYRXUOygHeN0J2HBQ
+        forest_system/oak   = XmI2WrS_SU+tqYpwDg71ow
+        forest_system/pine  = PyMiaIwMWUSpN_V7kccYKg
+
+        clearing              = G+htotm90UuRlkp9hFIeuA
+        clearing/info/rules   = +OsehBxrHkGxembtmPXgKA
+        clearing/main/general = K1Y+k+DtnE6dWKa9l_BjSw
+        clearing/main/media   = kOUCla6pgUSSOJJXegVfDA
+
+    Test cases (valid)
+
+        dim:@forest_system/birch@example.com
+        dim:@forest_system/birch@example.com/about
+        dim:@forest_system/birch@example.com/lists/block
+        dim:@forest_system/birch@example.com/lists/friends
+
+        dim:@$uvkc9gBskEK5rwux1dz5jA/birch@example.com
+        dim:@forest_system/$YqWslsYRXUOygHeN0J2HBQ@example.com/about
+        dim:@$uvkc9gBskEK5rwux1dz5jA/$YqWslsYRXUOygHeN0J2HBQ@example.com/lists/block
+        dim:@forest_system/birch@example.com/lists/friends
+
+        @forest_system/birch@example.com
+        @forest_system/birch@example.com/about
+        @$uvkc9gBskEK5rwux1dz5jA/birch@example.com
+        @forest_system/$YqWslsYRXUOygHeN0J2HBQ@example.com/about
+        @$uvkc9gBskEK5rwux1dz5jA/$YqWslsYRXUOygHeN0J2HBQ@example.com/lists/block
+
+        dim:#clearing@domain.tld/rules
+        dim:#clearing@domain.tld/info/rules
+        dim:#clearing@domain.tld/main/general
+        dim:#clearing@domain.tld/rules
+
+        It is worth noting that while groups *may* have namespaces,
+        it is uncommon for instances to let them use one instead of
+        a GUID. Channels are reccommended to always allow namespaces.
+
+        dim:#$G+htotm90UuRlkp9hFIeuA@domain.tld/$+OsehBxrHkGxembtmPXgKA/
+        dim:#clearing@domain.tld/index
+    
+    Test Cases (invalid)
+
+        <>
+
+    Every group SHOULD have an "index" file at its root that contains
+    a list of all paths and thier corrosponding GUIDs.
 
 2.3   Response Segment
 
