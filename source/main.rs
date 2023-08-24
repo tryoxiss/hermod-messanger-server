@@ -23,6 +23,9 @@
  *  *  khaim0919
  */
 
+// We currently have no need for this, and likely never will!
+ #![forbid(unsafe_code)]
+
 mod connection;
 mod startup;
 //mod connection::packets;
