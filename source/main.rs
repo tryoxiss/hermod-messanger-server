@@ -24,7 +24,7 @@
  */
 
 // We currently have no need for this, and likely never will!
- #![forbid(unsafe_code)]
+#![forbid(unsafe_code)]
 
 mod connection;
 mod startup;
