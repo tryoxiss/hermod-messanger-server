@@ -1,5 +1,5 @@
 [package]
-name = "codename_bonfire_server"
+name = "hermod-server"
 licence = "AGPL 3.0 Only"
 version = "0.1.0"
 edition = "2021"  # Rust Edition

@@ -112,43 +112,62 @@ pub fn verify_file_integrity(version: &String, repository: &str)
 
 pub fn init_log4rs_config()
 {
+    // Try again after the files creation if we fail to bind.
+    match log4rs::init_file("log4rs.yml", Default::default())
+    {
+        Ok(_) => { info!("File found and bound!"); return },
+        Err(_) => create_log4rs_file()
+    }
+
+    create_log4rs_file();
+
     log4rs::init_file("log4rs.yml", Default::default())
-        .expect("Failed to init log4rs file!");
+        .expect("Failed to find file, even after an attempt at creating it. Try creating one yourself?");
 }
 
 fn create_log4rs_file()
 {
     let mut _file = File::create("log4rs.yml");
-    match fs::write("log4rs.yml", 
-b"\
-appenders:
-    stdout:
-    # TODO: 
-    # - Make `Capitalsed` instead of `UPPERCASE`.
-    # - Change Colors
-    #   - Trace: Grey
-    #   - Debug: Green
-    #   - Info:  Blue
-    #   - Warn:  Yellow (Already Correct)
-    #   - Error: Red    (Already Correct)
-        kind: console
-        encoder:
-            pattern: \"{h(\\x1b[1m{l}):>16.16}\\x1b[0m {m}{n}\"
-    file:
-        kind: file
-        path: \"logs/recent.log\"
-        encoder:
-            pattern: \"{d(%Y-%m-%d %H:%M:%S)} : {m}{n}\"
+
+    // its ugly because its minified.
+    // KEEP THIS IT WORKS AND YOU CAN REVERT SO YOU DON'T FEEL DUMB LIKE ME
+//     match fs::write("log4rs.yml",
+// b"appenders:
+//     stdout:
+//         kind: console
+//         encoder:
+//             pattern: \"{h(\\x1b[1m{l}):>16.16}\\x1b[0m {m}{n}\"
+//     file:
+//         kind: file
+//         path: \"logs/recent.log\"
+//         encoder:
+//             pattern: \"{d} : {m}{n}\"
+// root:
+//     level: info
+//     appenders:
+//         - stdout
+//         - file")
+
+    match fs::write("log4rs.yml",
+b"appenders:
+ stdout:
+  kind: console
+  encoder:
+   pattern: \"{h(\\x1b[1m{l}):>16.16}\\x1b[0m {m}{n}\"
+ file:
+  kind: file
+  path: \"logs/recent.log\"
+  encoder:
+   pattern: \"{d} : {m}{n}\"
 root:
-    level: trace
-    appenders:
-        - stdout
-        - file")
+ level: info
+ appenders:
+  - stdout
+  - file")
     {
         Ok(_) =>
         {
-            println!("The defult log4rs.yml file has been created! Try re-running the program!");
-            std::process::exit(1);
+            println!("The defult log4rs.yml file has been created! We will not attempt to bind ...");
         }
 
         Err(error) =>

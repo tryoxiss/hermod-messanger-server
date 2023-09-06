@@ -30,3 +30,23 @@ openssl verify -CAfile ca-cert.pem server-cert.pem
 ## File Requirements
 
 Every file MUST contain the licence notice found in `source/_filenotice.txt`. It is not a requirement of the licence we use (AGPL v3 only), but of this project. It is incredbily easy to de-assosiate a file with a project, and therefore its licence. This increses the chance are code is used in ways not compliant with the licence. If every file has the attached notice, it shows clear intent to dis-assosiate it with the licence if that section is removed.
+
+## Compiling for release
+
+in your project location:
+```sh
+cargo build --release
+# Now your built file is located at target/release/hermod-server, and can be executed with `./hermod-server`,
+
+# Now lets test everything is working! But first, we need a few files
+cp log4rs target/release/
+cp identity.pfx target/release/ # Alternativly: just run the program twice, and it will have no issue.
+
+./hermod-server
+# Open the link it gives you, and you should get a packet served 
+# TODO: Make it serve a generic "Operational!" thing when you go to like /test or somth
+
+# Now lets remove those files and bundle the release
+rm target/release/identity.pfx
+rm target/release/log4rs.yml
+```
