@@ -10,11 +10,11 @@
 // a message field and such but still get levels.
 macro_rules! log
 {
-    ($job:expr, $message:expr) =>
-    {
-        eprintln!("\x1b[92m\x1b[1m {:>11}\x1b[0m {}", $job, $message);
-        trace!("{} : {}", $job, $message);
-    }
+	($job:expr, $message:expr) =>
+	{
+		eprintln!("\x1b[92m\x1b[1m {:>11}\x1b[0m {}", $job, $message);
+		trace!("{} : {}", $job, $message);
+	}
 }
 
 // pub struct Status
