@@ -1,28 +1,22 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *  This file is part of:		 https://github.com/tryoxiss/bonfire-server *
- *  Hermod Messanger						  https://en.ourdomain.ext/docs/ *
- *																		   *
- *  Copyright (C) 2023—present : Hermod Messenger Contributers (AUTHORS.md)  *
- *																		   *
- *  This program is free software: you can redistribute it and/or modify	 *
- *  it under the terms of the GNU Affero General Public License version 3	*
- *  as published by the Free Software Foundation.							*
- *																		   *
- *  This program is distributed in the hope that it will be useful,		  *
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of		   *
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			*
- *  GNU Affero General Public License version 3 for more details.			*
- *																		   *
- *  You should have received a copy of the GNU Affero General Public License *
- *  along with this program.  If not, see:								   *
- *	https://www.gnu.org/licenses/agpl-3.0								  *
- *																		   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/* @authors
- *  *  tryoxiss 'madeline'
- *  *  khaim0919
- */
-//
+/*
+This file is a part of Hermod Messanger Server.
+
+	Copyright (C) 2023-Present Hermod Messanger Contributers. (AUTHORS.md)
+	Under The GNU Affero General Public Licence 3.0 ONLY (LICENCE.md)
+
+	If for any reason the licence file was not provided, you may obtain a
+	copy at <https://www.gnu.org/licenses/agpl-3.0.txt>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+*/
+
+/*
+This file was authored by:
+	* Madeline "tryoxiss"
+*/
 
 // use guid::GUID;
 

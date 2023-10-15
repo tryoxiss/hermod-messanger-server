@@ -1,22 +1,22 @@
 /*
- *	  This file is part of:
- *	  Codename Bonfire Instant Messanger
- *
- *	  Copyright (C) 2023 or later - Project Bonfire Contributers
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Affero General Public License as published
- *  by the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Affero General Public License for more details.
- *
- *  You should have received a copy of the GNU Affero General Public License
- *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+This file is a part of Hermod Messanger Server.
+
+	Copyright (C) 2023-Present Hermod Messanger Contributers. (AUTHORS.md)
+	Under The GNU Affero General Public Licence 3.0 ONLY (LICENCE.md)
+
+	If for any reason the licence file was not provided, you may obtain a
+	copy at <https://www.gnu.org/licenses/agpl-3.0.txt>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+*/
+
+/*
+This file was authored by:
+	* Madeline "tryoxiss"
+*/
 
 use log::{trace, debug, info, warn, error};
 
@@ -42,11 +42,11 @@ fn create_header_variables() -> Vec<HeaderVariable>
 	let mut header_variables: Vec<HeaderVariable> = vec![];
 
 	let header_length: usize = 0;
+	
 	for variable in 0..header_length
 	{
 		header_variables.push(HeaderVariable::new("key", "value"));
 	}
-
 
 	// Use Aes-Gcm-Siv for Client-to-Server (aka not Peer-to-Peer)
 	// ---

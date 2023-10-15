@@ -52,7 +52,7 @@ Table of Contents
 
 1.2   Requirements
 
-    The key words "MUST", "MUST NOT', "SHOULD", "SHOULD NOT", and "MAY"
+    The key words "MUST", "MUST NOT", "SHOULD", "SHOULD NOT", and "MAY"
     this document are to be interprited as described in rfc-2119.
 
 1.3   Termonology

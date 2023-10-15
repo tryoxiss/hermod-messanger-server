@@ -1,3 +1,23 @@
+/*
+This file is a part of Hermod Messanger Server.
+
+	Copyright (C) 2023-Present Hermod Messanger Contributers. (AUTHORS.md)
+	Under The GNU Affero General Public Licence 3.0 ONLY (LICENCE.md)
+
+	If for any reason the licence file was not provided, you may obtain a
+	copy at <https://www.gnu.org/licenses/agpl-3.0.txt>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+*/
+
+/*
+This file was authored by:
+	* Madeline "tryoxiss"
+*/
+
 use std::io::ErrorKind;
 use std::net::TcpListener;
 use std::net::Ipv6Addr;

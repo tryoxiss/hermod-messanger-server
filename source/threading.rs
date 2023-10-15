@@ -1,8 +1,31 @@
-use std::thread;
-use std::sync::{mpsc, Arc, Mutex};
+/*
+This file is a part of Hermod Messanger Server.
 
-use log::{trace, debug, error};
-// use log4rs;
+	Copyright (C) 2023-Present Hermod Messanger Contributers. (AUTHORS.md)
+	Under The GNU Affero General Public Licence 3.0 ONLY (LICENCE.md)
+
+	If for any reason the licence file was not provided, you may obtain a
+	copy at <https://www.gnu.org/licenses/agpl-3.0.txt>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+*/
+
+/*
+This file was authored by:
+	* Madeline "tryoxiss"
+*/
+
+use std::thread;
+use std::sync::mpsc;
+use std::sync::Arc;
+use std::sync::Mutex;
+
+use log::trace;
+use log::debug;
+use log::error;
 
 use crate::{ENDBLOCK, CODE_START, INDENT};
 
@@ -121,7 +144,6 @@ impl Worker
 				.recv()
 				.unwrap();
 
-		// this nesting is.... ewwww...
 			match message
 			{
 				Message::NewJob(job) => Worker::handle_job(job, id),
@@ -129,16 +151,13 @@ impl Worker
 			}
 		});
 
-		// this should always be a safe unwrap since every valid u16 should be able to complete
-		// .to_string()
-		Worker { id: id, thread: Some(thread.unwrap()) }
+		return Worker { id: id, thread: Some(thread.unwrap()) }
 	}
 
 	fn handle_job(job: Job, id: u16)
 	{
-		// log!("Job", "started by worker #{id}");
-		trace!("Worker #{id} got a job!");
+		debug!("Worker #{id} got a job!");
 		job();
-		trace!("Worker #{id} finished its job!");
+		debug!("Worker #{id} finished its job!");
 	}
 }

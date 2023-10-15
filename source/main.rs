@@ -1,40 +1,30 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *  This file is part of:		 https://github.com/tryoxiss/bonfire-server *
- *  Hermod Messanger						  https://en.ourdomain.ext/docs/ *
- *																		   *
- *  Copyright (C) 2023—present : Hermod Messenger Contributers (AUTHORS.md)  *
- *																		   *
- *  This program is free software: you can redistribute it and/or modify	 *
- *  it under the terms of the GNU Affero General Public License version 3	*
- *  as published by the Free Software Foundation.							*
- *																		   *
- *  This program is distributed in the hope that it will be useful,		  *
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of		   *
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			*
- *  GNU Affero General Public License version 3 for more details.			*
- *																		   *
- *  You should have received a copy of the GNU Affero General Public License *
- *  along with this program.  If not, see:								   *
- *	https://www.gnu.org/licenses/agpl-3.0								  *
- *																		   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/* @authors
- *  *  tryoxiss 'madeline'
- *  *  khaim0919
- */
+/*
+This file is a part of Hermod Messanger Server.
+
+	Copyright (C) 2023-Present Hermod Messanger Contributers. (AUTHORS.md)
+	Under The GNU Affero General Public Licence 3.0 ONLY (LICENCE.md)
+
+	If for any reason the licence file was not provided, you may obtain a
+	copy at <https://www.gnu.org/licenses/agpl-3.0.txt>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+*/
+
+/*
+This file was authored by:
+	* Madeline "tryoxiss"
+	* Khaim "khaim0919"
+*/
 
 // We currently have no need for this, and likely never will!
-#![forbid(unsafe_code)]
+// #![forbid(unsafe_code)]
 
 mod connection;
 mod startup;
 //mod connection::packets;
-
-// extern crate guid;
-
-// Make our own logging system, with messaghes being *what is it doing* and not *what level is it*
-#[macro_use]
-mod terminal_out;
 
 mod threading;
 use threading::ThreadPool;
@@ -46,28 +36,25 @@ use log::info;
 // use log::warn;
 // use log::error;
 
-static CODE_START: &str = "\x1b[40m";
-static ENDBLOCK: &str   = "\x1b[0m";
-static INDENT: &str	 = "             ";
-static BOLD: &str	   = "\x1b[1m";
-static UNDERLINE: &str  = "\x1b[4m";
+const CODE_START: &str = "\x1b[40m";
+const ENDBLOCK: &str   = "\x1b[0m";
+const INDENT: &str	 = "             ";
+const BOLD: &str	   = "\x1b[1m";
+const UNDERLINE: &str  = "\x1b[4m";
 
-/// - (margin) = INDENT
-/// = (padding) = 1ch left, 1ch right
-/// C (content) = 1ch
-///						----------------==C
-static UL_ITEM: &str	= "               •";
+//      Regular Indent -------------
+const UL_ITEM: &str	= "              •";
 
-/// The main function contains all initalisation steps, aswell as the main
-/// program loop.
 fn main() -> ()
 {
 	// 🚩 FIXME: The main log file needs to be renammed to when it was run
 	// once a new file is created/after the program ends, so that recent.log
 	// can take its place instead of appending new logs to recent.log
 	startup::init_log4rs_config();
+	// TODO: Use SimplestLogger, once I get it more done and get it on crates.io
+	// (or even if I don't, its great and especially for this!)
 
-	log!("Initalising", "program master thread");
+	info!("Initalising program master thread");
 
 	const REPOSITORY: &str = "tryoxiss.github.io";
 	let server_version: String = startup::check_updates(
@@ -86,10 +73,10 @@ fn main() -> ()
 	// ASSIGN VALUES
 	// NO VALUE? -> DEFULT
 
-	let threads: u16 = 4;				  // threads to add to the pool
-	let max_requests: usize = usize::MAX;  // requests before automatic shutdown
+	let threads: u16 = 4;
+	let max_requests: usize = usize::MAX;
 	let listener_ip:[u16; 8] = [0, 0, 0, 0, 0, 0, 0, 1]; // send requests to this IP
-	let listener_port: u16 = 3467;	  // Send Requests to this port (Rationale: DIMP typed on a telephone)
+	let listener_port: u16 = 3467; // Send Requests to this port (Rationale: DIMP typed on a telephone)
 
 	let warn_restart_at: usize = (max_requests / 4) * 3; // this will round but won't error
 
@@ -186,16 +173,9 @@ fn main() -> ()
 {INDENT}If this is not correct, please press {BOLD}{UNDERLINE}CTRL+C{ENDBLOCK} during the 
 {INDENT}launch countdown to abort the launch.");
 
-	/* 📔 Note
-	 * set count to 0 to skip launch sequence. Is always 0 when hosting
-	 * a local server. Default is 5 secconds when testing anything else.
-	 * This mostly is to prevent the "onoseccond", where you do something
-	 * and immeditely realise that you have just made a very big mistake.
-	 */
 	startup::launch_countdown(0);
 
-	log!("Completed", "initation! Your server is now live! 🎉");
-	// info!("Initation completed! Your server is now live! 🎉");
+	info!("Initation completed! Your server is now live! 🎉");
 
 	for (packets_handled, stream) in tcp_listener
 		.incoming()
@@ -204,7 +184,7 @@ fn main() -> ()
 	{
 		let acceptor = tls_manager.clone();
 
-		thread_pool.run(move || 
+		thread_pool.run(move ||
 		{
 			let stream = acceptor.accept(stream.unwrap());
 
@@ -214,9 +194,7 @@ fn main() -> ()
 				Err(_) => { return; }
 			}
 
-			connection::handle(stream
-				.expect("Failed to read stream")
-			);
+			connection::handle(stream.expect("Failed to read stream"));
 		});
 
 		if packets_handled == warn_restart_at
@@ -230,7 +208,7 @@ fn main() -> ()
 		}
 		else if packets_handled == max_requests
 		{
-			log!("Shutdown", "Shutting down: Max Packet Limit reached.");
+			info!("Shutting down: Max Packet Limit reached.");
 			std::process::exit(255);
 		}
 		else if packets_handled >= warn_restart_at
@@ -241,6 +219,6 @@ fn main() -> ()
 		trace!("lifetime: {packets_handled} packets handled");
 	}
 
-	log!("Shutdown", "in progress");
+	info!("Shutdown in progress");
 	// info!("Begining server shutdown ...");
 }

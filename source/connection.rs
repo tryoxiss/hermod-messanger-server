@@ -1,3 +1,23 @@
+/*
+This file is a part of Hermod Messanger Server.
+
+	Copyright (C) 2023-Present Hermod Messanger Contributers. (AUTHORS.md)
+	Under The GNU Affero General Public Licence 3.0 ONLY (LICENCE.md)
+
+	If for any reason the licence file was not provided, you may obtain a
+	copy at <https://www.gnu.org/licenses/agpl-3.0.txt>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+*/
+
+/*
+This file was authored by:
+	* Madeline "tryoxiss"
+*/
+
 mod packets;
 use packets::*;
 
@@ -14,8 +34,6 @@ pub fn handle(stream: TlsStream<TcpStream>)
 	// test pourposes: (REMOVE THE UNWRAP!) (even tho this is constant and  always safe)
 	RequestPacket::from("dim/1.0 GET groups/groupname/category/channel\nencryption=aes;force_encryption=t;\nThis\nis my\n content!!\n   UWU\n").unwrap();
 
-	// Option::None = Malformed Packet
-	// Option::Some(packet) = Successful
 	let (request, stream) = process_incoming(stream);
 
 	let response: ResponsePacket;
@@ -25,7 +43,7 @@ pub fn handle(stream: TlsStream<TcpStream>)
 		{
 			response = handle_request(packet);
 		},
-		Err(RequestError::HeaderTooLong) => response = ResponsePacket::error(401, "Malformed Packet"),
+		Err(RequestError::HeaderTooLong) => response = ResponsePacket::error(401, "Header Too Long"),
 		Err(RequestError::InvalidMethod) => response = ResponsePacket::error(405, "Invalid Method"),
 		Err(RequestError::Unknown) => response = ResponsePacket::error(401, "Malformed Packet"),
 	}
