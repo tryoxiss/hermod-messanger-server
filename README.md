@@ -1,4 +1,4 @@
-# hermod-server
+# Hermod Messanger Server
 
-> **Warning**
-> This software is not currently suitable for any productin builds and is not spec-compliant as it is in very early developement.
+> **Important**
+> We have migrated this repository to [codeberg](https://codeberg.org/tryoxiss/hermod-messanger-server) due to github using public repos as AI training data. This repository will be completely purged at some point.
