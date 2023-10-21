@@ -1,0 +1,19 @@
+# Orginisational stuff
+.gitignore          @tryoxiss
+CHANGELOG.md        @tryoxiss @khaim0919
+CODE_OF_CONDUCT.md  @tryoxiss
+CODEOWNERS          @tryoxiss
+CONTRIBUTING.md     @tryoxiss
+EMOJIS.md           @tryoxiss
+LICENCE             @tryoxiss
+README.md           @tryoxiss
+SECURITY.md         @tryoxiss
+SETUP.md            @tryoxiss
+
+# Code
+*.rs           @khaim0919 @tryoxiss
+Cargo.toml     @khaim0919 @tryoxiss
+INSTALL.sh     @khaim0919 @tryoxiss
+
+# All source files MUST be approved by one of us
+/source/       @khaim0919 @tryoxiss
